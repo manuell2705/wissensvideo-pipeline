@@ -1,5 +1,8 @@
 name: Voice samples
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      script: { description: 'voice_samples.py or voice_variants.py', required: false, default: 'voice_variants.py' }
 permissions:
   contents: write
 jobs:
@@ -13,7 +16,7 @@ jobs:
           sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
           pip install -q torch --index-url https://download.pytorch.org/whl/cpu
           pip install -q -r render/requirements.txt edge-tts
-      - run: python render/voice_samples.py samples
+      - run: python render/${{ inputs.script }} samples
       - env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "voice-samples-${{ github.run_number }}" samples/*.mp3 --title "Voice samples" --notes "Compare and pick one"
+        run: gh release create "voice-samples-${{ github.run_number }}" samples/*.mp3 --title "Voice samples (${{ inputs.script }})" --notes "Compare and pick one"

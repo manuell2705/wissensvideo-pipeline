@@ -6,6 +6,7 @@ on:
       callback_url: { description: 'n8n webhook to call when done (optional)', required: false, default: '' }
       voice:        { description: 'Kokoro voice', required: false, default: 'bm_george' }
       speed:        { description: 'Voice speed', required: false, default: '1.0' }
+      voice_fx:     { description: 'none | deeper | warm | documentary', required: false, default: 'none' }
       only:         { description: 'all | long | shorts', required: false, default: 'all' }
 permissions:
   contents: write
@@ -38,6 +39,7 @@ jobs:
         env:
           VOICE: ${{ inputs.voice }}
           SPEED: ${{ inputs.speed }}
+          VOICE_FX: ${{ inputs.voice_fx }}
           ONLY: ${{ inputs.only }}
           NODE_PATH: ${{ github.workspace }}/node_modules
           WORKERS: '4'

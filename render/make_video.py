@@ -31,13 +31,40 @@ def log(*a):
 _kp = None
 
 
+def voice_tensor(kp, spec):
+    """'bm_lewis' or a blend like 'bm_lewis:0.7+bm_george:0.3'."""
+    if '+' not in spec and ':' not in spec:
+        return spec
+    parts = [p.split(':') for p in spec.split('+')]
+    tot = sum(float(w) for _, w in parts)
+    return sum(kp.load_single_voice(v) * (float(w) / tot) for v, w in parts)
+
+
+# Sound presets (ffmpeg filters) to make the voice deeper / warmer / more "documentary".
+FX = {
+    'none': None,
+    'deeper': 'asetrate=24000*0.94,aresample=24000,atempo=1.0638',
+    'warm': 'equalizer=f=140:t=q:w=1:g=3,equalizer=f=3500:t=q:w=1.5:g=-2,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=160',
+    'documentary': 'asetrate=24000*0.94,aresample=24000,atempo=1.0638,equalizer=f=140:t=q:w=1:g=3,equalizer=f=3500:t=q:w=1.5:g=-2,acompressor=threshold=-20dB:ratio=2.5:attack=10:release=160,aecho=0.85:0.5:35:0.06',
+}
+
+
+def apply_fx(wav, fx):
+    f = FX.get(fx, fx)
+    if not f:
+        return
+    tmp = Path(str(wav) + '.fx.wav')
+    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(wav), '-af', f, '-ar', str(SR), '-ac', '1', str(tmp)], check=True)
+    tmp.replace(wav)
+
+
 def kokoro_tts(text, voice, speed):
     global _kp
     from kokoro import KPipeline
     if _kp is None:
         _kp = KPipeline(lang_code='b')  # 'b' = British English
     audio, words, off = [], [], 0.0
-    for r in _kp(text, voice=voice, speed=speed, split_pattern=r'\n+'):
+    for r in _kp(text, voice=voice_tensor(_kp, voice), speed=speed, split_pattern=r'\n+'):
         a = r.audio.cpu().numpy() if hasattr(r.audio, 'cpu') else np.asarray(r.audio)
         for t in (getattr(r, 'tokens', None) or []):
             if t.start_ts is not None and t.text.strip() and re.search(r'\w', t.text):
@@ -69,6 +96,13 @@ def make_voice(scenes, outdir, voice, speed):
         else:
             a, words = kokoro_tts(s['narration'], voice, speed)
         sf.write(str(f), a, SR)
+        fx = os.environ.get('VOICE_FX', 'none')
+        if fx != 'none':
+            raw = len(a) / SR
+            apply_fx(f, fx)
+            a, _ = sf.read(str(f), dtype='float32')
+            k = (len(a) / SR) / raw  # keep word times in sync if the length changed
+            words = [{'w': w['w'], 's': w['s'] * k, 'e': w['e'] * k} for w in words]
         s['adur'] = len(a) / SR
         if len(words) < len(s['narration'].split()) * 0.6:
             words = approx_words(s['narration'], s['adur'])

@@ -1,0 +1,18 @@
+name: Voice samples
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  samples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: |
+          sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q -r render/requirements.txt edge-tts
+      - run: python render/voice_samples.py samples
+      - env: { GH_TOKEN: '${{ github.token }}' }
+        run: gh release create "voice-samples-${{ github.run_number }}" samples/*.mp3 --title "Voice samples" --notes "Compare and pick one"

@@ -1,0 +1,462 @@
+{
+ "title": "What If You Used 100% of Your Brain?",
+ "category": "Biology",
+ "description": "Movies say you only use 10% of your brain. So what would happen if you switched on the other 90%? The answer is stranger, and far more hopeful, than superpowers. A myth-versus-reality look at your brain, with every claim sourced below.",
+ "tags": [
+  "brain",
+  "10 percent myth",
+  "neuroscience",
+  "science explained",
+  "psychology",
+  "biology",
+  "what if",
+  "animated science"
+ ],
+ "sources": [
+  "Raichle & Gusnard (2002), Appraising the brain's energy budget, PNAS. https://doi.org/10.1073/pnas.172399499",
+  "Lennie (2003), The cost of cortical computation, Current Biology. https://doi.org/10.1016/S0960-9822(03)00135-0",
+  "Azevedo et al. (2009), Equal numbers of neuronal and nonneuronal cells make the human brain, J Comp Neurol. https://doi.org/10.1002/cne.21974",
+  "von Bartheld et al. (2016), The search for true numbers of neurons and glial cells in the human brain, J Comp Neurol. https://doi.org/10.1002/cne.24040",
+  "Beyerstein (1999), Whence cometh the myth that we only use 10% of our brains? In: Mind Myths, Wiley.",
+  "Maguire et al. (2000), Navigation-related structural change in the hippocampi of taxi drivers, PNAS. https://doi.org/10.1073/pnas.070039597",
+  "Erickson et al. (2011), Exercise training increases size of hippocampus and improves memory, PNAS. https://doi.org/10.1073/pnas.1015950108",
+  "Xie et al. (2013), Sleep drives metabolite clearance from the adult brain, Science. https://doi.org/10.1126/science.1241224",
+  "Simons et al. (2016), Do 'brain-training' programs work?, Psychological Science in the Public Interest. https://doi.org/10.1177/1529100616661983",
+  "Epilepsy Foundation / WHO: Epilepsy fact sheet. https://www.who.int/news-room/fact-sheets/detail/epilepsy",
+  "Raichle et al. (2001), A default mode of brain function, PNAS. https://doi.org/10.1073/pnas.98.2.676",
+  "Draganski et al. (2004), Changes in grey matter induced by training, Nature. https://doi.org/10.1038/427311a"
+ ],
+ "scenes": [
+  {
+   "id": 1,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Right now, as you watch this, you are using about ten percent of your brain. At least, that is what you have probably been told.",
+   "image_prompt": "a young person sitting on a sofa at night watching a glowing screen, a transparent glowing brain visible inside their head with only a small part lit up"
+  },
+  {
+   "id": 2,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Movies love this idea. Take a pill, flip a hidden switch, and suddenly you learn languages in an hour, read minds, and bend the world around you.",
+   "image_prompt": "a hero swallowing a glowing blue pill, energy aura exploding around them, floating books and letters swirling in the air"
+  },
+  {
+   "id": 3,
+   "chapter": "Hook",
+   "kind": "number",
+   "onscreen": "90% unused?",
+   "narration": "So here is the question. If ninety percent of your brain is just sitting there, asleep, what would happen if you woke all of it up?",
+   "image_prompt": "a huge dark brain shaped like a sleeping city at night, only a few windows lit, the rest in shadow"
+  },
+  {
+   "id": 4,
+   "chapter": "Hook",
+   "kind": "title",
+   "onscreen": "What If You Used 100% of Your Brain?",
+   "narration": "What would you become, if you used one hundred percent of your brain?",
+   "image_prompt": "a glowing brain floating in a starry deep blue space, rays of light bursting from it, epic title card composition"
+  },
+  {
+   "id": 5,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": "Simplified, but sourced",
+   "narration": "Quick warning before we start. Your brain is the most complicated object we know of, so we will simplify a lot. But everything you hear is backed by research, and the sources are in the description.",
+   "image_prompt": "a friendly scientist character holding a stack of research papers and a magnifying glass, cozy library background"
+  },
+  {
+   "id": 6,
+   "chapter": "Where the myth came from",
+   "kind": "chapter",
+   "onscreen": "1. Where the myth came from",
+   "narration": "First, where does the ten percent idea even come from? Funnily enough, nobody knows for sure.",
+   "image_prompt": "an old dusty book opening with a question mark made of light rising out of it"
+  },
+  {
+   "id": 7,
+   "chapter": "Where the myth came from",
+   "kind": "image",
+   "onscreen": "William James, 1907",
+   "narration": "One likely root is the psychologist William James. Around nineteen hundred and seven, he wrote that people use only a small part of their possible mental resources. He meant potential, not brain tissue.",
+   "image_prompt": "a bearded early 1900s professor writing at a wooden desk by candlelight, papers everywhere, sepia tones mixed with blue"
+  },
+  {
+   "id": 8,
+   "chapter": "Where the myth came from",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Then self-help writers did what self-help writers do. They took a vague, hopeful sentence, and gave it a precise number. Ten percent sounds scientific. It sounds like something you could fix.",
+   "image_prompt": "a salesman on a stage pointing at a giant 10% sign, an audience looking amazed, spotlights"
+  },
+  {
+   "id": 9,
+   "chapter": "Where the myth came from",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "And it stuck, because it is a beautiful thought. It tells you that the best version of you is already in there, just waiting for the right key.",
+   "image_prompt": "a person standing in front of a giant locked door shaped like a brain, holding a tiny golden key, warm light leaking through the cracks"
+  },
+  {
+   "id": 10,
+   "chapter": "Where the myth came from",
+   "kind": "image",
+   "onscreen": "Myth",
+   "narration": "Unfortunately, it is also completely wrong. And the reason why is far more interesting than the myth.",
+   "image_prompt": "a giant 10% sign cracking and shattering into glowing pieces"
+  },
+  {
+   "id": 11,
+   "chapter": "You already use all of it",
+   "kind": "chapter",
+   "onscreen": "2. You already use all of it",
+   "narration": "Let us look at the evidence, starting with the most basic one: energy.",
+   "image_prompt": "a brain connected to a glowing battery and power cables, energy meters on the side"
+  },
+  {
+   "id": 12,
+   "chapter": "You already use all of it",
+   "kind": "number",
+   "onscreen": "2% of your weight",
+   "narration": "Your brain makes up only about two percent of your body weight. Roughly the weight of a large bag of sugar.",
+   "image_prompt": "a cartoon human silhouette standing next to a balance scale with a brain on one side and a bag of sugar on the other"
+  },
+  {
+   "id": 13,
+   "chapter": "You already use all of it",
+   "kind": "number",
+   "onscreen": "20% of your energy",
+   "narration": "Yet at rest, it burns about twenty percent of your energy. Every fifth calorie you eat ends up powering the thing between your ears.",
+   "image_prompt": "a plate of food with glowing energy streams flowing upward into a brain, one in five food items glowing gold"
+  },
+  {
+   "id": 14,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Now think like evolution. For millions of years, food was scarce. A body that fed a huge organ that was ninety percent useless would have starved next to one that did not.",
+   "image_prompt": "prehistoric humans on a dry savanna searching for food at sunset, thin and tired, dramatic sky"
+  },
+  {
+   "id": 15,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Nature does not keep expensive machines it does not use. If most of your brain were idle, it would have shrunk long ago.",
+   "image_prompt": "a giant rusty unused machine being taken apart and recycled by tiny worker robots, symbolic"
+  },
+  {
+   "id": 16,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": "Brain scans",
+   "narration": "Second piece of evidence: brain scans. Machines like fMRI and PET show which areas are busy. Over the course of a normal day, there is no dark, silent ninety percent. Every region lights up for something.",
+   "image_prompt": "a person lying in an MRI scanner, a big screen beside it showing a colourful brain scan with many glowing regions"
+  },
+  {
+   "id": 17,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Watching this video uses your visual cortex. Understanding my words uses your language areas. Sitting upright, breathing, keeping your heart beating, all of that is your brain too.",
+   "image_prompt": "cutaway illustration of a person watching a video, glowing labelled zones in their brain for vision, language, balance and breathing"
+  },
+  {
+   "id": 18,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": "Even at rest",
+   "narration": "Even when you do nothing at all, your brain does not switch off. Daydreaming, remembering, planning your evening, all of that runs on a busy network that becomes more active when you stop focusing on the outside world.",
+   "image_prompt": "a person lying on grass looking at clouds, thought bubbles with memories and plans floating above, a softly glowing brain"
+  },
+  {
+   "id": 19,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "In fact, the energy your brain uses barely drops when you start a hard task. Most of its budget goes into simply staying ready.",
+   "image_prompt": "a brain on a sofa with a power meter that barely moves between relaxing and solving a hard maths problem, humorous"
+  },
+  {
+   "id": 20,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": "No spare parts",
+   "narration": "Third: injuries. If ninety percent of your brain were spare, most strokes and head injuries would be harmless. They are not. Damage to almost any area, even a tiny one, changes something about how a person moves, speaks, feels or remembers.",
+   "image_prompt": "a doctor kindly showing a patient a brain diagram on a tablet, a small red spot highlighted, hospital room"
+  },
+  {
+   "id": 21,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "There is no spare tank. No hidden storage room. Your brain is less like a house with one lit room, and more like a city where every district has a job.",
+   "image_prompt": "a glowing city shaped like a brain at night, different districts in different colours, roads of light connecting them"
+  },
+  {
+   "id": 22,
+   "chapter": "You already use all of it",
+   "kind": "number",
+   "onscreen": "86 billion neurons",
+   "narration": "And it is a big city. Around eighty six billion neurons, plus a similar number of support cells called glia. Each neuron can connect to thousands of others.",
+   "image_prompt": "a vast network of glowing neurons stretching to the horizon like city lights, tiny sparks travelling between them"
+  },
+  {
+   "id": 23,
+   "chapter": "You already use all of it",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "So, myth busted. You use all of your brain. But that does not quite answer our question. You use all of it, but not all at the same time.",
+   "image_prompt": "the brain city at night with lights flickering on and off in different districts, like a living pattern"
+  },
+  {
+   "id": 24,
+   "chapter": "The 100% thought experiment",
+   "kind": "chapter",
+   "onscreen": "3. Switching everything on",
+   "narration": "So let us run the thought experiment properly. What if every single neuron in your brain fired at once?",
+   "image_prompt": "a giant master power switch labelled 100% on a control panel, a hand reaching for it, dramatic lighting"
+  },
+  {
+   "id": 25,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": "~1% active",
+   "narration": "Here is the surprising part. At any given moment, only a small fraction of your neurons are strongly active. One estimate says that in the cortex, the energy budget allows only around one percent to fire hard at the same time.",
+   "image_prompt": "a dark field of neurons where only a few scattered points shine brightly, like a few stars in a night sky"
+  },
+  {
+   "id": 26,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "That sounds like waste, but it is the opposite. Information lives in patterns. Which neurons fire, and which stay quiet, is the message.",
+   "image_prompt": "a piano keyboard made of neurons, only certain keys lit up forming a melody of light"
+  },
+  {
+   "id": 27,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Think of a piano. A song is a few keys at a time, in the right order. Now slam your arms down on every key at once. You do not get a better song. You get noise.",
+   "image_prompt": "a cartoon character slamming both arms onto every piano key at once, sound waves exploding chaotically, comic expression"
+  },
+  {
+   "id": 28,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Back in our city: imagine every light, every engine, every alarm and every speaker switching on at the same second. The power grid would not make the city smarter. It would collapse.",
+   "image_prompt": "the brain city overloaded, every window blazing white, power lines sparking, a huge blackout wave spreading"
+  },
+  {
+   "id": 29,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": "A seizure",
+   "narration": "And we actually know what something close to this looks like in a real brain. When huge groups of neurons start firing together, in sync and out of control, that is a seizure.",
+   "image_prompt": "abstract visualisation of electrical waves spreading across a brain in synchronized bright pulses, purple and white"
+  },
+  {
+   "id": 30,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "In a generalised seizure, both halves of the brain get swept up at once. A person usually loses consciousness. Their muscles may stiffen and jerk. Afterwards, they are often exhausted and confused.",
+   "image_prompt": "a calm, respectful scene of a person lying on their side on a soft carpet in the recovery position, a friend kneeling beside them with a phone, soft light"
+  },
+  {
+   "id": 31,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": "50 million people",
+   "narration": "Around fifty million people worldwide live with epilepsy. For them, this is not a superpower fantasy. It is a medical condition, and for most of them it can be well controlled with treatment.",
+   "image_prompt": "a diverse group of smiling people of all ages in a park, living normal lives, warm afternoon light"
+  },
+  {
+   "id": 32,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": "Brakes matter",
+   "narration": "So your brain is not holding back power out of laziness. A big part of its wiring exists to calm things down. Special inhibitory neurons act like brakes, keeping activity balanced.",
+   "image_prompt": "a racing car with glowing neuron patterns on it, its brakes glowing blue as it takes a sharp corner safely"
+  },
+  {
+   "id": 33,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "A fast car is not the one with no brakes. It is the one with brakes good enough to let it go fast safely.",
+   "image_prompt": "a sleek car speeding along a mountain road at night, headlights cutting through fog, cinematic"
+  },
+  {
+   "id": 34,
+   "chapter": "The 100% thought experiment",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "That is the real answer to our question. If you used one hundred percent of your brain at the same time, you would not become a genius. You would, very briefly, become nobody at all.",
+   "image_prompt": "a silhouette of a person dissolving into white light and static, then reforming, symbolic and calm"
+  },
+  {
+   "id": 35,
+   "chapter": "The real upgrade",
+   "kind": "chapter",
+   "onscreen": "4. The real upgrade",
+   "narration": "But do not be disappointed yet. Because the true story hides something better than a secret switch.",
+   "image_prompt": "a sunrise over the brain city, golden light spreading across the districts"
+  },
+  {
+   "id": 36,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "Neuroplasticity",
+   "narration": "Your brain is not finished. It rewires itself every day. Scientists call this neuroplasticity. Connections that you use get stronger. Connections you ignore slowly fade.",
+   "image_prompt": "glowing neuron branches growing new connections like vines, some old faint branches fading away"
+  },
+  {
+   "id": 37,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "London taxi drivers",
+   "narration": "Take London taxi drivers. To get their licence, they memorise tens of thousands of streets. Brain scans found that a part of the hippocampus involved in navigation was larger in experienced drivers.",
+   "image_prompt": "a classic black London taxi driving through a maze of glowing streets shaped like a brain, Big Ben in the distance"
+  },
+  {
+   "id": 38,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "They did not unlock a hidden ten percent. They trained the brain they already had, the slow way, with thousands of hours of practice.",
+   "image_prompt": "a tired but proud taxi driver studying a giant map at a kitchen table late at night, cups of tea around"
+  },
+  {
+   "id": 39,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "Juggling",
+   "narration": "You do not need to be a taxi driver. In another study, people who spent three months learning to juggle showed measurable changes in brain areas that track moving objects. When they stopped practising, much of that change faded again.",
+   "image_prompt": "a cheerful beginner juggling three colourful balls in a living room, motion trails glowing, one ball about to drop"
+  },
+  {
+   "id": 40,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "Sleep",
+   "narration": "Then there is sleep. While you sleep, your brain replays and strengthens what you learned during the day. And fluid flows through brain tissue and helps wash away waste that builds up while you are awake.",
+   "image_prompt": "a person sleeping peacefully in bed, a translucent brain above them with gentle blue streams of water flowing through it"
+  },
+  {
+   "id": 41,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Skip sleep, and your attention, memory and mood all get worse. No pill from a movie will make up for that.",
+   "image_prompt": "a yawning person at a desk at 3am surrounded by coffee cups, screen glowing, eyes heavy"
+  },
+  {
+   "id": 42,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "Exercise",
+   "narration": "Exercise helps too. In one study, older adults who walked briskly for a year saw their hippocampus grow by about two percent, instead of shrinking with age as usual.",
+   "image_prompt": "a group of older adults happily walking briskly through an autumn park, leaves falling"
+  },
+  {
+   "id": 43,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "Brain games?",
+   "narration": "And what about brain training apps? Here, honesty matters. You mostly get better at the game itself. The evidence that it makes you smarter in everyday life is weak.",
+   "image_prompt": "a person tapping a colourful puzzle game on a phone, a small trophy appearing, but a question mark floating above their head"
+  },
+  {
+   "id": 44,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "What does work is boring, and that is the good news. Sleep well. Move your body. Learn hard things. Talk to people. None of it is a shortcut, but all of it is real.",
+   "image_prompt": "four small panels in one image: sleeping, jogging, reading a book, laughing with friends, warm colours"
+  },
+  {
+   "id": 45,
+   "chapter": "The real upgrade",
+   "kind": "image",
+   "onscreen": "Limits",
+   "narration": "And to be fair, there are limits. Genes, health, age and luck all play a role. Nobody becomes a different person in a weekend. But almost everyone can move the needle a little, and a little, kept up for years, adds up.",
+   "image_prompt": "a small plant growing over many seasons into a big tree, time-lapse style in one image"
+  },
+  {
+   "id": 46,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "So, what happens if you use one hundred percent of your brain? You already do. Just not all at once, and that is exactly what makes you you.",
+   "image_prompt": "the young person from the beginning on the sofa, now their whole brain glowing softly in many colours, calm smile"
+  },
+  {
+   "id": 47,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "The ten percent myth promises a hidden version of you, locked away. The truth is kinder. The best version of you is not hidden. It is built, one connection at a time.",
+   "image_prompt": "a person building a glowing staircase out of neuron-shaped bricks, climbing it towards a bright horizon"
+  },
+  {
+   "id": 48,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "And here is a strange thought to end on. Right now, billions of neurons are working together, just so you can understand this sentence.",
+   "image_prompt": "extreme close-up of neurons firing in a beautiful pattern that forms the shape of a speech bubble"
+  },
+  {
+   "id": 49,
+   "chapter": "Ending",
+   "kind": "title",
+   "onscreen": "Your brain is already incredible",
+   "narration": "If you enjoyed this, subscribe and share it with someone who still believes the ten percent myth. Your brain, all of it, is already incredible.",
+   "image_prompt": "the glowing brain city at dawn seen from above, peaceful and bright, end card composition with empty space"
+  }
+ ],
+ "shorts": [
+  {
+   "title": "You don't use 10% of your brain #shorts",
+   "scene_ids": [
+    1,
+    12,
+    13,
+    14,
+    15
+   ]
+  },
+  {
+   "title": "What if ALL your neurons fired at once? #shorts",
+   "scene_ids": [
+    24,
+    27,
+    28,
+    29
+   ]
+  },
+  {
+   "title": "How London taxi drivers grew their brains #shorts",
+   "scene_ids": [
+    36,
+    37,
+    38,
+    39
+   ]
+  },
+  {
+   "title": "The real way to upgrade your brain #shorts",
+   "scene_ids": [
+    40,
+    42,
+    43,
+    44
+   ]
+  }
+ ]
+}

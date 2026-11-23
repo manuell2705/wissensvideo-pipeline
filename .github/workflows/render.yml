@@ -1,0 +1,56 @@
+name: Render video
+on:
+  workflow_dispatch:
+    inputs:
+      job_id:       { description: 'Folder in jobs/ with script.json', required: true }
+      callback_url: { description: 'n8n webhook to call when done (optional)', required: false, default: '' }
+      voice:        { description: 'Kokoro voice', required: false, default: 'bm_george' }
+      speed:        { description: 'Voice speed', required: false, default: '1.0' }
+      only:         { description: 'all | long | shorts', required: false, default: 'all' }
+permissions:
+  contents: write
+concurrency: { group: render-${{ inputs.job_id }}, cancel-in-progress: false }
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11', cache: 'pip', cache-dependency-path: render/requirements.txt }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: System packages + font
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+          mkdir -p ~/.fonts && curl -sL -o ~/.fonts/Fredoka.ttf "https://github.com/google/fonts/raw/main/ofl/fredoka/Fredoka%5Bwdth,wght%5D.ttf" && fc-cache -f
+      - name: Python packages
+        run: |
+          pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -q -r render/requirements.txt
+      - uses: actions/cache@v4
+        with: { path: ~/.cache/huggingface, key: hf-kokoro-v1 }
+      - name: Node packages
+        run: npm install --no-audit --no-fund && npx playwright install --with-deps chromium
+      - name: Render
+        env:
+          VOICE: ${{ inputs.voice }}
+          SPEED: ${{ inputs.speed }}
+          ONLY: ${{ inputs.only }}
+          NODE_PATH: ${{ github.workspace }}/node_modules
+          WORKERS: '4'
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          POLLINATIONS_TOKEN: ${{ secrets.POLLINATIONS_TOKEN }}
+        run: python render/make_video.py --script jobs/${{ inputs.job_id }}/script.json --out out
+      - name: Publish as release
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          TAG="video-${{ inputs.job_id }}-${{ github.run_number }}"
+          gh release create "$TAG" out/*.mp4 out/metadata.json --title "$TAG" --notes "Rendered by run ${{ github.run_id }}"
+          echo "TAG=$TAG" >> $GITHUB_ENV
+      - name: Tell n8n
+        if: ${{ always() && inputs.callback_url != '' }}
+        run: |
+          curl -s -X POST -H 'Content-Type: application/json' "${{ inputs.callback_url }}" \
+            -d "{\"job_id\":\"${{ inputs.job_id }}\",\"status\":\"${{ job.status }}\",\"tag\":\"${TAG:-}\",\"repo\":\"${{ github.repository }}\",\"run_id\":\"${{ github.run_id }}\"}"

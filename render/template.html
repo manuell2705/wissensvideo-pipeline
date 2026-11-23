@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --night: #0b1033; --deep: #151d5c; --teal: #2ee6c9; --amber: #ffb547; --coral: #ff6b6b; --ink: #f4f1ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--night); }
+  body { font-family: 'Fredoka', 'Nunito', 'DejaVu Sans', sans-serif; color: var(--ink); }
+  #stage { position: absolute; inset: 0; overflow: hidden; }
+  .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+  .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; will-change: transform; }
+  .bg.placeholder { background: radial-gradient(circle at 30% 30%, #3b4bd8, #151d5c 55%, #0b1033); }
+  .shade { position: absolute; inset: 0; background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(5,8,30,.55) 100%),
+      linear-gradient(to top, rgba(5,8,30,.55), rgba(5,8,30,0) 40%); }
+  .dark { position: absolute; inset: 0; background: rgba(8,11,40,.55); opacity: 0; }
+  .particles { position: absolute; inset: 0; pointer-events: none; }
+  .p { position: absolute; border-radius: 50%; background: rgba(255,255,255,.85); box-shadow: 0 0 12px 3px rgba(120,220,255,.6); }
+  .title { position: absolute; left: 8%; right: 8%; top: 50%; transform: translateY(-50%); text-align: center;
+     font-weight: 700; font-size: calc(var(--u) * 7.2); line-height: 1.1; text-shadow: 0 0 30px rgba(46,230,201,.55), 0 6px 0 rgba(0,0,0,.35); }
+  .title .ch { display: inline-block; }
+  .chapter { position: absolute; left: 7%; top: 50%; transform: translateY(-50%); }
+  .chapter .bar { height: calc(var(--u) * .9); width: calc(var(--u) * 18); background: var(--amber); border-radius: 99px; transform-origin: left; }
+  .chapter .txt { margin-top: calc(var(--u) * 2); font-weight: 700; font-size: calc(var(--u) * 6.4); line-height: 1.1; text-shadow: 0 6px 0 rgba(0,0,0,.35); max-width: 86vw; }
+  .num { position: absolute; left: 6%; right: 6%; top: 50%; transform: translateY(-50%); text-align: center; font-weight: 700;
+     font-size: calc(var(--u) * 9); color: var(--amber); text-shadow: 0 0 40px rgba(255,181,71,.6), 0 7px 0 rgba(0,0,0,.4); line-height: 1.05; }
+  .label { position: absolute; left: 5%; bottom: 8%; padding: calc(var(--u) * .9) calc(var(--u) * 2.4); border-radius: 99px;
+     background: rgba(11,16,51,.78); border: 3px solid var(--teal); font-weight: 600; font-size: calc(var(--u) * 3.1); box-shadow: 0 0 24px rgba(46,230,201,.45); }
+  .portrait .label { left: 50%; bottom: auto; top: 14%; transform: translateX(-50%); white-space: nowrap; font-size: calc(var(--u) * 5); }
+  .cap { position: absolute; left: 6%; right: 6%; bottom: 20%; text-align: center; font-weight: 700; font-size: calc(var(--u) * 7.4);
+     line-height: 1.15; text-shadow: 0 0 6px #000, 0 6px 0 rgba(0,0,0,.6); -webkit-text-stroke: 3px rgba(0,0,0,.7); paint-order: stroke fill; }
+  .cap .w { display: inline-block; margin: 0 .12em; opacity: 0; }
+  .cap .w.hot { color: var(--amber); }
+  .brand { position: absolute; right: 3%; top: 4%; font-weight: 700; font-size: calc(var(--u) * 2.2); opacity: .55; letter-spacing: .05em; }
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<script src="vendor/gsap.min.js"></script>
+<script src="data.js"></script>
+<script>
+// Our motion rules (from the GSAP + LottieFiles motion-design guidance):
+// - something always moves (Ken Burns + particles), ease out on entrances, ease in on exits,
+// - stagger text, overshoot only on small "pop" elements, transitions 0.5-0.8 s.
+const V = window.VIDEO;
+const W = V.width, H = V.height;
+document.documentElement.style.setProperty('--w', W + 'px');
+document.documentElement.style.setProperty('--h', H + 'px');
+document.documentElement.style.setProperty('--u', (Math.min(W, H) / 100) + 'px');
+if (H > W) document.body.classList.add('portrait');
+const stage = document.getElementById('stage');
+const tl = gsap.timeline({ paused: true });
+// deterministic random
+let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const XF = 0.6; // crossfade seconds
+
+V.scenes.forEach((s, i) => {
+  const el = document.createElement('div'); el.className = 'scene'; stage.appendChild(el);
+  const bg = document.createElement('div'); bg.className = 'bg' + (s.img ? '' : ' placeholder');
+  if (s.img) bg.style.backgroundImage = `url("${s.img}")`;
+  el.appendChild(bg);
+  el.insertAdjacentHTML('beforeend', '<div class="shade"></div><div class="dark"></div><div class="particles"></div>');
+  const dark = el.querySelector('.dark');
+  const t0 = s.start, d = s.dur;
+  // scene in/out
+  tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: i === 0 ? 0.01 : XF, ease: 'power1.inOut' }, Math.max(0, t0 - (i === 0 ? 0 : XF / 2)));
+  tl.set(el, { opacity: 0 }, t0 + d + XF / 2 + 0.05);
+  // camera: Ken Burns, alternate direction; long scenes get a second move
+  const dir = i % 4;
+  const fromS = [1.0, 1.12, 1.04, 1.1][dir], toS = [1.12, 1.0, 1.14, 1.02][dir];
+  const fx = [-2, 2, 0, -1.5][dir], tx = [2, -2, 0, 1.5][dir];
+  const fy = [0, 0, -2, 1.5][dir], ty = [0, 0, 2, -1.5][dir];
+  if (d > 9 && !s.kind.match(/title|chapter/)) {
+    const mid = t0 + d * 0.5;
+    tl.fromTo(bg, { scale: fromS, xPercent: fx, yPercent: fy }, { scale: (fromS + toS) / 2 + 0.03, xPercent: 0, yPercent: 0, duration: mid - t0 + XF, ease: 'sine.inOut' }, t0 - XF / 2);
+    tl.to(bg, { scale: toS + 0.06, xPercent: tx * 1.4, yPercent: ty * 1.4, duration: d / 2 + XF, ease: 'sine.inOut' }, mid + XF / 2);
+  } else {
+    tl.fromTo(bg, { scale: fromS, xPercent: fx, yPercent: fy }, { scale: toS, xPercent: tx, yPercent: ty, duration: d + XF, ease: 'sine.inOut' }, t0 - XF / 2);
+  }
+  // particles: slow floating dust
+  const pc = el.querySelector('.particles');
+  for (let k = 0; k < 18; k++) {
+    const p = document.createElement('div'); p.className = 'p';
+    const sz = 2 + rnd() * 5; p.style.width = p.style.height = sz + 'px';
+    p.style.left = (rnd() * 100) + '%'; p.style.top = (rnd() * 100) + '%'; pc.appendChild(p);
+    tl.fromTo(p, { y: 0, x: 0, opacity: 0 }, { y: -(40 + rnd() * 120), x: (rnd() - .5) * 60, opacity: 0.25 + rnd() * 0.6, duration: d + XF, ease: 'none' }, t0 - XF / 2);
+  }
+  // overlays per kind
+  if (s.kind === 'title' && s.onscreen) {
+    tl.to(dark, { opacity: 1, duration: 0.8 }, t0);
+    const t = document.createElement('div'); t.className = 'title';
+    t.innerHTML = s.onscreen.split(' ').map(w => `<span class="ch">${w}</span>`).join(' ');
+    el.appendChild(t);
+    tl.from(t.querySelectorAll('.ch'), { y: 60, opacity: 0, scale: 0.8, duration: 0.7, stagger: 0.09, ease: 'back.out(1.7)' }, t0 + 0.3);
+    tl.to(t, { scale: 1.04, duration: d, ease: 'sine.inOut' }, t0 + 0.3);
+    tl.to(t, { opacity: 0, y: -30, duration: 0.5, ease: 'power2.in' }, t0 + d - 0.4);
+  } else if (s.kind === 'chapter' && s.onscreen) {
+    tl.to(dark, { opacity: 1, duration: 0.6 }, t0);
+    tl.to(dark, { opacity: 0, duration: 0.8 }, t0 + Math.min(3.2, d - 0.8));
+    const c = document.createElement('div'); c.className = 'chapter';
+    c.innerHTML = `<div class="bar"></div><div class="txt">${s.onscreen}</div>`; el.appendChild(c);
+    tl.from(c.querySelector('.bar'), { scaleX: 0, duration: 0.6, ease: 'power3.out' }, t0 + 0.2);
+    tl.from(c.querySelector('.txt'), { x: -80, opacity: 0, duration: 0.7, ease: 'power3.out' }, t0 + 0.4);
+    tl.to(c, { x: 60, opacity: 0, duration: 0.5, ease: 'power2.in' }, t0 + Math.min(3.2, d - 0.8));
+  } else if (s.kind === 'number' && s.onscreen) {
+    tl.to(dark, { opacity: 0.8, duration: 0.5 }, t0 + 0.2);
+    const n = document.createElement('div'); n.className = 'num'; n.textContent = s.onscreen; el.appendChild(n);
+    tl.from(n, { scale: 0.3, opacity: 0, duration: 0.8, ease: 'back.out(2)' }, t0 + 0.4);
+    tl.to(n, { y: '-=14', duration: 1.6, yoyo: true, repeat: Math.max(0, Math.floor(d / 1.6) - 2), ease: 'sine.inOut' }, t0 + 1.2);
+    tl.to(n, { opacity: 0, scale: 1.15, duration: 0.45, ease: 'power2.in' }, t0 + d - 0.5);
+  } else if (s.onscreen && !V.captions) {
+    const l = document.createElement('div'); l.className = 'label'; l.textContent = s.onscreen; el.appendChild(l);
+    tl.from(l, { y: 40, opacity: 0, duration: 0.6, ease: 'power3.out' }, t0 + 0.5);
+    tl.to(l, { opacity: 0, y: 20, duration: 0.4, ease: 'power2.in' }, t0 + Math.min(d - 0.4, 5.5));
+  } else if (s.onscreen && V.captions) {
+    const l = document.createElement('div'); l.className = 'label'; l.textContent = s.onscreen; el.appendChild(l);
+    tl.from(l, { scale: 0.6, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, t0 + 0.2);
+  }
+});
+
+// Shorts: word-by-word captions, 3 words per line group
+if (V.captions) {
+  const cap = document.createElement('div'); cap.className = 'cap'; stage.appendChild(cap);
+  const words = V.captions; const G = 3;
+  for (let g = 0; g < words.length; g += G) {
+    const grp = words.slice(g, g + G);
+    const box = document.createElement('div'); box.style.position = 'absolute'; box.style.left = 0; box.style.right = 0; box.style.bottom = 0;
+    box.innerHTML = grp.map(w => `<span class="w${/\d|%/.test(w.w) || w.w.length > 7 ? ' hot' : ''}">${w.w}</span>`).join(' ');
+    cap.appendChild(box);
+    const spans = box.querySelectorAll('.w');
+    grp.forEach((w, k) => tl.fromTo(spans[k], { opacity: 0, y: 25, scale: 0.85 }, { opacity: 1, y: 0, scale: 1, duration: 0.18, ease: 'back.out(2)' }, w.s));
+    const end = (words[g + G] ? words[g + G].s : grp[grp.length - 1].e + 0.4);
+    tl.set(box, { opacity: 0 }, end);
+  }
+}
+if (V.brand) { const b = document.createElement('div'); b.className = 'brand'; b.textContent = V.brand; stage.appendChild(b); }
+tl.set({}, {}, V.total);
+window.seekTo = (t) => { tl.seek(t, false); return true; };
+window.READY = true;
+</script>
+</body>
+</html>

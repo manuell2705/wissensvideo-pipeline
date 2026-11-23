@@ -9,7 +9,9 @@ on:
       only:         { description: 'all | long | shorts', required: false, default: 'all' }
 permissions:
   contents: write
-concurrency: { group: render-${{ inputs.job_id }}, cancel-in-progress: false }
+concurrency:
+  group: render-${{ inputs.job_id }}
+  cancel-in-progress: false
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -44,7 +46,8 @@ jobs:
           POLLINATIONS_TOKEN: ${{ secrets.POLLINATIONS_TOKEN }}
         run: python render/make_video.py --script jobs/${{ inputs.job_id }}/script.json --out out
       - name: Publish as release
-        env: { GH_TOKEN: '${{ github.token }}' }
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           TAG="video-${{ inputs.job_id }}-${{ github.run_number }}"
           gh release create "$TAG" out/*.mp4 out/metadata.json --title "$TAG" --notes "Rendered by run ${{ github.run_id }}"

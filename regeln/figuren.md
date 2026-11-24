@@ -29,3 +29,4 @@ Crops: Kai = left 62 %, Mira = right 62 %, full sheet when both appear.
 - Motion stays simple: breathing, a small turn of the head, camera moves. No AI morph clips.
 - The world stands still and calm. The presentation (graphics, zooms, GTA switch) carries the movement.
 - Style: 2D anime TV series, clean line art, cel shading; night blue / teal / leaf green / amber; about 40 % Frutiger Aero (glass, glow, water).
+- The video is about the VIEWER ("you") and the topic, not about the characters. Kai, Mira and Orbi are recurring side figures, used only where they help explain something (for example as "you" in a scene). Most scenes show the topic itself: brain, AI, cities, diagrams.

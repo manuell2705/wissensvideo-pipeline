@@ -14,6 +14,10 @@ case "${TVER%.*}" in 2.4) V=0.19;; 2.5) V=0.20;; 2.6) V=0.21;; 2.7) V=0.22;; 2.8
 python -c "import torch, torchvision, transformers; print('torch', torch.__version__, 'tv', torchvision.__version__, 'tf', transformers.__version__, torch.cuda.is_available())"
 export DEVICE=cuda HF_HUB_ENABLE_HF_TRANSFER=1
 mkdir -p /w/gpu_out
+# idle watchdog: once the GPU has worked, 12 minutes in a row at 0 % means the task hangs -> stop (trap deletes the pod)
+( seen=0; idle=0; while sleep 60; do u=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits | head -1 | tr -d ' ');
+  [ "${u:-0}" -gt 10 ] && seen=1 && idle=0; [ "$seen" = 1 ] && [ "${u:-0}" -eq 0 ] && idle=$((idle+1));
+  if [ "$idle" -ge 12 ]; then echo "IDLE WATCHDOG: GPU idle 12 min, stopping" | tee -a /w/gpu_out/log.txt; pkill -f "bash -c $TASK_CMD" ; pkill -f python; break; fi; done ) &
 timeout -k 30 "${MAX_MIN:-60}m" bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt   # hard stop: a hung task can never keep a paid pod alive
 echo done > /w/gpu_out/zz_DONE.txt
 python render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out final

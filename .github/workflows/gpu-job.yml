@@ -38,4 +38,10 @@ jobs:
         if: always()
         env: { RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}' }
         run: |
-          [ -n "$POD" ] && curl -s -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" "https://api.runpod.io/v2/pods/$POD"; echo deleted $POD
+          [ -z "$POD" ] && exit 0
+          for i in 1 2 3 4 5; do
+            c=$(curl -s -o /dev/null -w '%{http_code}' -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" "https://api.runpod.io/v2/pods/$POD"); echo "delete $POD -> $c"
+            g=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $RUNPOD_API_KEY" "https://api.runpod.io/v2/pods/$POD"); echo "check -> $g"
+            [ "$g" = "404" ] && echo "pod gone" && exit 0; sleep 10
+          done
+          echo "::error::pod $POD may still exist"; exit 1

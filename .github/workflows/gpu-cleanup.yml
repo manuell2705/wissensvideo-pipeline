@@ -1,13 +1,24 @@
 name: GPU cleanup (delete all mindsphere pods)
 on:
+  schedule:
+    - cron: '*/15 * * * *'   # safety net: no paid pod may outlive its job
   workflow_dispatch:
     inputs:
       keep: { description: 'pod id to keep (optional)', required: false, default: '' }
 jobs:
   clean:
     runs-on: ubuntu-latest
+    permissions: { actions: read }
     steps:
+      - name: Any GPU job running?
+        id: busy
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          n=$(gh api "repos/${{ github.repository }}/actions/workflows/gpu-job.yml/runs?status=in_progress" --jq '.total_count')
+          q=$(gh api "repos/${{ github.repository }}/actions/workflows/gpu-job.yml/runs?status=queued" --jq '.total_count')
+          echo "running=$n queued=$q"; echo "busy=$((n+q))" >> $GITHUB_OUTPUT
       - name: List and delete
+        if: steps.busy.outputs.busy == '0' || github.event_name == 'workflow_dispatch'
         env: { RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}', KEEP: '${{ inputs.keep }}' }
         run: |
           python3 - <<'PY'

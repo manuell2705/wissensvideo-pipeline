@@ -17,7 +17,7 @@ SW, SH = sheet.size
 REFS = {'kai': sheet.crop((0, 0, int(SW * 0.62), SH)), 'mira': sheet.crop((int(SW * 0.38), 0, SW, SH)), None: sheet}
 def ref_for(s):
     # only the characters that are meant to be in the shot, otherwise the edit model adds both
-    if 'ref' in s and s['ref'] is None and 'Orbi' not in s['image_prompt'] and 'Kai' not in s['image_prompt'] and 'Mira' not in s['image_prompt']: return None
+    if not any(n in s['image_prompt'] for n in ('Kai', 'Mira', 'Orbi')): return None   # topic scene: no characters at all
     return REFS.get(s.get('ref'), sheet)
 from diffusers import QwenImageEditPlusPipeline
 ed = QwenImageEditPlusPipeline.from_pretrained("Qwen/Qwen-Image-Edit-2509", torch_dtype=torch.bfloat16).to('cuda')

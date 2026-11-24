@@ -91,5 +91,5 @@ for s in script['scenes']:
 (out / 'narration_report.json').write_text(json.dumps(report, indent=1))
 # one listening file for the user
 lst = out / '_list.txt'; lst.write_text(''.join(f"file 'scene_{s['id']:03d}.wav'\n" for s in script['scenes']))
-subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', str(lst), '-af', 'apad=pad_dur=0,loudnorm=I=-16:TP=-1.5', '-b:a', '160k', str(out / 'narration_full.mp3')], check=True)
+subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', str(lst), '-af', 'loudnorm=I=-16:TP=-1.5', '-b:a', '160k', str(out / 'narration_full.mp3')], check=True)
 for f in out.glob('_*'): f.unlink()

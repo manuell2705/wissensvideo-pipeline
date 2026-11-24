@@ -22,6 +22,7 @@ jobs:
           TASK_CMD: ${{ inputs.task_cmd }}
           GPU: ${{ inputs.gpu }}
           PIP_PKGS: ${{ inputs.pip_pkgs }}
+          MAX_MIN: ${{ inputs.max_minutes }}
         run: |
           TAG="gpu-${{ github.run_id }}"; echo "TAG=$TAG" >> $GITHUB_ENV
           python3 render/gpu/start_pod.py

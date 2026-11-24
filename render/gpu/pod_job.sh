@@ -14,6 +14,6 @@ case "${TVER%.*}" in 2.4) V=0.19;; 2.5) V=0.20;; 2.6) V=0.21;; 2.7) V=0.22;; 2.8
 python -c "import torch, torchvision, transformers; print('torch', torch.__version__, 'tv', torchvision.__version__, 'tf', transformers.__version__, torch.cuda.is_available())"
 export DEVICE=cuda HF_HUB_ENABLE_HF_TRANSFER=1
 mkdir -p /w/gpu_out
-bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt
+timeout -k 30 "${MAX_MIN:-60}m" bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt   # hard stop: a hung task can never keep a paid pod alive
 echo done > /w/gpu_out/zz_DONE.txt
 python render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out final

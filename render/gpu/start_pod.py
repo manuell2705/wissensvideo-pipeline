@@ -17,7 +17,7 @@ for attempt in range(3):
             body = {"name": "mindsphere-gpu", "image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04", "cloud": cloud,
                     "gpu": {"id": g, "count": 1}, "disk": 200 if BIG else 60,
                     "env": {"RUNPOD_API_KEY": KEY, "GH_TOKEN": os.environ["GH_TOKEN"], "REPO": repo, "TASK_CMD": os.environ["TASK_CMD"],
-                            "PIP_PKGS": os.environ["PIP_PKGS"], "RESULT_TAG": "gpu-" + os.environ["GITHUB_RUN_ID"]},
+                            "PIP_PKGS": os.environ["PIP_PKGS"], "RESULT_TAG": "gpu-" + os.environ["GITHUB_RUN_ID"], "MAX_MIN": str(int(os.environ.get("MAX_MIN", "60")) - 3)},
                     "entrypoint": ["bash", "-c"],
                     "cmd": [f"curl -sL https://raw.githubusercontent.com/{repo}/main/render/gpu/pod_job.sh | bash"]}
             code, d = req("POST", "/v2/pods", body)

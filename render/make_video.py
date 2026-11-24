@@ -386,10 +386,20 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
     shutil.copy(HERE / 'template.html', rdir / 'index.html')
     (rdir / 'render.js').write_text(RENDER_JS)
     nf = int(math.ceil(total * fps))
-    per = math.ceil(nf / workers)
+    f0, f1 = 0, nf
+    if os.environ.get('SHARD'):   # split rendering over several machines: SHARD=k/N renders only its slice of frames
+        k_, n_ = (int(x) for x in os.environ['SHARD'].split('/'))
+        f0, f1 = nf * k_ // n_, nf * (k_ + 1) // n_
+    if os.environ.get('SEGS_DIR'):   # all slices already rendered elsewhere: just join them
+        segs = sorted(Path(os.environ['SEGS_DIR']).glob('**/shard_*.mp4'), key=lambda x: int(re.findall(r'\d+', x.stem)[0]))
+        (rdir / 'list.txt').write_text(''.join(f"file '{s.resolve()}'\n" for s in segs))
+        silent = rdir / 'video.mp4'
+        subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', str(rdir / 'list.txt'), '-c', 'copy', str(silent)], check=True)
+        return silent
+    per = math.ceil((f1 - f0) / workers)
     procs, segs = [], []
     for k in range(workers):
-        a, b = k * per, min(nf, (k + 1) * per)
+        a, b = f0 + k * per, min(f1, f0 + (k + 1) * per)
         if a >= b: break
         seg = rdir / f'seg_{k}.mp4'; segs.append(seg)
         procs.append(subprocess.Popen(['node', str(rdir / 'render.js'), str(rdir / 'index.html'), str(seg), str(w), str(h), str(fps), str(a), str(b)]))
@@ -449,6 +459,8 @@ def main():
         wav = build_audio(scenes, out, total, 'long')
         log(f'render long {total:.1f}s')
         vid = render(scenes, total, out, 'long', 1920, 1080, fps, workers=workers)
+        if os.environ.get('SHARD'):
+            shutil.copy(vid, out / f"shard_{int(os.environ['SHARD'].split('/')[0]):02d}.mp4"); log('shard done'); return
         mux(vid, wav, out / 'video.mp4', music)
         write_meta(script, out)
         log('long done')

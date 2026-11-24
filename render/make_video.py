@@ -227,6 +227,26 @@ const { spawn } = require('child_process');
 """
 
 
+def label_times(s):
+    """Info cards appear exactly when their key word is spoken (falls back to an even spread)."""
+    labels = s.get('labels') or []
+    if not labels: return []
+    off = s['start'] + (0.35 if s['kind'] in ('title', 'chapter') else 0)
+    words = s.get('words') or []
+    norm = lambda x: re.sub(r'[^a-z0-9%]', '', x.lower())
+    out, used = [], -1
+    for k, lab in enumerate(labels):
+        keys = [norm(x) for x in lab.split() if len(norm(x)) > 2] or [norm(lab)]
+        t = None
+        for i, w in enumerate(words):
+            if i <= used: continue
+            if any(kw and (norm(w['w']).startswith(kw[:5]) or kw.startswith(norm(w['w'])[:5] or '#')) for kw in keys):
+                t = w['s']; used = i; break
+        if t is None: t = s.get('adur', s['dur']) * (0.25 + 0.6 * k / max(1, len(labels)))
+        out.append({'text': lab, 't': round(off + max(0.3, t - 0.15), 3)})
+    return out
+
+
 def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
     rdir = outdir / f'_render_{name}'
     if rdir.exists(): shutil.rmtree(rdir)
@@ -237,7 +257,7 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
         img = None
         if s.get('img'):
             img = f"img_{s['id']:03d}.jpg"; shutil.copy(s['img'], rdir / img)
-        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'img': img})
+        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'img': img, 'labels': label_times(s)})
     data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND', 'MINDSPHERE')}
     (rdir / 'data.js').write_text('window.VIDEO = ' + json.dumps(data) + ';')
     shutil.copy(HERE / 'template.html', rdir / 'index.html')

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <style>
   :root {
-    --night: #0a2f66; --deep: #1173c4; --sky: #6cc9ff; --teal: #5fe0f0; --leaf: #8fe35a; --amber: #ffb547; --coral: #ff6b6b; --ink: #ffffff; --navy: #123a63;
+    --night: #0b1e3f; --deep: #123d7a; --sky: #7fd3ff; --teal: #3fe0d0; --leaf: #8fe35a; --amber: #ffb547; --ink: #ffffff; --navy: #0d2a52;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--night); }
@@ -12,38 +12,44 @@
   #stage { position: absolute; inset: 0; overflow: hidden; }
   .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
   .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; will-change: transform; }
-  .bg.placeholder { background: radial-gradient(circle at 35% 30%, #e9fbff, #7fd3ff 35%, #2aa6ea 65%, #0c5bb5); }
-  .shade { position: absolute; inset: 0; background:
-      radial-gradient(ellipse at center, rgba(0,0,0,0) 50%, rgba(6,40,95,.3) 100%),
-      linear-gradient(to top, rgba(6,40,95,.35), rgba(6,40,95,0) 35%),
-      radial-gradient(circle at 18% 12%, rgba(255,255,240,.28), rgba(255,255,255,0) 35%); }
-  .dark { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,70,150,.55), rgba(8,40,100,.7)); opacity: 0; }
+  .bg.placeholder { background: radial-gradient(circle at 50% 40%, #1d6f8f, #123d7a 45%, #0b1e3f 80%); }
+  .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(5,15,40,.28) 100%); }
+  .dark { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 55%, rgba(11,30,63,.55), rgba(6,16,36,.82)); opacity: 0; }
   .particles { position: absolute; inset: 0; pointer-events: none; }
-  /* Frutiger Aero: glossy soap bubbles instead of dust */
-  .p { position: absolute; border-radius: 50%; border: 2px solid rgba(255,255,255,.75);
-       background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.03) 55%, rgba(220,250,255,.25) 80%, rgba(255,255,255,.7) 100%);
-       box-shadow: 0 0 10px rgba(160,235,255,.45), inset 0 0 8px rgba(255,255,255,.4); }
-  .p::after { content: ''; position: absolute; left: 18%; top: 14%; width: 34%; height: 20%; border-radius: 50%; background: rgba(255,255,255,.9); transform: rotate(-35deg); }
-  .p.dot { border: 0; background: rgba(255,255,255,.85); box-shadow: 0 0 10px 3px rgba(150,235,255,.6); }
-  .p.dot::after { display: none; }
-  .title { position: absolute; left: 8%; right: 8%; top: 50%; transform: translateY(-50%); text-align: center;
-     font-weight: 700; font-size: calc(var(--u) * 7.2); line-height: 1.1; text-shadow: 0 0 34px rgba(120,220,255,.75), 0 6px 0 rgba(10,50,110,.5); -webkit-text-stroke: 4px var(--navy); paint-order: stroke fill; }
-  .title .ch { display: inline-block; }
-  .chapter { position: absolute; left: 7%; top: 50%; transform: translateY(-50%); }
-  .chapter .bar { height: calc(var(--u) * 1.1); width: calc(var(--u) * 18); background: linear-gradient(180deg, #e8ffd0 0%, #9fe85a 48%, #4fc23a 52%, #2a9a3c 100%); border: 3px solid var(--navy); border-radius: 99px; transform-origin: left; box-shadow: 0 0 22px rgba(160,240,110,.55); }
-  .chapter .txt { margin-top: calc(var(--u) * 2); font-weight: 700; font-size: calc(var(--u) * 6.4); line-height: 1.1; text-shadow: 0 0 26px rgba(120,220,255,.6), 0 6px 0 rgba(10,50,110,.45); -webkit-text-stroke: 4px var(--navy); paint-order: stroke fill; max-width: 86vw; }
-  .num { position: absolute; left: 6%; right: 6%; top: 50%; transform: translateY(-50%); text-align: center; font-weight: 700;
-     font-size: calc(var(--u) * 9); color: var(--amber); text-shadow: 0 0 40px rgba(255,181,71,.6), 0 7px 0 rgba(10,50,110,.45); -webkit-text-stroke: 5px var(--navy); paint-order: stroke fill; line-height: 1.05; }
-  .label { position: absolute; left: 5%; bottom: 8%; padding: calc(var(--u) * .9) calc(var(--u) * 2.4); border-radius: 99px;
-     background: linear-gradient(180deg, rgba(190,240,255,.62) 0%, rgba(90,190,245,.6) 48%, rgba(20,110,200,.82) 52%, rgba(12,80,170,.88) 100%);
-     border: 3px solid rgba(255,255,255,.9); font-weight: 600; font-size: calc(var(--u) * 3.1); color: #fff;
-     text-shadow: 0 2px 0 rgba(10,50,110,.7); box-shadow: 0 6px 20px rgba(6,40,95,.4), 0 0 24px rgba(120,220,255,.5); }
-  .portrait .label { left: 50%; bottom: auto; top: 14%; transform: translateX(-50%); white-space: nowrap; font-size: calc(var(--u) * 5); }
+  /* soft light motes (fireflies), no bubbles */
+  .p { position: absolute; border-radius: 50%; background: rgba(255,250,225,.9); box-shadow: 0 0 10px 3px rgba(255,214,140,.55); }
+  /* glass panel shared by all overlays: Mindsphere's 40% Frutiger Aero */
+  .glass { background: linear-gradient(160deg, rgba(255,255,255,.28), rgba(90,170,220,.18) 40%, rgba(11,30,63,.62));
+     border: 2px solid rgba(255,255,255,.65); border-radius: calc(var(--u) * 2.2);
+     box-shadow: 0 10px 34px rgba(5,15,40,.45), inset 0 1px 0 rgba(255,255,255,.7), 0 0 26px rgba(63,224,208,.25);
+     backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .ring { position: absolute; border: 3px solid rgba(143,227,90,.85); border-radius: 50%; box-shadow: 0 0 18px rgba(143,227,90,.6); }
+  .title { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; padding: calc(var(--u)*3.2) calc(var(--u)*5); max-width: 86%; }
+  .title .ch { display: inline-block; margin: 0 .14em; font-weight: 700; font-size: calc(var(--u) * 6.8); line-height: 1.12; text-shadow: 0 3px 18px rgba(5,15,40,.6); }
+  .title .ch.hl { color: var(--amber); }
+  .title .ring { left: 50%; top: 50%; width: 120%; height: 34%; margin-left: -60%; margin-top: -17%; transform: rotate(-8deg); }
+  .chapter { position: absolute; left: 6%; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: calc(var(--u)*2.4); padding: calc(var(--u)*2.2) calc(var(--u)*3.6) calc(var(--u)*2.2) calc(var(--u)*2.2); max-width: 82%; }
+  .chapter .no { flex: none; width: calc(var(--u)*11); height: calc(var(--u)*11); border-radius: 50%; display: grid; place-items: center;
+     font-weight: 700; font-size: calc(var(--u)*6); color: var(--navy);
+     background: radial-gradient(circle at 35% 30%, #fff, #c8ffd9 35%, #8fe35a 70%, #3aa34a); box-shadow: 0 0 24px rgba(143,227,90,.6); position: relative; }
+  .chapter .no .ring { inset: -18%; border-width: 2px; transform: rotateX(70deg); }
+  .chapter .txt { font-weight: 700; font-size: calc(var(--u) * 5.6); line-height: 1.1; text-shadow: 0 3px 14px rgba(5,15,40,.55); }
+  .num { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; padding: calc(var(--u)*2.6) calc(var(--u)*5); max-width: 88%; }
+  .num .v { font-weight: 700; font-size: calc(var(--u) * 8.4); line-height: 1.05; color: var(--amber); text-shadow: 0 0 30px rgba(255,181,71,.45), 0 4px 0 rgba(13,42,82,.5); }
+  .num .bar { height: calc(var(--u)*.6); margin: calc(var(--u)*1.6) auto 0; width: 60%; border-radius: 99px; background: linear-gradient(90deg, var(--teal), var(--leaf)); transform-origin: left; }
+  .cards { position: absolute; left: 4%; bottom: 7%; display: flex; flex-wrap: wrap; gap: calc(var(--u)*1.4); max-width: 70%; }
+  .card { display: flex; align-items: center; gap: calc(var(--u)*1.1); padding: calc(var(--u)*1.0) calc(var(--u)*2.2) calc(var(--u)*1.0) calc(var(--u)*1.3); border-radius: 99px;
+     font-weight: 600; font-size: calc(var(--u) * 3.0); text-shadow: 0 2px 6px rgba(5,15,40,.6); white-space: nowrap; }
+  .card .dot { width: calc(var(--u)*1.5); height: calc(var(--u)*1.5); border-radius: 50%; background: var(--leaf); box-shadow: 0 0 12px var(--leaf); flex: none; }
+  .card:nth-child(2) .dot { background: var(--teal); box-shadow: 0 0 12px var(--teal); }
+  .card:nth-child(3) .dot { background: var(--amber); box-shadow: 0 0 12px var(--amber); }
+  .portrait .cards { left: 50%; bottom: auto; top: 12%; transform: translateX(-50%); justify-content: center; max-width: 90%; }
+  .portrait .card { font-size: calc(var(--u) * 4.4); }
   .cap { position: absolute; left: 6%; right: 6%; bottom: 20%; text-align: center; font-weight: 700; font-size: calc(var(--u) * 7.4);
      line-height: 1.15; text-shadow: 0 0 6px #000, 0 6px 0 rgba(0,0,0,.6); -webkit-text-stroke: 4px var(--navy); paint-order: stroke fill; }
   .cap .w { display: inline-block; margin: 0 .12em; opacity: 0; }
   .cap .w.hot { color: var(--amber); }
-  .brand { position: absolute; right: 3%; top: 4%; font-weight: 700; font-size: calc(var(--u) * 2.2); opacity: .55; letter-spacing: .05em; }
+  .brand { position: absolute; right: 3%; top: 4%; font-weight: 700; font-size: calc(var(--u) * 2.0); opacity: .5; letter-spacing: .08em; }
 </style>
 </head>
 <body>
@@ -89,49 +95,57 @@ V.scenes.forEach((s, i) => {
   } else {
     tl.fromTo(bg, { scale: fromS, xPercent: fx, yPercent: fy }, { scale: toS, xPercent: tx, yPercent: ty, duration: d + XF, ease: 'sine.inOut' }, t0 - XF / 2);
   }
-  // Frutiger Aero bubbles: glossy soap bubbles rising slowly, plus a few sparkle dots
+  // a few soft light motes drifting upward
   const pc = el.querySelector('.particles');
-  // only a few: 2 subtle bubbles, the rest soft light motes (user: not too many bubbles)
-  for (let k = 0; k < 8; k++) {
-    const p = document.createElement('div'); const isDot = k >= 2;
-    p.className = isDot ? 'p dot' : 'p';
-    const sz = isDot ? 3 + rnd() * 4 : (V.width / 1920) * (8 + rnd() * 18);
+  for (let k = 0; k < 6; k++) {
+    const p = document.createElement('div'); p.className = 'p';
+    const sz = (V.width / 1920) * (3 + rnd() * 4);
     p.style.width = p.style.height = sz + 'px';
-    p.style.left = (rnd() * 100) + '%'; p.style.top = (20 + rnd() * 85) + '%'; pc.appendChild(p);
-    const rise = 60 + rnd() * 180, drift = (rnd() - .5) * 80;
-    tl.fromTo(p, { y: 0, x: 0, opacity: 0, scale: 0.85 },
-      { y: -rise, x: drift, opacity: isDot ? 0.3 + rnd() * 0.5 : 0.25 + rnd() * 0.25, scale: 1, duration: d + XF, ease: 'sine.out' }, t0 - XF / 2);
+    p.style.left = (rnd() * 100) + '%'; p.style.top = (30 + rnd() * 70) + '%'; pc.appendChild(p);
+    tl.fromTo(p, { y: 0, x: 0, opacity: 0 }, { y: -(40 + rnd() * 120), x: (rnd() - .5) * 60, opacity: 0.25 + rnd() * 0.45, duration: d + XF, ease: 'sine.out' }, t0 - XF / 2);
   }
   // overlays per kind
   if (s.kind === 'title' && s.onscreen) {
-    tl.to(dark, { opacity: 1, duration: 0.8 }, t0);
-    const t = document.createElement('div'); t.className = 'title';
-    t.innerHTML = s.onscreen.split(' ').map(w => `<span class="ch">${w}</span>`).join(' ');
+    tl.to(dark, { opacity: 0.85, duration: 0.8 }, t0);
+    const t = document.createElement('div'); t.className = 'title glass';
+    const ws = s.onscreen.split(' ');
+    t.innerHTML = '<div class="ring"></div>' + ws.map(w => `<span class="ch${/\d|%|\?/.test(w) ? ' hl' : ''}">${w}</span>`).join(' ');
     el.appendChild(t);
-    tl.from(t.querySelectorAll('.ch'), { y: 60, opacity: 0, scale: 0.8, duration: 0.7, stagger: 0.09, ease: 'back.out(1.7)' }, t0 + 0.3);
-    tl.to(t, { scale: 1.04, duration: d, ease: 'sine.inOut' }, t0 + 0.3);
-    tl.to(t, { opacity: 0, y: -30, duration: 0.5, ease: 'power2.in' }, t0 + d - 0.4);
+    tl.from(t, { scale: 0.85, opacity: 0, duration: 0.7, ease: 'power3.out' }, t0 + 0.2);
+    tl.from(t.querySelector('.ring'), { scale: 0.3, opacity: 0, rotation: -40, duration: 1.1, ease: 'power3.out' }, t0 + 0.3);
+    tl.from(t.querySelectorAll('.ch'), { y: 40, opacity: 0, duration: 0.6, stagger: 0.08, ease: 'back.out(1.6)' }, t0 + 0.45);
+    tl.to(t.querySelector('.ring'), { rotation: 8, duration: d, ease: 'sine.inOut' }, t0 + 1.4);
+    tl.to(t, { opacity: 0, y: -24, duration: 0.5, ease: 'power2.in' }, t0 + d - 0.4);
   } else if (s.kind === 'chapter' && s.onscreen) {
-    tl.to(dark, { opacity: 1, duration: 0.6 }, t0);
-    tl.to(dark, { opacity: 0, duration: 0.8 }, t0 + Math.min(3.2, d - 0.8));
-    const c = document.createElement('div'); c.className = 'chapter';
-    c.innerHTML = `<div class="bar"></div><div class="txt">${s.onscreen}</div>`; el.appendChild(c);
-    tl.from(c.querySelector('.bar'), { scaleX: 0, duration: 0.6, ease: 'power3.out' }, t0 + 0.2);
-    tl.from(c.querySelector('.txt'), { x: -80, opacity: 0, duration: 0.7, ease: 'power3.out' }, t0 + 0.4);
-    tl.to(c, { x: 60, opacity: 0, duration: 0.5, ease: 'power2.in' }, t0 + Math.min(3.2, d - 0.8));
+    tl.to(dark, { opacity: 0.8, duration: 0.6 }, t0);
+    const hold = Math.min(3.4, d - 0.8);
+    tl.to(dark, { opacity: 0, duration: 0.8 }, t0 + hold);
+    const m = s.onscreen.match(/^(\d+)\.?\s*(.*)$/);
+    const c = document.createElement('div'); c.className = 'chapter glass';
+    c.innerHTML = `<div class="no">${m ? m[1] : '•'}<div class="ring"></div></div><div class="txt">${m ? m[2] : s.onscreen}</div>`; el.appendChild(c);
+    tl.from(c, { x: -60, opacity: 0, duration: 0.7, ease: 'power3.out' }, t0 + 0.2);
+    tl.from(c.querySelector('.no'), { scale: 0, duration: 0.6, ease: 'back.out(2)' }, t0 + 0.35);
+    tl.from(c.querySelector('.txt'), { x: -30, opacity: 0, duration: 0.6, ease: 'power3.out' }, t0 + 0.55);
+    tl.to(c, { x: 50, opacity: 0, duration: 0.5, ease: 'power2.in' }, t0 + hold);
   } else if (s.kind === 'number' && s.onscreen) {
-    tl.to(dark, { opacity: 0.8, duration: 0.5 }, t0 + 0.2);
-    const n = document.createElement('div'); n.className = 'num'; n.textContent = s.onscreen; el.appendChild(n);
-    tl.from(n, { scale: 0.3, opacity: 0, duration: 0.8, ease: 'back.out(2)' }, t0 + 0.4);
-    tl.to(n, { y: '-=14', duration: 1.6, yoyo: true, repeat: Math.max(0, Math.floor(d / 1.6) - 2), ease: 'sine.inOut' }, t0 + 1.2);
-    tl.to(n, { opacity: 0, scale: 1.15, duration: 0.45, ease: 'power2.in' }, t0 + d - 0.5);
-  } else if (s.onscreen && !V.captions) {
-    const l = document.createElement('div'); l.className = 'label'; l.textContent = s.onscreen; el.appendChild(l);
-    tl.from(l, { y: 40, opacity: 0, duration: 0.6, ease: 'power3.out' }, t0 + 0.5);
-    tl.to(l, { opacity: 0, y: 20, duration: 0.4, ease: 'power2.in' }, t0 + Math.min(d - 0.4, 5.5));
-  } else if (s.onscreen && V.captions) {
-    const l = document.createElement('div'); l.className = 'label'; l.textContent = s.onscreen; el.appendChild(l);
-    tl.from(l, { scale: 0.6, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, t0 + 0.2);
+    tl.to(dark, { opacity: 0.6, duration: 0.5 }, t0 + 0.2);
+    const n = document.createElement('div'); n.className = 'num glass';
+    n.innerHTML = `<div class="v">${s.onscreen}</div><div class="bar"></div>`; el.appendChild(n);
+    tl.from(n, { scale: 0.5, opacity: 0, duration: 0.7, ease: 'back.out(1.8)' }, t0 + 0.4);
+    tl.from(n.querySelector('.bar'), { scaleX: 0, duration: 0.9, ease: 'power3.out' }, t0 + 0.8);
+    tl.to(n, { y: '-=10', duration: 1.8, yoyo: true, repeat: Math.max(0, Math.floor(d / 1.8) - 2), ease: 'sine.inOut' }, t0 + 1.2);
+    tl.to(n, { opacity: 0, scale: 1.08, duration: 0.45, ease: 'power2.in' }, t0 + d - 0.5);
+    tl.to(dark, { opacity: 0, duration: 0.45 }, t0 + d - 0.5);
+  }
+  // info cards: each appears exactly when its key word is spoken
+  if (s.labels && s.labels.length) {
+    const box = document.createElement('div'); box.className = 'cards'; el.appendChild(box);
+    s.labels.forEach((lb) => {
+      const c = document.createElement('div'); c.className = 'card glass';
+      c.innerHTML = `<span class="dot"></span>${lb.text}`; box.appendChild(c);
+      tl.fromTo(c, { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.8)' }, lb.t);
+    });
+    tl.to(box, { opacity: 0, y: 16, duration: 0.4, ease: 'power2.in' }, t0 + d - 0.35);
   }
 });
 

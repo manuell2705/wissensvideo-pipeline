@@ -4,9 +4,11 @@ from pathlib import Path
 tag, out = sys.argv[1], Path(sys.argv[2])
 repo = os.environ.get('GITHUB_REPOSITORY', 'manuell2705/wissensvideo-pipeline'); tok = os.environ['GH_TOKEN']
 H = {'Authorization': f'Bearer {tok}', 'Accept': 'application/vnd.github+json'}
-rel = json.load(urllib.request.urlopen(urllib.request.Request(f'https://api.github.com/repos/{repo}/releases/tags/{tag}', headers=H)))
 for d in ('audio', 'img'): (out / d).mkdir(parents=True, exist_ok=True)
-for a in rel['assets']:
+assets = []
+for tg in tag.split(','):   # several GPU releases can be combined, e.g. gpu-1,gpu-2
+    assets += json.load(urllib.request.urlopen(urllib.request.Request(f'https://api.github.com/repos/{repo}/releases/tags/{tg.strip()}', headers=H)))['assets']
+for a in assets:
     n = a['name']; d = out / ('audio' if n.endswith(('.wav', '.json')) and n.startswith('scene_') else 'img' if n.endswith('.jpg') else 'raw')
     d.mkdir(exist_ok=True)
     r = urllib.request.urlopen(urllib.request.Request(a['url'], headers={**H, 'Accept': 'application/octet-stream'}))

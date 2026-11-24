@@ -34,6 +34,7 @@ for s in script['scenes']:
     im.save(out / f"scene_{s['id']:03d}_1.jpg", quality=93); print('still', s['id'], round(time.time() - t), 's', flush=True)
 upload()
 del ed; torch.cuda.empty_cache()
+if not any(x.get('motion') for x in script['scenes']): sys.exit(0)
 from diffusers import WanImageToVideoPipeline, AutoencoderKLWan
 from diffusers.utils import export_to_video
 mid = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"

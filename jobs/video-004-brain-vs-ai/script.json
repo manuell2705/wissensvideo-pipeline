@@ -50,7 +50,6 @@
     }
    ],
    "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) sitting at his desk at night next to a single dim old light bulb, a soft glowing brain shape faintly visible inside his head, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) floating beside the bulb comparing the two, cosy dark room",
-   "motion": "the light bulb flickers softly, the glow inside Kai's head pulses gently, Kai turns his head toward the bulb, Orbi bobs up and down, slow camera push in",
    "ref": "kai",
    "cutout": true,
    "transition": "cut",
@@ -95,7 +94,6 @@
     }
    ],
    "image_prompt": "a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city, endless rows of glowing server towers stretching to the horizon at night, power lines and cooling towers, epic scale, tiny cars below for scale",
-   "motion": "the AI titan slowly raises its head and its amber eye brightens, waves of light run along the server towers, steam rises from cooling towers, slow dramatic camera tilt up",
    "ref": null,
    "transition": "gta",
    "gfx": [
@@ -160,7 +158,6 @@
     }
    ],
    "image_prompt": "epic anime arena under a starry sky: Mira (a young woman with a dark ponytail and a warm amber jacket) on the left, glowing teal energy around her head and hands, facing a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city on the right, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) hovering in the middle like a referee, dramatic standoff, wide shot",
-   "motion": "Mira's hair and jacket blow in the wind as teal energy swirls around her, the AI titan's amber circuits pulse, Orbi spins between them, camera slowly circles the arena",
    "ref": "mira",
    "cutout": true,
    "transition": "dive",
@@ -194,7 +191,6 @@
     }
    ],
    "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) and a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city charging at each other, teal and amber energy beams colliding in a huge burst of light in the middle of the arena, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) shielding its eyes, anime battle climax",
-   "motion": "the teal and amber energy beams collide and explode into a bright flash, shockwave ripples outward, debris and light particles fly, fast dynamic camera shake",
    "ref": "mira",
    "transition": "out",
    "energy": true,

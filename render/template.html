@@ -64,7 +64,7 @@
      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
   .bars { position: absolute; left: 0; right: 0; height: 7%; background: #050b18; z-index: 5; }
   /* presentation layer: 2.5D character cut-out + infographics synced to the voice */
-  .fg { position: absolute; inset: -6%; width: 112%; height: 112%; object-fit: cover; pointer-events: none; filter: drop-shadow(0 12px 28px rgba(3,10,30,.55)); }
+  .fg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform-origin: 50% 100%; pointer-events: none; filter: drop-shadow(0 12px 28px rgba(3,10,30,.55)); }
   .gx { position: absolute; z-index: 4; }
   .gbars { right: 5%; top: 12%; width: 36%; padding: calc(var(--u)*2.2) calc(var(--u)*2.6); }
   .gbars .row { margin: calc(var(--u)*1.2) 0; }
@@ -159,10 +159,11 @@ V.scenes.forEach((s, i) => {
     wrap.appendChild(b); if (k === 0) bg = b;
     const st = sh.t, sd = sh.d;
     if (sh.fg) {
-      const fg = document.createElement('img'); fg.className = 'fg'; fg.src = sh.fg; wrap.appendChild(fg);
-      tl.fromTo(fg, { xPercent: 0, scale: 1.0 }, { xPercent: (i % 2 ? 1.2 : -1.2), scale: 1.035, duration: sd + 0.8, ease: 'sine.inOut' }, st - 0.4);
+      // character layer rides on the same camera as the background (no ghosting), plus a calm idle 'breathing' and a tiny depth push
+      const fg = document.createElement('img'); fg.className = 'fg'; fg.src = sh.fg; b.appendChild(fg);
+      tl.fromTo(fg, { scale: 1.0 }, { scale: 1.012, duration: sd + 0.8, ease: 'sine.inOut' }, st - 0.4);
       const nb = Math.max(1, Math.floor(sd / 2.4));
-      tl.fromTo(fg, { yPercent: 0 }, { yPercent: -0.5, duration: 1.2, yoyo: true, repeat: nb * 2 - 1, ease: 'sine.inOut' }, st);   // idle breathing
+      tl.fromTo(fg, { yPercent: 0 }, { yPercent: -0.35, duration: 1.2, yoyo: true, repeat: nb * 2 - 1, ease: 'sine.inOut' }, st);
     }
     if (sh.video) {
       // real animation clip: frame-accurate image sequence, plays at <= 1x speed, then holds the last frame

@@ -187,6 +187,22 @@ S += [
  sc("Showdown", "So now you know what your brain can really do. Time to step into the ring. Your brain, at its very best... versus the smartest AI ever built.",
     "epic anime arena under a starry sky, a glowing human brain of teal light facing a towering figure of dark glass with amber circuit lines",
     gfx=[VS('brain', 'YOUR BRAIN', 'at its best', 'AI', 'smartest ever built', 'versus')], transition='gta', energy=True),
+ # --- short anime fight (added later: ids 67+ so existing images/audio keep their numbers) ---
+ dict(sc("Showdown", "The machine strikes first. Faster than you can blink.",
+    f"dynamic anime battle shot: {T} hurling a storm of glowing amber data shards across a night arena toward {K}, who stands his ground, wind in his hoodie",
+    ref='kai', energy=True), late=1),
+ dict(sc("Showdown", "But your brain filters the storm. Out of a thousand signals, you see the one that matters.",
+    f"anime close-up of {K} with calm glowing teal eyes, the world around him in slow motion, hundreds of grey shards frozen in the air and a single one outlined in bright teal",
+    ref='kai', labels=['Filter the storm', 'See the one that matters']), late=1),
+ dict(sc("Showdown", "Billions of neurons fire together. You dodge, read the pattern, and learn its rhythm.",
+    f"anime action shot: {K} sliding low under a sweeping amber energy beam, teal light trails following his movement, a faint glowing pattern of the attack drawn in the air",
+    ref='kai', labels=['Dodge', 'Read the pattern', 'Learn the rhythm'], energy=True), late=1),
+ dict(sc("Showdown", "No fear. No doubt. Just flow.",
+    f"anime key frame: {K} mid-leap with a calm focused face, landing a clean glowing teal strike on the bright amber core in the chest of {T}, sparks of light bursting outward",
+    ref='kai', energy=True), late=1),
+ dict(sc("Showdown", "Then both of you step back. Because this fight isn't decided by one hit. It's decided round by round.",
+    f"wide calm anime shot of the night arena after the clash, {K} and {T} facing each other at a distance, glowing dust settling, a holographic scoreboard lighting up above them",
+    ref='kai', transition='gta'), late=1),
  sc("Showdown", "Round one: speed. A processor ticks billions of times per second. A neuron, a few hundred. That's not a contest. Point to the machine.",
     "split image: on the left a single neuron sparking slowly like a firefly, on the right a computer chip flashing like a strobe",
     gfx=[B('processor', [I('Neuron', 500, 'per s', 'neuron'), I('Processor', 3000000000, 'per s', 'billions', AM, overflow=True)], 600), VS('point', 'BRAIN', '0', 'AI', '1')]),
@@ -224,7 +240,9 @@ S += [
  sc("Ending", "The question isn't who wins. It's what you'll build. See you on the next orbit.",
     "a small green glass planet with a glowing orbit ring floating in space at sunrise, tiny forests and a glass city on it"),
 ]
-for i, s in enumerate(S, 1): s['id'] = i
+base = [s for s in S if not s.get('late')]
+for i, s in enumerate(base, 1): s['id'] = i
+for i, s in enumerate([s for s in S if s.get('late')], len(base) + 1): s['id'] = i; s.pop('late')
 words = sum(len(s['narration'].split()) for s in S)
 script = dict(title="What If Your Brain Ran at 100%?", category="Science",
  description="What would really happen if your brain ran at 100%? Your senses, memory, speed, body and 'superpowers', checked honestly with real science. And at the end: could a 100% brain beat the smartest AI ever built?",

@@ -876,6 +876,67 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
+   "narration": "The machine strikes first. Faster than you can blink.",
+   "image_prompt": "dynamic anime battle shot: the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) hurling a storm of glowing amber data shards across a night arena toward Kai (a young man with short dark messy hair and a teal hoodie), who stands his ground, wind in his hoodie",
+   "ref": "kai",
+   "energy": true,
+   "id": 67
+  },
+  {
+   "chapter": "Showdown",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Filter the storm",
+    "See the one that matters"
+   ],
+   "narration": "But your brain filters the storm. Out of a thousand signals, you see the one that matters.",
+   "image_prompt": "anime close-up of Kai (a young man with short dark messy hair and a teal hoodie) with calm glowing teal eyes, the world around him in slow motion, hundreds of grey shards frozen in the air and a single one outlined in bright teal",
+   "ref": "kai",
+   "id": 68
+  },
+  {
+   "chapter": "Showdown",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Dodge",
+    "Read the pattern",
+    "Learn the rhythm"
+   ],
+   "narration": "Billions of neurons fire together. You dodge, read the pattern, and learn its rhythm.",
+   "image_prompt": "anime action shot: Kai (a young man with short dark messy hair and a teal hoodie) sliding low under a sweeping amber energy beam, teal light trails following his movement, a faint glowing pattern of the attack drawn in the air",
+   "ref": "kai",
+   "energy": true,
+   "id": 69
+  },
+  {
+   "chapter": "Showdown",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "No fear. No doubt. Just flow.",
+   "image_prompt": "anime key frame: Kai (a young man with short dark messy hair and a teal hoodie) mid-leap with a calm focused face, landing a clean glowing teal strike on the bright amber core in the chest of the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes), sparks of light bursting outward",
+   "ref": "kai",
+   "energy": true,
+   "id": 70
+  },
+  {
+   "chapter": "Showdown",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Then both of you step back. Because this fight isn't decided by one hit. It's decided round by round.",
+   "image_prompt": "wide calm anime shot of the night arena after the clash, Kai (a young man with short dark messy hair and a teal hoodie) and the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) facing each other at a distance, glowing dust settling, a holographic scoreboard lighting up above them",
+   "ref": "kai",
+   "transition": "gta",
+   "id": 71
+  },
+  {
+   "chapter": "Showdown",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
    "narration": "Round one: speed. A processor ticks billions of times per second. A neuron, a few hundred. That's not a contest. Point to the machine.",
    "image_prompt": "split image: on the left a single neuron sparking slowly like a firefly, on the right a computer chip flashing like a strobe",
    "gfx": [

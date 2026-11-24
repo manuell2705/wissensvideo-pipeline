@@ -242,6 +242,29 @@ def shot_times(s, n):
     return [(off + a, b - a) for a, b in zip(edges, edges[1:]) if b - a > 0.8]
 
 
+
+def word_time(s, key, default_frac=0.3):
+    """Absolute time when `key` (a word or phrase start) is spoken in scene s."""
+    off = s['start'] + (0.35 if s['kind'] in ('title', 'chapter') else 0)
+    norm = lambda x: re.sub(r'[^a-z0-9%]', '', x.lower())
+    k = norm(key.split()[0]) if key else ''
+    for w in s.get('words') or []:
+        if k and (norm(w['w']).startswith(k[:5]) or (len(norm(w['w'])) > 2 and k.startswith(norm(w['w'])))):
+            return round(off + max(0.1, w['s'] - 0.1), 3)
+    return round(off + s.get('adur', s['dur']) * default_frac, 3)
+
+
+def cutout(src, dst):
+    """Character layer for 2.5D parallax (rembg, anime model, runs on CPU)."""
+    global _RB
+    from rembg import remove, new_session
+    from PIL import Image, ImageFilter
+    if '_RB' not in globals(): _RB = new_session('isnet-anime')
+    im = remove(Image.open(src).convert('RGB'), session=_RB)
+    a = im.split()[-1].filter(ImageFilter.MaxFilter(5))      # tiny dilate so no halo of the old copy shows
+    im.putalpha(a); im.save(dst)
+
+
 # ---------------------------------------------------------------- render
 RENDER_JS = r"""
 const { chromium } = require('playwright');
@@ -320,8 +343,19 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
                     sh['line'] = None
             shots.append(sh)
         prev_ch = s['chapter']
-        energy = '!' in s['narration'] or bool(re.search(r'\b(boom|suddenly|explod|fire|blackout|switch)', s['narration'].lower()))
-        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} |
+        energy = s.get('energy') if 'energy' in s else '!' in s['narration'] or bool(re.search(r'\b(boom|suddenly|explod|fire|blackout|switch)', s['narration'].lower()))
+        if s.get('cutout') and shots and shots[0]['img'] and not shots[0].get('video'):
+            try:
+                shots[0]['fg'] = f"fg_{s['id']:03d}.png"; cutout(rdir / shots[0]['img'], rdir / shots[0]['fg'])
+            except Exception as e: log('cutout fail', s['id'], e); shots[0]['fg'] = None
+        gfx = []
+        for g in s.get('gfx') or []:
+            g = json.loads(json.dumps(g))
+            g['t'] = word_time(s, g.get('at', ''), 0.2)
+            for it in g.get('items', []): it['t'] = word_time(s, it.get('at', ''), 0.4) if it.get('at') else g['t']
+            if g.get('at2'): g['t2'] = word_time(s, g['at2'], 0.6)
+            gfx.append(g)
+        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'gfx': gfx} |
                   {'img': shots[0]['img'], 'shots': shots, 'energy': energy, 'labels': label_times(s)})
     data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND', 'MINDSPHERE')}
     (rdir / 'data.js').write_text('window.VIDEO = ' + json.dumps(data) + ';')

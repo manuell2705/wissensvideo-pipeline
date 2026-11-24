@@ -1,0 +1,29 @@
+name: GPU cleanup (delete all mindsphere pods)
+on:
+  workflow_dispatch:
+    inputs:
+      keep: { description: 'pod id to keep (optional)', required: false, default: '' }
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: List and delete
+        env: { RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}', KEEP: '${{ inputs.keep }}' }
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          K = os.environ['RUNPOD_API_KEY']; keep = os.environ.get('KEEP', '')
+          def req(m, path, base='https://api.runpod.io'):
+              r = urllib.request.Request(base + path, method=m, headers={'Authorization': 'Bearer ' + K})
+              try:
+                  with urllib.request.urlopen(r, timeout=60) as x: b = x.read(); return x.status, (json.loads(b) if b else None)
+              except urllib.error.HTTPError as e: return e.code, e.read().decode()[:300]
+          c, d = req('GET', '/v2/pods'); print('list', c, str(d)[:1500])
+          pods = d if isinstance(d, list) else (d or {}).get('pods', d.get('data', [])) if isinstance(d, dict) else []
+          for p in pods:
+              pid = p.get('id'); print('pod', pid, p.get('name'), p.get('status') or p.get('desiredStatus'))
+              if pid == keep or 'mindsphere' not in (p.get('name') or ''): continue
+              print(' delete v2', req('DELETE', f'/v2/pods/{pid}'))
+              print(' delete v1', req('DELETE', f'/v1/pods/{pid}', 'https://rest.runpod.io'))
+          c, d = req('GET', '/v2/pods'); print('after', c, str(d)[:800])
+          PY

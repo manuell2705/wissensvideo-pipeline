@@ -12,10 +12,8 @@
    "id": 1,
    "chapter": "Hook",
    "kind": "image",
-   "onscreen": "20 W",
-   "labels": [
-    "20 watts"
-   ],
+   "onscreen": null,
+   "labels": [],
    "narration": "Your brain runs on about twenty watts. Less than a dim light bulb.",
    "delivery": [
     {
@@ -35,16 +33,39 @@
    ],
    "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) sitting at his desk at night next to a single dim old light bulb, a soft glowing brain shape faintly visible inside his head, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) floating beside the bulb comparing the two, cosy dark room",
    "motion": "the light bulb flickers softly, the glow inside Kai's head pulses gently, Kai turns his head toward the bulb, Orbi bobs up and down, slow camera push in",
-   "ref": "kai"
+   "ref": "kai",
+   "cutout": true,
+   "transition": "cut",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "brain",
+     "max": 60,
+     "items": [
+      {
+       "label": "Your brain",
+       "value": 20,
+       "unit": "W",
+       "color": "#3fe0d0",
+       "at": "twenty"
+      },
+      {
+       "label": "Dim light bulb",
+       "value": 40,
+       "unit": "W",
+       "color": "#ffb547",
+       "at": "light"
+      }
+     ]
+    }
+   ]
   },
   {
    "id": 2,
    "chapter": "Hook",
    "kind": "image",
    "onscreen": null,
-   "labels": [
-    "more power than a city"
-   ],
+   "labels": [],
    "narration": "The biggest AI systems run in data centers that can draw more power than a small city.",
    "delivery": [
     {
@@ -57,7 +78,38 @@
    ],
    "image_prompt": "a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city, endless rows of glowing server towers stretching to the horizon at night, power lines and cooling towers, epic scale, tiny cars below for scale",
    "motion": "the AI titan slowly raises its head and its amber eye brightens, waves of light run along the server towers, steam rises from cooling towers, slow dramatic camera tilt up",
-   "ref": null
+   "ref": null,
+   "transition": "gta",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "biggest",
+     "max": 1000,
+     "items": [
+      {
+       "label": "Your brain",
+       "value": 20,
+       "unit": "W",
+       "color": "#3fe0d0",
+       "at": "biggest"
+      },
+      {
+       "label": "AI data center",
+       "value": 100000000,
+       "unit": "W",
+       "color": "#ffb547",
+       "at": "power",
+       "overflow": true
+      }
+     ]
+    },
+    {
+     "type": "icons",
+     "at": "city",
+     "n": 12,
+     "label": "more than a small city"
+    }
+   ]
   },
   {
    "id": 3,
@@ -91,7 +143,21 @@
    ],
    "image_prompt": "epic anime arena under a starry sky: Mira (a young woman with a dark ponytail and a warm amber jacket) on the left, glowing teal energy around her head and hands, facing a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city on the right, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) hovering in the middle like a referee, dramatic standoff, wide shot",
    "motion": "Mira's hair and jacket blow in the wind as teal energy swirls around her, the AI titan's amber circuits pulse, Orbi spins between them, camera slowly circles the arena",
-   "ref": "mira"
+   "ref": "mira",
+   "cutout": true,
+   "transition": "dive",
+   "energy": false,
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "human",
+     "left": "HUMAN BRAIN",
+     "left_sub": "unlocked to 100%",
+     "right": "AI",
+     "right_sub": "smartest machine ever built",
+     "at2": "versus"
+    }
+   ]
   },
   {
    "id": 4,
@@ -111,7 +177,16 @@
    ],
    "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) and a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city charging at each other, teal and amber energy beams colliding in a huge burst of light in the middle of the arena, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) shielding its eyes, anime battle climax",
    "motion": "the teal and amber energy beams collide and explode into a bright flash, shockwave ripples outward, debris and light particles fly, fast dynamic camera shake",
-   "ref": "mira"
+   "ref": "mira",
+   "transition": "out",
+   "energy": true,
+   "gfx": [
+    {
+     "type": "bigq",
+     "at": "who",
+     "text": "WHO WINS?"
+    }
+   ]
   },
   {
    "id": 5,
@@ -120,7 +195,8 @@
    "onscreen": "100% Brain vs AI: Who Wins?",
    "labels": [],
    "narration": "",
-   "image_prompt": ""
+   "image_prompt": "",
+   "transition": "dive"
   }
  ],
  "shorts": []

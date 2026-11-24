@@ -39,7 +39,7 @@ jobs:
         env: { GH_TOKEN: '${{ github.token }}' }
         run: |
           for i in $(seq 1 $(( ${{ inputs.max_minutes }} * 2 ))); do
-            if gh release view "$TAG" -R ${{ github.repository }} > /dev/null 2>&1; then sleep 60; echo "result ready"; gh release view "$TAG" -R ${{ github.repository }}; exit 0; fi
+            if gh release view "$TAG" -R ${{ github.repository }} --json assets --jq '.assets[].name' 2>/dev/null | grep -q zz_DONE; then echo "result ready"; gh release view "$TAG" -R ${{ github.repository }}; exit 0; fi
             sleep 30
           done
           echo "time limit reached"; exit 1

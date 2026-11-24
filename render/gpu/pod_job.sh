@@ -10,4 +10,5 @@ pip install -q chatterbox-tts kokoro soundfile 2>&1 | tail -2
 export DEVICE=cuda
 mkdir -p /w/gpu_out
 bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt
+echo done > /w/gpu_out/zz_DONE.txt
 python render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out

@@ -21,7 +21,10 @@ jobs:
           sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
           pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
           pip install -q chatterbox-tts kokoro soundfile
-      - run: python render/chatterbox_v3.py s ${{ matrix.variant }}
+      - env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: python render/chatterbox_v3.py s ${{ matrix.variant }}
       - uses: actions/upload-artifact@v4
         with: { name: 'cb-${{ matrix.variant }}', path: s/*.mp3 }
   release:

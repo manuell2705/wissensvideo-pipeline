@@ -22,6 +22,8 @@ REFS = {  # synthetic reference voices only (no real person is cloned)
  'minimax_narrator': ('file', 'render/refs/minimax_narrator.wav'),
  'fable': ('kokoro', 'bm_fable'), 'fable_lively': ('kokoro', 'bm_fable'),
  'isabella': ('kokoro', 'bf_isabella'), 'alice': ('kokoro', 'bf_alice'), 'heart': ('kokoro', 'af_heart'), 'bella': ('kokoro', 'af_bella'),
+ 'pandora': ('aura', 'pandora'), 'athena': ('aura', 'athena'), 'hera': ('aura', 'hera'),
+ 'theia': ('aura', 'theia'), 'juno': ('aura', 'juno'), 'cordelia': ('aura', 'cordelia'),
  'isabella_lively': ('kokoro', 'bf_isabella'), 'heart_lively': ('kokoro', 'af_heart'),
 }
 ref = REFS[variant]; ref_path = None
@@ -33,12 +35,22 @@ if ref and ref[0] == 'kokoro':
            "billions of years ago. Isn't that incredible? And the story is only just beginning.")
     a = np.concatenate([r.audio.cpu().numpy() for r in kp(txt, voice=ref[1], speed=1.0)])
     ref_path = out / f'_ref_{variant}.wav'; sf.write(str(ref_path), a, 24000)
+elif ref and ref[0] == 'aura':
+    import os, json, urllib.request
+    txt = ("Let me tell you something remarkable. Every atom in your body was forged inside a star, billions of years ago. "
+           "Isn't that incredible? And honestly, the story is only just beginning.")
+    req = urllib.request.Request(f"https://api.cloudflare.com/client/v4/accounts/{os.environ['CF_ACCOUNT_ID']}/ai/run/@cf/deepgram/aura-2-en",
+        data=json.dumps({'text': txt, 'speaker': ref[1], 'encoding': 'mp3'}).encode(),
+        headers={'Authorization': f"Bearer {os.environ['CF_API_TOKEN']}", 'Content-Type': 'application/json'})
+    mp = out / f'_ref_{variant}.mp3'; mp.write_bytes(urllib.request.urlopen(req, timeout=120).read())
+    ref_path = out / f'_ref_{variant}.wav'
+    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(mp), '-ar', '24000', '-ac', '1', str(ref_path)], check=True); mp.unlink()
 elif ref:
     ref_path = Path(ref[1])
 from chatterbox.tts import ChatterboxTTS
 model = ChatterboxTTS.from_pretrained(device='cpu')
 parts = []
-LIVELY = 1.25 if variant.endswith('_lively') else 1.0
+LIVELY = 1.25 if variant.endswith('_lively') else (0.9 if ref and ref[0] == 'aura' else 1.0)
 for text, exa, cfg, pause in SEGS:
     exa = min(1.4, exa * LIVELY)
     kw = dict(exaggeration=exa, cfg_weight=cfg, temperature=0.85)

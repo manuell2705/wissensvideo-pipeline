@@ -65,7 +65,12 @@ def transcribe(w):
     return r['text'], [{'w': c['text'].strip(), 's': round(c['timestamp'][0], 3), 'e': round(c['timestamp'][1] or c['timestamp'][0] + 0.2, 3)} for c in r['chunks']]
 
 report = []
-for s in script['scenes']:
+import os as _os
+PRE = [int(x) for x in _os.environ.get('PREVIEW_IDS', '').split(',') if x]
+_order = [s for s in script['scenes'] if s['id'] in PRE] + [s for s in script['scenes'] if s['id'] not in PRE]
+for _k, s in enumerate(_order):
+    if PRE and _k == len([x for x in _order if x['id'] in PRE]) and _os.environ.get('RESULT_TAG'):
+        subprocess.run(['python', 'render/gpu/upload_release.py', _os.environ['RESULT_TAG'], str(out)])   # preview audio first
     if not s.get('narration', '').strip():          # e.g. a pure title sting: short silence, no words
         sf.write(str(out / f"scene_{s['id']:03d}.wav"), np.zeros(int(SR * 0.3), np.float32), SR)
         (out / f"scene_{s['id']:03d}.json").write_text('[]'); continue
@@ -84,7 +89,7 @@ for s in script['scenes']:
         if best is None or score > best[0]: best = (score, wav, words)
         if score >= 0.9: break
     score, wav, words = best
-    sf.write(str(out / f"scene_{s['id']:03d}.wav"), wav, SR)
+    sf.write(str(out / '_w.wav'), wav, SR); (out / '_w.wav').replace(out / f"scene_{s['id']:03d}.wav")   # atomic (uploads run in parallel)
     (out / f"scene_{s['id']:03d}.json").write_text(json.dumps(words))
     report.append({'id': s['id'], 'score': round(score, 3), 'takes': take + 1, 'sec': round(len(wav) / SR, 2)})
     print('scene', s['id'], report[-1], flush=True)
@@ -92,4 +97,4 @@ for s in script['scenes']:
 # one listening file for the user
 lst = out / '_list.txt'; lst.write_text(''.join(f"file 'scene_{s['id']:03d}.wav'\n" for s in script['scenes']))
 subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', str(lst), '-af', 'loudnorm=I=-16:TP=-1.5', '-b:a', '160k', str(out / 'narration_full.mp3')], check=True)
-for f in out.glob('_*'): f.unlink()
+for f in [out / n for n in ('_t_in.wav', '_t_out.wav', '_w.wav', '_list.txt')]: f.unlink(missing_ok=True)

@@ -29,6 +29,10 @@
   "IEA 2025, Energy and AI: data center electricity use",
   "Moravec 1988, Mind Children: what is easy for humans is hard for robots",
   "Kasparov 2010, NYRB: freestyle (centaur) chess",
+  "Draganski et al. 2004, Nature: juggling changes grey matter",
+  "Luria 1968, The Mind of a Mnemonist (Shereshevsky)",
+  "Ward 2013, Annu Rev Psychol: synesthesia",
+  "Eagleman 2008, Curr Opin Neurobiol: perceived timing of events",
   "Google DeepMind & OpenAI, July 2025: AI models reach gold-medal standard at IMO 2025"
  ],
  "scenes": [
@@ -118,13 +122,25 @@
    "kind": "image",
    "onscreen": null,
    "labels": [
+    "Potential",
+    "became a number"
+   ],
+   "narration": "The idea is often traced back to early psychologists, who said we use only a fraction of our mental potential. Somewhere along the way, potential turned into a number.",
+   "image_prompt": "an old sepia-toned study with a glowing brain diagram on a chalkboard, a floating 10% sign drifting out of an old book like smoke",
+   "id": 7
+  },
+  {
+   "chapter": "The myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
     "Every region gets busy",
     "Over a day"
    ],
    "narration": "Here's the truth: you already use all of it. Brain scans show that over a single day, practically every region gets busy.",
    "image_prompt": "a human brain drawn as a night city seen from above, district after district lighting up over a day, sun and moon moving overhead",
    "transition": "out",
-   "id": 7
+   "id": 8
   },
   {
    "chapter": "The myth",
@@ -136,7 +152,7 @@
    ],
    "narration": "Just not all at the same time. At any moment, only a small fraction of your neurons is firing. And that's on purpose.",
    "image_prompt": "the brain city at night with only a few calm lights glowing in different districts, the rest resting in soft blue darkness",
-   "id": 8
+   "id": 9
   },
   {
    "chapter": "The myth",
@@ -168,7 +184,7 @@
      "max": 25
     }
    ],
-   "id": 9
+   "id": 10
   },
   {
    "chapter": "The myth",
@@ -181,7 +197,7 @@
    ],
    "narration": "So let's play a game. Fantasy rules: what if the limits disappeared? Let's go through it, piece by piece, and keep it honest.",
    "image_prompt": "a glowing control panel inside a calm observatory, five big sliders labelled with simple icons for eye, memory, lightning, muscle and sprout, all sliding up",
-   "id": 10
+   "id": 11
   },
   {
    "chapter": "1. Senses",
@@ -191,7 +207,7 @@
    "narration": "Level one. Your senses.",
    "image_prompt": "a giant glowing eye made of glass reflecting a sunny meadow",
    "transition": "dive",
-   "id": 11
+   "id": 12
   },
   {
    "chapter": "1. Senses",
@@ -208,7 +224,7 @@
      "caption": "bits per second, from your eyes alone (estimate)"
     }
    ],
-   "id": 12
+   "id": 13
   },
   {
    "chapter": "1. Senses",
@@ -241,7 +257,7 @@
      "max": 50
     }
    ],
-   "id": 13
+   "id": 14
   },
   {
    "chapter": "1. Senses",
@@ -257,7 +273,7 @@
    "ref": "kai",
    "cutout": true,
    "energy": true,
-   "id": 14
+   "id": 15
   },
   {
    "chapter": "1. Senses",
@@ -269,7 +285,19 @@
    ],
    "narration": "You wouldn't feel like a superhero. You'd feel overwhelmed. Your brain's filter is what lets you hear your name across a noisy room.",
    "image_prompt": "a glowing sieve made of light floating over a crowded party, filtering a storm of noise into one clear golden word drifting upward",
-   "id": 15
+   "id": 16
+  },
+  {
+   "chapter": "1. Senses",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Synesthesia",
+    "Sounds have colours"
+   ],
+   "narration": "Some people already experience a little of this mixing. With synesthesia, sounds can have colours, and numbers can sit in a place in space.",
+   "image_prompt": "musical notes turning into ribbons of colour in the air, glowing numbers floating in a curved line through a calm night room",
+   "id": 17
   },
   {
    "chapter": "1. Senses",
@@ -285,7 +313,7 @@
      "text": "FILTER > FLOOD"
     }
    ],
-   "id": 16
+   "id": 18
   },
   {
    "chapter": "2. Memory",
@@ -295,7 +323,7 @@
    "narration": "Level two. Memory.",
    "image_prompt": "an endless glowing library floating in space, books turning into stars",
    "transition": "gta",
-   "id": 17
+   "id": 19
   },
   {
    "chapter": "2. Memory",
@@ -307,7 +335,7 @@
    ],
    "narration": "Some people already live with an extreme memory. With a rare condition called hyperthymesia, they remember almost every day of their lives.",
    "image_prompt": "a corridor of floating glowing calendar pages stretching into the distance, one page opening to show a rainy afternoon",
-   "id": 18
+   "id": 20
   },
   {
    "chapter": "2. Memory",
@@ -319,7 +347,7 @@
    ],
    "narration": "Ask them about a random Tuesday years ago, and they can tell you what they did, and sometimes even the weather.",
    "image_prompt": "a single glowing calendar page for a Tuesday unfolding into a small 3D scene of a rainy street with an umbrella",
-   "id": 19
+   "id": 21
   },
   {
    "chapter": "2. Memory",
@@ -337,7 +365,19 @@
      "prefix": "< "
     }
    ],
-   "id": 20
+   "id": 22
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Perfect lists, years later",
+    "Hard to forget"
+   ],
+   "narration": "In the nineteen twenties, a Russian journalist named Solomon Shereshevsky could repeat long lists of numbers, even years later. But he struggled to forget, and sometimes even to follow a simple conversation.",
+   "image_prompt": "a 1920s newspaper office drawn in soft anime style, endless glowing number strings spiralling around an empty desk chair",
+   "id": 23
   },
   {
    "chapter": "2. Memory",
@@ -350,7 +390,7 @@
    "narration": "And here's the twist: you don't store memories like files. You rebuild them every time you remember, like retelling a story.",
    "image_prompt": "a memory drawn as a glowing sandcastle being rebuilt by tiny hands of light, slightly different each time, at the edge of a calm sea",
    "transition": "out",
-   "id": 21
+   "id": 24
   },
   {
    "chapter": "2. Memory",
@@ -366,7 +406,7 @@
      "text": "FORGETTING = CLEAN-UP"
     }
    ],
-   "id": 22
+   "id": 25
   },
   {
    "chapter": "3. Speed",
@@ -376,7 +416,7 @@
    "narration": "Level three. Speed.",
    "image_prompt": "a stopwatch made of light floating over a quiet night race track",
    "transition": "dive",
-   "id": 23
+   "id": 26
   },
   {
    "chapter": "3. Speed",
@@ -408,7 +448,7 @@
      "max": 130
     }
    ],
-   "id": 24
+   "id": 27
   },
   {
    "chapter": "3. Speed",
@@ -426,7 +466,19 @@
      "suffix": " ms"
     }
    ],
-   "id": 25
+   "id": 28
+  },
+  {
+   "chapter": "3. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Your \"now\" is a little late",
+    "Edited to feel in sync"
+   ],
+   "narration": "Even your sense of now is a little late. Your brain takes a fraction of a second to build each moment, then edits it so sound and sight feel perfectly in sync.",
+   "image_prompt": "a film editor's desk made of light, two glowing strips of sound and picture sliding into place together, a small clock ticking softly",
+   "id": 29
   },
   {
    "chapter": "3. Speed",
@@ -440,7 +492,7 @@
    "narration": "Fantasy upgrade: neurons that fire ten times faster. Sounds great. But more firing means more energy, and more energy means more heat.",
    "image_prompt": "a cartoon brain wearing a tiny racing helmet, steam and little flames starting to rise from it",
    "energy": true,
-   "id": 26
+   "id": 30
   },
   {
    "chapter": "3. Speed",
@@ -472,7 +524,7 @@
      "max": 42
     }
    ],
-   "id": 27
+   "id": 31
   },
   {
    "chapter": "3. Speed",
@@ -498,7 +550,7 @@
     }
    ],
    "transition": "out",
-   "id": 28
+   "id": 32
   },
   {
    "chapter": "4. Body",
@@ -508,7 +560,7 @@
    "narration": "Level four. Your body.",
    "image_prompt": "a glowing anatomy figure made of glass standing in a calm sunny field",
    "transition": "gta",
-   "id": 29
+   "id": 33
   },
   {
    "chapter": "4. Body",
@@ -520,7 +572,21 @@
    ],
    "narration": "Your brain is also a bodyguard. It never lets your muscles pull with everything they have, because that could tear tendons or crack bones.",
    "image_prompt": "a glass arm with glowing muscles, a small glowing safety lock on the elbow holding back the muscle fibres",
-   "id": 30
+   "id": 34
+  },
+  {
+   "chapter": "4. Body",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Heartbeat",
+    "Breathing",
+    "Digestion",
+    "All automatic"
+   ],
+   "narration": "And it runs a hundred things you never notice. Your heartbeat, your breathing, your digestion. If you had to control all of that yourself, there'd be no brain left for thinking.",
+   "image_prompt": "a glass human body with calm glowing systems inside, a heart, lungs and stomach each pulsing softly like quiet machines in a night factory",
+   "id": 35
   },
   {
    "chapter": "4. Body",
@@ -533,7 +599,7 @@
    "narration": "In extreme moments, with adrenaline flooding in, people have reported surprising bursts of strength. Scientists think the brain loosens that limit for a moment.",
    "image_prompt": "a dramatic anime scene of a glowing silhouette lifting the corner of a car on a rainy street, golden adrenaline sparks around them",
    "energy": true,
-   "id": 31
+   "id": 36
   },
   {
    "chapter": "4. Body",
@@ -545,7 +611,7 @@
    ],
    "narration": "Now imagine no limit at all. And no pain either. Sounds powerful, until you remember why pain exists.",
    "image_prompt": "a glowing red alarm bell in the shape of a nerve, ringing softly next to a bandaged hand",
-   "id": 32
+   "id": 37
   },
   {
    "chapter": "4. Body",
@@ -561,7 +627,7 @@
      "text": "PAIN = ALARM"
     }
    ],
-   "id": 33
+   "id": 38
   },
   {
    "chapter": "5. Learning",
@@ -571,7 +637,7 @@
    "narration": "Level five. Learning.",
    "image_prompt": "a small sprout growing out of a glowing book at dawn",
    "transition": "dive",
-   "id": 34
+   "id": 39
   },
   {
    "chapter": "5. Learning",
@@ -583,7 +649,7 @@
    ],
    "narration": "This is the one upgrade you already have. Every time you practise something, your brain physically rewires itself.",
    "image_prompt": "a glowing brain with new bright paths growing between districts like roads being built overnight",
-   "id": 35
+   "id": 40
   },
   {
    "chapter": "5. Learning",
@@ -601,7 +667,25 @@
      "suffix": "+"
     }
    ],
-   "id": 36
+   "id": 41
+  },
+  {
+   "chapter": "5. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "You don't have to be a taxi driver. In one study, people who learned to juggle for three months showed measurable changes in their brain scans.",
+   "image_prompt": "three glowing juggling balls arcing through the air in a sunny park, a soft brain-scan hologram brightening beside them",
+   "gfx": [
+    {
+     "type": "stat",
+     "at": "three",
+     "value": 3,
+     "caption": "months of juggling = visible change",
+     "suffix": " months"
+    }
+   ],
+   "id": 42
   },
   {
    "chapter": "5. Learning",
@@ -614,7 +698,7 @@
    "narration": "And while you sleep, your brain replays the day and keeps what matters. So a well-rested brain is already closer to one hundred percent than a tired one.",
    "image_prompt": "a peaceful bedroom at night, a dreamy glowing replay of the day drifting above the bed like constellations",
    "transition": "out",
-   "id": 37
+   "id": 43
   },
   {
    "chapter": "6. Superpowers",
@@ -624,7 +708,7 @@
    "narration": "Level six. Superpowers.",
    "image_prompt": "a glowing comic-style lightning bolt inside a glass sphere under the stars",
    "transition": "gta",
-   "id": 38
+   "id": 44
   },
   {
    "chapter": "6. Superpowers",
@@ -636,7 +720,7 @@
    ],
    "narration": "In the movie Lucy, a drug unlocks a hundred percent of the brain, and suddenly she can read minds and move objects.",
    "image_prompt": "a cinema screen showing a glowing figure with floating objects around her, film reel frames curling at the edges",
-   "id": 39
+   "id": 45
   },
   {
    "chapter": "6. Superpowers",
@@ -652,7 +736,7 @@
      "text": "NO EVIDENCE"
     }
    ],
-   "id": 40
+   "id": 46
   },
   {
    "chapter": "6. Superpowers",
@@ -672,7 +756,7 @@
     }
    ],
    "energy": true,
-   "id": 41
+   "id": 47
   },
   {
    "chapter": "6. Superpowers",
@@ -690,7 +774,7 @@
      "suffix": "+"
     }
    ],
-   "id": 42
+   "id": 48
   },
   {
    "chapter": "6. Superpowers",
@@ -703,7 +787,7 @@
    "narration": "His brain was wired differently. Some everyday things were hard for him. Every extreme ability seems to come with a cost.",
    "image_prompt": "a golden balance scale floating in space, one side a glowing book, the other a small everyday house key",
    "transition": "out",
-   "id": 43
+   "id": 49
   },
   {
    "chapter": "The real 100%",
@@ -719,7 +803,7 @@
      "text": "THE REAL 100%?"
     }
    ],
-   "id": 44
+   "id": 50
   },
   {
    "chapter": "The real 100%",
@@ -730,11 +814,11 @@
     "No self-doubt",
     "Flow"
    ],
-   "narration": "Time disappears. You stop worrying about what others think. The task almost does itself. Psychologists call it flow.",
+   "narration": "Time disappears. You stop worrying about what others think. The task almost does itself. Psychologists call it flow. Athletes call it being in the zone.",
    "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) painting on a giant canvas in a quiet studio at night, warm light, time-lapse clocks gently melting into stars around her",
    "ref": "mira",
    "cutout": true,
-   "id": 45
+   "id": 51
   },
   {
    "chapter": "The real 100%",
@@ -750,7 +834,7 @@
      "text": "LESS NOISE"
     }
    ],
-   "id": 46
+   "id": 52
   },
   {
    "chapter": "The real 100%",
@@ -763,7 +847,7 @@
    ],
    "narration": "Flow shows up when a challenge is just a little harder than your skill. Too easy is boring. Too hard is stress. In between is the sweet spot.",
    "image_prompt": "a glowing curved path between a sleepy grey valley and a stormy cliff, a bright golden lane running exactly in the middle",
-   "id": 47
+   "id": 53
   },
   {
    "chapter": "Showdown",
@@ -785,7 +869,7 @@
    ],
    "transition": "gta",
    "energy": true,
-   "id": 48
+   "id": 54
   },
   {
    "chapter": "Showdown",
@@ -826,7 +910,7 @@
      "right_sub": "1"
     }
    ],
-   "id": 49
+   "id": 55
   },
   {
    "chapter": "Showdown",
@@ -852,7 +936,7 @@
      "right_sub": "2"
     }
    ],
-   "id": 50
+   "id": 56
   },
   {
    "chapter": "Showdown",
@@ -873,7 +957,7 @@
      "right_sub": "3"
     }
    ],
-   "id": 51
+   "id": 57
   },
   {
    "chapter": "Showdown",
@@ -914,7 +998,7 @@
      "right_sub": "3"
     }
    ],
-   "id": 52
+   "id": 58
   },
   {
    "chapter": "Showdown",
@@ -955,7 +1039,7 @@
      "right_sub": "3"
     }
    ],
-   "id": 53
+   "id": 59
   },
   {
    "chapter": "Showdown",
@@ -977,7 +1061,7 @@
      "right_sub": "3"
     }
    ],
-   "id": 54
+   "id": 60
   },
   {
    "chapter": "Showdown",
@@ -993,7 +1077,7 @@
      "text": "?"
     }
    ],
-   "id": 55
+   "id": 61
   },
   {
    "chapter": "Showdown",
@@ -1013,7 +1097,7 @@
     }
    ],
    "energy": true,
-   "id": 56
+   "id": 62
   },
   {
    "chapter": "Showdown",
@@ -1033,7 +1117,7 @@
      "at2": "best"
     }
    ],
-   "id": 57
+   "id": 63
   },
   {
    "chapter": "Ending",
@@ -1048,7 +1132,7 @@
    "narration": "So your brain doesn't need to run at one hundred percent. It needs the right lights on at the right time. Good sleep. Real challenges. A little less noise.",
    "image_prompt": "the brain night city calm and beautiful, the right districts glowing warmly, a soft sunrise beginning on the horizon",
    "transition": "dive",
-   "id": 58
+   "id": 64
   },
   {
    "chapter": "Ending",
@@ -1064,7 +1148,7 @@
      "text": "BRAIN + AI"
     }
    ],
-   "id": 59
+   "id": 65
   },
   {
    "chapter": "Ending",
@@ -1073,7 +1157,7 @@
    "labels": [],
    "narration": "The question isn't who wins. It's what you'll build. See you on the next orbit.",
    "image_prompt": "a small green glass planet with a glowing orbit ring floating in space at sunrise, tiny forests and a glass city on it",
-   "id": 60
+   "id": 66
   }
  ],
  "shorts": []

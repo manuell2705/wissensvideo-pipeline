@@ -21,8 +21,16 @@ def ref_for(s):
     return REFS.get(s.get('ref'), sheet)
 from diffusers import QwenImageEditPlusPipeline
 ed = QwenImageEditPlusPipeline.from_pretrained("Qwen/Qwen-Image-Edit-2509", torch_dtype=torch.bfloat16).to('cuda')
-for s in script['scenes']:
+import os
+PRE = [int(x) for x in os.environ.get('PREVIEW_IDS', '').split(',') if x]
+order = [s for s in script['scenes'] if s['id'] in PRE] + [s for s in script['scenes'] if s['id'] not in PRE]
+done = 0
+for s in order:
+    if done == len([x for x in order if x['id'] in PRE and x.get('image_prompt')]) and PRE and done: upload()   # quick preview first
     if not s.get('image_prompt'): continue
+    if (out / f"scene_{s['id']:03d}_1.jpg").exists(): continue
+    done += 1
+    if done > len(PRE) and done % 10 == 0: upload()
     p = s['image_prompt'].replace('Kai (', 'Kai from the reference image (').replace('Mira (', 'Mira from the reference image (').replace('Orbi (', 'Orbi from the reference image (')
     t = time.time()
     r = ref_for(s)
@@ -31,7 +39,7 @@ for s in script['scenes']:
         p = p + '. Completely new scene, only keep the art style and colours of the reference image'
     im = ed(image=[r], prompt=f"{p}. Wide 16:9 cinematic scene, keep faces, hair and outfits exactly as in the reference. {STYLE}", negative_prompt=NEG,
             num_inference_steps=30, true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10)).images[0]
-    im.save(out / f"scene_{s['id']:03d}_1.jpg", quality=93); print('still', s['id'], round(time.time() - t), 's', flush=True)
+    im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(out / f"scene_{s['id']:03d}_1.jpg"); print('still', s['id'], round(time.time() - t), 's', flush=True)
 upload()
 del ed; torch.cuda.empty_cache()
 if not any(x.get('motion') for x in script['scenes']): sys.exit(0)

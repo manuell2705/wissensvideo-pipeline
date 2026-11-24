@@ -91,15 +91,16 @@ V.scenes.forEach((s, i) => {
   }
   // Frutiger Aero bubbles: glossy soap bubbles rising slowly, plus a few sparkle dots
   const pc = el.querySelector('.particles');
-  for (let k = 0; k < 16; k++) {
-    const p = document.createElement('div'); const isDot = k % 4 === 3;
+  // only a few: 2 subtle bubbles, the rest soft light motes (user: not too many bubbles)
+  for (let k = 0; k < 8; k++) {
+    const p = document.createElement('div'); const isDot = k >= 2;
     p.className = isDot ? 'p dot' : 'p';
-    const sz = isDot ? 3 + rnd() * 4 : (V.width / 1920) * (10 + rnd() * rnd() * 70);
+    const sz = isDot ? 3 + rnd() * 4 : (V.width / 1920) * (8 + rnd() * 18);
     p.style.width = p.style.height = sz + 'px';
     p.style.left = (rnd() * 100) + '%'; p.style.top = (20 + rnd() * 85) + '%'; pc.appendChild(p);
     const rise = 60 + rnd() * 180, drift = (rnd() - .5) * 80;
     tl.fromTo(p, { y: 0, x: 0, opacity: 0, scale: 0.85 },
-      { y: -rise, x: drift, opacity: 0.45 + rnd() * 0.5, scale: 1, duration: d + XF, ease: 'sine.out' }, t0 - XF / 2);
+      { y: -rise, x: drift, opacity: isDot ? 0.3 + rnd() * 0.5 : 0.25 + rnd() * 0.25, scale: 1, duration: d + XF, ease: 'sine.out' }, t0 - XF / 2);
   }
   // overlays per kind
   if (s.kind === 'title' && s.onscreen) {

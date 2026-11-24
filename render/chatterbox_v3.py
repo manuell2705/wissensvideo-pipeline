@@ -20,6 +20,9 @@ REFS = {  # synthetic reference voices only (no real person is cloned)
  'default': None, 'george': ('kokoro', 'bm_george'), 'lewis': ('kokoro', 'bm_lewis'), 'daniel': ('kokoro', 'bm_daniel'),
  'michael': ('kokoro', 'am_michael'), 'fenrir': ('kokoro', 'am_fenrir'), 'emma': ('kokoro', 'bf_emma'),
  'minimax_narrator': ('file', 'render/refs/minimax_narrator.wav'),
+ 'fable': ('kokoro', 'bm_fable'), 'fable_lively': ('kokoro', 'bm_fable'),
+ 'isabella': ('kokoro', 'bf_isabella'), 'alice': ('kokoro', 'bf_alice'), 'heart': ('kokoro', 'af_heart'), 'bella': ('kokoro', 'af_bella'),
+ 'isabella_lively': ('kokoro', 'bf_isabella'), 'heart_lively': ('kokoro', 'af_heart'),
 }
 ref = REFS[variant]; ref_path = None
 if ref and ref[0] == 'kokoro':
@@ -35,7 +38,9 @@ elif ref:
 from chatterbox.tts import ChatterboxTTS
 model = ChatterboxTTS.from_pretrained(device='cpu')
 parts = []
+LIVELY = 1.25 if variant.endswith('_lively') else 1.0
 for text, exa, cfg, pause in SEGS:
+    exa = min(1.4, exa * LIVELY)
     kw = dict(exaggeration=exa, cfg_weight=cfg, temperature=0.85)
     if ref_path: kw['audio_prompt_path'] = str(ref_path)
     w = model.generate(text, **kw).squeeze(0).cpu().numpy()

@@ -1,5 +1,8 @@
 name: Chatterbox v3
-on: { workflow_dispatch: {} }
+on:
+  workflow_dispatch:
+    inputs:
+      variants: { description: 'JSON list', required: false, default: '["default","george","lewis","daniel","michael","fenrir","emma","minimax_narrator"]' }
 permissions:
   contents: write
 jobs:
@@ -9,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        variant: [default, george, lewis, daniel, michael, fenrir, emma, minimax_narrator]
+        variant: ${{ fromJSON(inputs.variants) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

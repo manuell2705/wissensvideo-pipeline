@@ -10,7 +10,7 @@
   html, body { width: var(--w); height: var(--h); overflow: hidden; background: var(--night); }
   body { font-family: 'Fredoka', 'Nunito', 'DejaVu Sans', sans-serif; color: var(--ink); }
   #stage { position: absolute; inset: 0; overflow: hidden; }
-  .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+  .scene { position: absolute; inset: 0; opacity: 0; overflow: hidden; will-change: transform; }
   .bg { position: absolute; inset: -6%; background-size: cover; background-position: center; will-change: transform; }
   .bg.placeholder { background: radial-gradient(circle at 50% 40%, #1d6f8f, #123d7a 45%, #0b1e3f 80%); }
   .shade { position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(5,15,40,.28) 100%); }
@@ -94,9 +94,32 @@ V.scenes.forEach((s, i) => {
   const dark = el.querySelector('.dark');
   const t0 = s.start, d = s.dur;
   // scene in/out
-  tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: i === 0 ? 0.01 : XF, ease: 'power1.inOut' }, Math.max(0, t0 - (i === 0 ? 0 : XF / 2)));
-  tl.set(el, { opacity: 0 }, t0 + d + XF / 2 + 0.05);
+  // scene transitions like the reference videos: dive INTO the old picture and land in the new one, or zoom OUT so the
+  // old picture becomes a small part of the new one. Alternates with a soft crossfade so it never gets repetitive.
+  const prevEl = i > 0 ? stage.children[i - 1] : null;
+  const tr = i === 0 ? 'cut' : (s.transition || ['dive', 'out', 'dive', 'fade'][i % 4]);
+  const fxp = 35 + ((i * 29) % 30), fyp = 35 + ((i * 17) % 25);   // focal point of the zoom
+  el.style.transformOrigin = `${fxp}% ${fyp}%`;
+  if ((tr === 'dive' || tr === 'out') && prevEl) {
+    // both pictures move together on one camera path, so it feels like one continuous zoom
+    const T = 1.0, a = t0 - 0.5, E = 'power2.inOut', dive = tr === 'dive';
+    tl.set(prevEl, { zIndex: dive ? 1 : 3, transformOrigin: `${fxp}% ${fyp}%` }, a);
+    tl.set(el, { zIndex: 2 }, a);
+    tl.fromTo(prevEl, { scale: 1 }, { scale: dive ? 6 : 0.18, duration: T, ease: E, immediateRender: false }, a);
+    tl.fromTo(prevEl, { opacity: 1 }, { opacity: 0, duration: T * 0.35, ease: 'power1.in', immediateRender: false }, a + T * 0.6);
+    tl.fromTo(el, { scale: dive ? 0.17 : 5, opacity: 0 }, { scale: 1, duration: T, ease: E, immediateRender: false }, a);
+    if (dive) tl.fromTo(el, { borderRadius: '50%' }, { borderRadius: '0%', duration: T, ease: 'power3.in', immediateRender: false }, a);   // round portal opening up
+    else tl.fromTo(prevEl, { borderRadius: '0%' }, { borderRadius: '12%', duration: T, ease: 'power2.in', immediateRender: false }, a);
+    tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: T * 0.35, ease: 'power1.out', immediateRender: false }, a + (dive ? T * 0.3 : 0.02));
+    if (dive) tl.fromTo(prevEl, { filter: 'blur(0px)' }, { filter: 'blur(5px)', duration: T * 0.4, immediateRender: false }, a + T * 0.6);
+    tl.set(prevEl, { scale: 1, filter: 'none', zIndex: 0, borderRadius: '0%' }, a + T + 0.02);
+    tl.set(el, { zIndex: 0 }, a + T + 0.02);
+  } else {
+    tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: i === 0 ? 0.01 : XF, ease: 'power1.inOut' }, Math.max(0, t0 - (i === 0 ? 0 : XF / 2)));
+  }
+  tl.set(el, { opacity: 0 }, t0 + d + XF / 2 + 0.6);
   const shots = (s.shots && s.shots.length) ? s.shots : [{ t: t0, d: d, img: s.img, line: null }];
+  if (tr === 'dive' || tr === 'out') shots.forEach(sh => { sh.line = null; });
   let bg = null;
   shots.forEach((sh, k) => {
     const wrap = document.createElement('div'); wrap.className = 'shot'; shotsBox.appendChild(wrap);

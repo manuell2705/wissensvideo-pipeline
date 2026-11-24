@@ -49,6 +49,17 @@
      line-height: 1.15; text-shadow: 0 0 6px #000, 0 6px 0 rgba(0,0,0,.6); -webkit-text-stroke: 4px var(--navy); paint-order: stroke fill; }
   .cap .w { display: inline-block; margin: 0 .12em; opacity: 0; }
   .cap .w.hot { color: var(--amber); }
+  /* anime motion pass */
+  .shots { position: absolute; inset: 0; }
+  .shot { position: absolute; inset: 0; overflow: hidden; }
+  .line, .paper { position: absolute; inset: -6%; background-size: cover; background-position: center; }
+  .paper { background: #0c1e3f; }
+  .speed { position: absolute; left: 50%; top: 50%; width: 260%; height: 260%; margin: -130% 0 0 -130%; opacity: 0; pointer-events: none; mix-blend-mode: screen; }
+  .flash { position: absolute; inset: 0; background: #fff; opacity: 0; mix-blend-mode: screen; }
+  .leak { position: absolute; width: 70%; height: 90%; border-radius: 50%; filter: blur(60px); mix-blend-mode: screen; opacity: .0; pointer-events: none; }
+  .grain { position: absolute; inset: -50%; opacity: .07; pointer-events: none; mix-blend-mode: overlay;
+     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .bars { position: absolute; left: 0; right: 0; height: 7%; background: #050b18; z-index: 5; }
   .brand { position: absolute; right: 3%; top: 4%; font-weight: 700; font-size: calc(var(--u) * 2.0); opacity: .5; letter-spacing: .08em; }
 </style>
 </head>
@@ -74,27 +85,79 @@ const XF = 0.6; // crossfade seconds
 
 V.scenes.forEach((s, i) => {
   const el = document.createElement('div'); el.className = 'scene'; stage.appendChild(el);
-  const bg = document.createElement('div'); bg.className = 'bg' + (s.img ? '' : ' placeholder');
-  if (s.img) bg.style.backgroundImage = `url("${s.img}")`;
-  el.appendChild(bg);
+  el.insertAdjacentHTML('beforeend', '<div class="shots"></div>');
+  const shotsBox = el.querySelector('.shots');
   el.insertAdjacentHTML('beforeend', '<div class="shade"></div><div class="dark"></div><div class="particles"></div>');
   const dark = el.querySelector('.dark');
   const t0 = s.start, d = s.dur;
   // scene in/out
   tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: i === 0 ? 0.01 : XF, ease: 'power1.inOut' }, Math.max(0, t0 - (i === 0 ? 0 : XF / 2)));
   tl.set(el, { opacity: 0 }, t0 + d + XF / 2 + 0.05);
-  // camera: Ken Burns, alternate direction; long scenes get a second move
-  const dir = i % 4;
-  const fromS = [1.0, 1.12, 1.04, 1.1][dir], toS = [1.12, 1.0, 1.14, 1.02][dir];
-  const fx = [-2, 2, 0, -1.5][dir], tx = [2, -2, 0, 1.5][dir];
-  const fy = [0, 0, -2, 1.5][dir], ty = [0, 0, 2, -1.5][dir];
-  if (d > 9 && !s.kind.match(/title|chapter/)) {
-    const mid = t0 + d * 0.5;
-    tl.fromTo(bg, { scale: fromS, xPercent: fx, yPercent: fy }, { scale: (fromS + toS) / 2 + 0.03, xPercent: 0, yPercent: 0, duration: mid - t0 + XF, ease: 'sine.inOut' }, t0 - XF / 2);
-    tl.to(bg, { scale: toS + 0.06, xPercent: tx * 1.4, yPercent: ty * 1.4, duration: d / 2 + XF, ease: 'sine.inOut' }, mid + XF / 2);
-  } else {
-    tl.fromTo(bg, { scale: fromS, xPercent: fx, yPercent: fy }, { scale: toS, xPercent: tx, yPercent: ty, duration: d + XF, ease: 'sine.inOut' }, t0 - XF / 2);
+  const shots = (s.shots && s.shots.length) ? s.shots : [{ t: t0, d: d, img: s.img, line: null }];
+  let bg = null;
+  shots.forEach((sh, k) => {
+    const wrap = document.createElement('div'); wrap.className = 'shot'; shotsBox.appendChild(wrap);
+    const b = document.createElement('div'); b.className = 'bg' + (sh.img ? '' : ' placeholder');
+    if (sh.img) b.style.backgroundImage = `url("${sh.img}")`;
+    wrap.appendChild(b); if (k === 0) bg = b;
+    const st = sh.t, sd = sh.d;
+    // camera per shot: Ken Burns with varied direction (+ a slight 3D drift so it never feels like a slideshow)
+    const dir = (i + k) % 4;
+    const fromS = [1.02, 1.14, 1.05, 1.12][dir], toS = [1.14, 1.02, 1.16, 1.04][dir];
+    const fx = [-2, 2, 0, -1.5][dir], tx = [2, -2, 0, 1.5][dir], fy = [0, 0, -2, 1.5][dir], ty = [0, 0, 2, -1.5][dir];
+    tl.fromTo(b, { scale: fromS, xPercent: fx, yPercent: fy, rotation: (dir - 1.5) * 0.25 },
+                 { scale: toS, xPercent: tx, yPercent: ty, rotation: -(dir - 1.5) * 0.25, duration: sd + XF + 0.3, ease: 'sine.inOut' }, st - XF / 2);
+    if (k > 0) {
+      // cut styles between shots of one scene: flash cut, whip pan, ink bloom, zoom punch
+      const kind = (i * 3 + k) % 4;
+      if (kind === 0) {
+        tl.set(wrap, { opacity: 0 }, 0); tl.set(wrap, { opacity: 1 }, st);
+        const f = document.createElement('div'); f.className = 'flash'; wrap.appendChild(f);
+        tl.fromTo(f, { opacity: 0.9 }, { opacity: 0, duration: 0.35, ease: 'power2.out' }, st);
+      } else if (kind === 1) {
+        const prev = shotsBox.children[k - 1];
+        tl.fromTo(wrap, { xPercent: 100, filter: 'blur(14px)' }, { xPercent: 0, filter: 'blur(0px)', duration: 0.32, ease: 'power3.out' }, st - 0.12);
+        tl.to(prev, { xPercent: -40, filter: 'blur(14px)', duration: 0.32, ease: 'power3.in' }, st - 0.2);
+        tl.set(wrap, { xPercent: 100 }, 0);
+      } else if (kind === 2) {
+        const cx = 30 + ((i * 37 + k * 23) % 40), cy = 35 + ((i * 17) % 30);
+        tl.fromTo(wrap, { clipPath: `circle(0% at ${cx}% ${cy}%)` }, { clipPath: `circle(150% at ${cx}% ${cy}%)`, duration: 0.75, ease: 'power2.inOut' }, st - 0.35);
+      } else {
+        tl.set(wrap, { opacity: 0 }, 0);
+        tl.fromTo(wrap, { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'expo.out' }, st - 0.1);
+      }
+    }
+    if (sh.line) {
+      // 'being drawn': glowing line art sketches itself in, then colour blooms through it
+      const paper = document.createElement('div'); paper.className = 'paper'; wrap.appendChild(paper);
+      const ln = document.createElement('div'); ln.className = 'line'; ln.style.backgroundImage = `url("${sh.line}")`; wrap.appendChild(ln);
+      tl.fromTo(ln, { clipPath: 'polygon(0% 0%, 0% 0%, -30% 100%, -30% 100%)' }, { clipPath: 'polygon(0% 0%, 130% 0%, 100% 100%, -30% 100%)', duration: 1.1, ease: 'power1.inOut' }, st);
+      tl.fromTo(ln, { scale: 1.04 }, { scale: 1.0, duration: 2.0, ease: 'sine.out' }, st);
+      const cx = 50, cy = 45;
+      tl.fromTo([paper, ln], { clipPath: `circle(150% at ${cx}% ${cy}%)` }, { clipPath: `circle(0% at ${cx}% ${cy}%)`, duration: 0.9, ease: 'power2.in' }, st + 1.25);
+      tl.fromTo(b, { filter: 'saturate(0.3) brightness(1.3)' }, { filter: 'saturate(1) brightness(1)', duration: 1.0, ease: 'power2.out' }, st + 1.3);
+    }
+  });
+  // anime speed lines on high-energy moments
+  if (s.energy && !s.kind.match(/title|chapter/)) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const sv = document.createElementNS(ns, 'svg'); sv.setAttribute('viewBox', '-100 -100 200 200'); sv.setAttribute('class', 'speed');
+    let paths = '';
+    for (let q = 0; q < 70; q++) { const a = (q / 70) * Math.PI * 2 + rnd() * 0.05, w = 0.006 + rnd() * 0.012, r0 = 26 + rnd() * 18;
+      paths += `<path d="M${Math.cos(a - w) * r0},${Math.sin(a - w) * r0} L${Math.cos(a) * 140},${Math.sin(a) * 140} L${Math.cos(a + w) * r0},${Math.sin(a + w) * r0}Z" fill="rgba(255,255,255,${0.35 + rnd() * 0.5})"/>`; }
+    sv.innerHTML = paths; el.appendChild(sv);
+    const sT = t0 + ((shots[0] && shots[0].line) ? Math.min(2.4, d * 0.4) : Math.min(1.2, d * 0.2));
+    tl.fromTo(sv, { opacity: 0, scale: 1.25 }, { opacity: 0.55, scale: 1, duration: 0.25, ease: 'power2.out' }, sT);
+    for (let q = 0; q < 8; q++) tl.set(sv, { rotation: (q % 2 ? 1.5 : -1.5) }, sT + q * 0.09);
+    tl.to(sv, { opacity: 0, scale: 0.92, duration: 0.5, ease: 'power2.in' }, sT + 0.9);
+    tl.to(bg, { keyframes: { x: [0, -8, 7, -5, 3, 0] }, duration: 0.4, ease: 'none' }, sT);
   }
+  // light leaks: warm amber + teal glow drifting slowly (cinematic anime look)
+  const lk1 = document.createElement('div'); lk1.className = 'leak'; lk1.style.background = 'radial-gradient(circle, rgba(255,181,71,.9), rgba(255,120,60,0))';
+  const lk2 = document.createElement('div'); lk2.className = 'leak'; lk2.style.background = 'radial-gradient(circle, rgba(63,224,208,.8), rgba(63,224,208,0))';
+  el.appendChild(lk1); el.appendChild(lk2);
+  tl.fromTo(lk1, { left: '-30%', top: '-30%', opacity: 0 }, { left: '-5%', top: '-15%', opacity: 0.22, duration: d + XF, ease: 'sine.inOut' }, t0 - XF / 2);
+  tl.fromTo(lk2, { left: '75%', top: '55%', opacity: 0 }, { left: '60%', top: '40%', opacity: 0.16, duration: d + XF, ease: 'sine.inOut' }, t0 - XF / 2);
   // a few soft light motes drifting upward
   const pc = el.querySelector('.particles');
   for (let k = 0; k < 6; k++) {
@@ -144,6 +207,7 @@ V.scenes.forEach((s, i) => {
       const c = document.createElement('div'); c.className = 'card glass';
       c.innerHTML = `<span class="dot"></span>${lb.text}`; box.appendChild(c);
       tl.fromTo(c, { y: 30, opacity: 0, scale: 0.9 }, { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'back.out(1.8)' }, lb.t);
+      tl.fromTo(c.querySelector('.dot'), { scale: 2.6 }, { scale: 1, duration: 0.45, ease: 'back.out(3)' }, lb.t + 0.05);
     });
     tl.to(box, { opacity: 0, y: 16, duration: 0.4, ease: 'power2.in' }, t0 + d - 0.35);
   }
@@ -164,6 +228,8 @@ if (V.captions) {
     tl.set(box, { opacity: 0 }, end);
   }
 }
+{ const g = document.createElement('div'); g.className = 'grain'; stage.appendChild(g);
+  tl.fromTo(g, { x: 0, y: 0 }, { keyframes: { x: [0, -37, 22, -11, 41, 0], y: [0, 19, -33, 27, -8, 0] }, duration: 0.5, ease: 'steps(6)', repeat: Math.ceil(V.total / 0.5) }, 0); }
 if (V.brand) { const b = document.createElement('div'); b.className = 'brand'; b.textContent = V.brand; stage.appendChild(b); }
 tl.set({}, {}, V.total);
 window.seekTo = (t) => { tl.seek(t, false); return true; };

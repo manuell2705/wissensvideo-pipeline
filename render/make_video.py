@@ -146,6 +146,8 @@ def make_images(scenes, outdir, landscape=True):
     for s in scenes:
         p = outdir / 'img' / f"scene_{s['id']:03d}.jpg"
         s['img'] = None
+        if list((outdir / 'img').glob(f"scene_{s['id']:03d}_*.jpg")):   # several GPU shots already there
+            s['img'] = str(sorted((outdir / 'img').glob(f"scene_{s['id']:03d}_*.jpg"))[0]); continue
         if p.exists() and p.stat().st_size > 5000:
             s['img'] = str(p); continue
         if prov == 'none':
@@ -197,6 +199,47 @@ def build_audio(scenes, outdir, total, name):
     wav = outdir / f'{name}_voice.wav'
     sf.write(str(wav), buf[:int(total * SR)], SR)
     return wav
+
+
+
+# ---------------------------------------------------------------- anime motion pass (2026-11-24)
+def sketch(src, dst):
+    """Pencil/ink line-art version of an image (colour-dodge sketch), tinted night-blue: used for the 'being drawn' reveal."""
+    from PIL import Image, ImageFilter, ImageOps
+    im = Image.open(src).convert('L')
+    inv = ImageOps.invert(im).filter(ImageFilter.GaussianBlur(6))
+    a, b = np.asarray(im, dtype=np.float32), np.asarray(inv, dtype=np.float32)
+    d = np.clip(a * 255.0 / np.maximum(1, 255.0 - b), 0, 255)
+    d = np.clip((d - 120) * 1.9, 0, 255) / 255.0            # stronger lines
+    paper, ink = np.array([12, 30, 63], np.float32), np.array([200, 245, 255], np.float32)   # glowing lines on night blue
+    rgb = paper[None, None] * d[..., None] + ink[None, None] * (1 - d[..., None])
+    Image.fromarray(rgb.astype(np.uint8)).save(dst, quality=90)
+
+
+def shot_files(outdir, s):
+    """scene_XXX_1.jpg, scene_XXX_2.jpg ... (several shots per scene) or the single scene_XXX.jpg."""
+    multi = sorted((outdir / 'img').glob(f"scene_{s['id']:03d}_*.jpg"))
+    multi = [m for m in multi if not m.stem.endswith('_line')]
+    if multi: return multi
+    one = outdir / 'img' / f"scene_{s['id']:03d}.jpg"
+    return [one] if one.exists() else []
+
+
+def shot_times(s, n):
+    """Split the scene into n shots; cut on a sentence start close to the even split, so cuts land on speech rhythm."""
+    d, off = s['dur'], s['start']
+    if n <= 1: return [(off, d)]
+    words = s.get('words') or []
+    starts = [w['s'] for i, w in enumerate(words) if i == 0 or re.search(r'[.!?,:]$', words[i - 1]['w'])]
+    lead = 0.35 if s['kind'] in ('title', 'chapter') else 0
+    cuts = []
+    for k in range(1, n):
+        ideal = d * k / n
+        cand = [lead + t for t in starts if 1.6 < lead + t < d - 1.6]
+        c = min(cand, key=lambda t: abs(t - ideal)) if cand and min(abs(t - ideal) for t in cand) < d / n * 0.45 else ideal
+        cuts.append(c)
+    edges = [0] + sorted(set(round(c, 3) for c in cuts)) + [d]
+    return [(off + a, b - a) for a, b in zip(edges, edges[1:]) if b - a > 0.8]
 
 
 # ---------------------------------------------------------------- render
@@ -252,12 +295,25 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
     if rdir.exists(): shutil.rmtree(rdir)
     rdir.mkdir(parents=True)
     shutil.copytree(HERE / 'vendor', rdir / 'vendor')
-    vs = []
-    for s in scenes:
-        img = None
-        if s.get('img'):
-            img = f"img_{s['id']:03d}.jpg"; shutil.copy(s['img'], rdir / img)
-        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'img': img, 'labels': label_times(s)})
+    vs, prev_ch = [], None
+    for i, s in enumerate(scenes):
+        files = shot_files(outdir, s) if not s.get('img') or Path(s['img']).parent == outdir / 'img' else [Path(s['img'])]
+        times = shot_times(s, len(files)) if files else [(s['start'], s['dur'])]
+        shots = []
+        for k, ((t, d), f) in enumerate(zip(times, files or [None])):
+            sh = {'t': round(t, 3), 'd': round(d, 3), 'img': None, 'line': None}
+            if f:
+                sh['img'] = f"img_{s['id']:03d}_{k}.jpg"; shutil.copy(f, rdir / sh['img'])
+                # 'being drawn' reveal on chapter openings and every 4th scene (first shot only)
+                if k == 0 and s['kind'] == 'image' and (s['chapter'] != prev_ch or i % 4 == 1) and os.environ.get('SKETCH', '1') == '1':
+                    sh['line'] = f"line_{s['id']:03d}.jpg"
+                    try: sketch(f, rdir / sh['line'])
+                    except Exception as e: log('sketch fail', s['id'], e); sh['line'] = None
+            shots.append(sh)
+        prev_ch = s['chapter']
+        energy = '!' in s['narration'] or bool(re.search(r'\b(boom|suddenly|explod|fire|blackout|switch)', s['narration'].lower()))
+        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} |
+                  {'img': shots[0]['img'], 'shots': shots, 'energy': energy, 'labels': label_times(s)})
     data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND', 'MINDSPHERE')}
     (rdir / 'data.js').write_text('window.VIDEO = ' + json.dumps(data) + ';')
     shutil.copy(HERE / 'template.html', rdir / 'index.html')

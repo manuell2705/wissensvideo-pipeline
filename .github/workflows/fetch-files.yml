@@ -1,0 +1,17 @@
+name: Fetch files
+on:
+  workflow_dispatch:
+    inputs:
+      files: { description: 'JSON object name -> url', required: true }
+      tag: { description: 'release tag', required: true }
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - env: { FILES: '${{ inputs.files }}', GH_TOKEN: '${{ github.token }}' }
+        run: |
+          mkdir f && cd f
+          echo "$FILES" | python3 -c "import json,sys,urllib.request;[urllib.request.urlretrieve(u,n) for n,u in json.load(sys.stdin).items()]"
+          ls -la && gh release create "${{ inputs.tag }}" * -R ${{ github.repository }} --title "${{ inputs.tag }}" --notes "fetched"

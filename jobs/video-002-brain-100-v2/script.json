@@ -1,9 +1,10 @@
 {
- "title": "What If You Used 100% of Your Brain?",
+ "title": "Flow State: Is This Your Brain at 100%?",
  "category": "Biology",
- "description": "You've heard you only use 10% of your brain. So what would happen if you switched on the rest? Superpowers, mind reading, perfect memory, total body control: we go through the questions everyone secretly asks, and answer them honestly with science. Every claim is sourced below.",
+ "description": "That feeling when time disappears and everything just works: flow. Is that your brain at 100%? And what would happen if you really switched everything on? Superpowers, mind reading, perfect memory, total body control: we go through the questions everyone secretly asks, and answer them honestly with science. Every claim is sourced below.",
  "tags": [
-  "brain",
+  "flow state",
+  "the zone",
   "10 percent myth",
   "neuroscience",
   "neuroplasticity",
@@ -28,6 +29,10 @@
   "Maguire et al. (2000), Navigation-related structural change in the hippocampi of taxi drivers, PNAS. https://doi.org/10.1073/pnas.070039597",
   "Walker & Stickgold (2004), Sleep-dependent learning and memory consolidation, Neuron. https://doi.org/10.1016/j.neuron.2004.08.031",
   "Erickson et al. (2011), Exercise training increases size of hippocampus and improves memory, PNAS. https://doi.org/10.1073/pnas.1015950108",
+  "Csikszentmihalyi, M. (1990), Flow: The Psychology of Optimal Experience. Harper & Row.",
+  "Dietrich (2004), Neurocognitive mechanisms underlying the experience of flow, Consciousness and Cognition. https://doi.org/10.1016/j.concog.2004.07.002",
+  "Limb & Braun (2008), Neural substrates of spontaneous musical performance: an fMRI study of jazz improvisation, PLoS ONE. https://doi.org/10.1371/journal.pone.0001679",
+  "Ulrich et al. (2014), Neural correlates of experimentally induced flow experiences, NeuroImage. https://doi.org/10.1016/j.neuroimage.2013.10.019",
   "NINDS: Epilepsy and Seizures. https://www.ninds.nih.gov/health-information/disorders/epilepsy-and-seizures"
  ],
  "scenes": [
@@ -37,8 +42,8 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "You've probably heard it. You only use ten percent of your brain.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) on a cosy sofa at night, a transparent head showing the brain drawn as a glowing night city inside a glass dome with only a few windows lit"
+   "narration": "You know that feeling. You're drawing, or playing, or writing, and suddenly the world goes quiet. Time disappears. Every move just... happens.",
+   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) drawing at a desk at night, completely absorbed, the room around them fading into soft glowing lines, a clock melting gently"
   },
   {
    "id": 2,
@@ -46,11 +51,31 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "And honestly? It's a tempting idea. Somewhere inside your skull, ninety percent of you is just... asleep. Waiting for someone to flip the switch.",
-   "image_prompt": "a giant old-fashioned power switch inside the brain drawn as a glowing night city inside a glass dome, most of the city dark and sleeping, a tiny figure looking up at the switch"
+   "narration": "No doubts. No hunger. No little voice asking if you're good enough. Just you, and the thing you're doing, perfectly in sync.",
+   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) skateboarding down a glowing hill road at sunset, a calm focused smile, everything else blurred into colour"
   },
   {
    "id": 3,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "flow state"
+   ],
+   "narration": "Athletes call it the zone. Scientists call it flow. And people who've felt it often say the same thing: it feels like your brain is finally running at full power.",
+   "image_prompt": "a split scene: a basketball player, a musician and a gamer, each surrounded by the same soft teal glow"
+  },
+  {
+   "id": 4,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Like a hidden switch was flipped. Which brings us to an old, famous claim. You only use ten percent of your brain.",
+   "image_prompt": "a giant old-fashioned power switch inside the brain drawn as a glowing night city inside a glass dome, most of the city dark and sleeping, a tiny figure looking up at the switch"
+  },
+  {
+   "id": 5,
    "chapter": "Hook",
    "kind": "image",
    "onscreen": null,
@@ -61,25 +86,25 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) swallowing a glowing pill, books and objects floating around them, dramatic cinema-poster lighting"
   },
   {
-   "id": 4,
+   "id": 6,
    "chapter": "Hook",
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "So what would really happen if you woke it all up? Would you get superpowers? Could you control your own body? Would you remember every single breakfast you've ever had?",
+   "narration": "So is flow the secret ninety percent waking up? And what would happen if you went all the way? Superpowers? Total control of your body? Remembering every breakfast you've ever had?",
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) surrounded by floating thought bubbles: a lightning bolt, a heart, a stack of breakfast plates going up to the sky"
   },
   {
-   "id": 5,
+   "id": 7,
    "chapter": "Hook",
    "kind": "title",
-   "onscreen": "Your Brain at 100%",
+   "onscreen": "Flow State: Your Brain at 100%?",
    "labels": [],
-   "narration": "This is your brain. At one hundred percent.",
+   "narration": "This is your brain. In flow. And at one hundred percent.",
    "image_prompt": "the green glass planet Mindsphere with a glowing orbit ring in space, a bright brain-shaped city glowing on its surface, epic title composition"
   },
   {
-   "id": 6,
+   "id": 8,
    "chapter": "Honesty",
    "kind": "image",
    "onscreen": null,
@@ -91,7 +116,7 @@
    "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) holding up a small glass sign next to a stack of science journals, friendly wink"
   },
   {
-   "id": 7,
+   "id": 9,
    "chapter": "The city in your head",
    "kind": "number",
    "onscreen": "86 billion neurons",
@@ -100,7 +125,7 @@
    "image_prompt": "ten small blue-green Earths lined up in a row, each full of tiny glowing dots like people"
   },
   {
-   "id": 8,
+   "id": 10,
    "chapter": "The city in your head",
    "kind": "image",
    "onscreen": null,
@@ -112,7 +137,7 @@
    "image_prompt": "two glowing neurons reaching toward each other with a tiny sparkling gap between them, a city skyline of neurons behind"
   },
   {
-   "id": 9,
+   "id": 11,
    "chapter": "The city in your head",
    "kind": "image",
    "onscreen": null,
@@ -126,7 +151,7 @@
    "image_prompt": "wide aerial view of the brain drawn as a glowing night city inside a glass dome, districts with little glass signs shaped like an eye, an ear, a hand and a heart, roads of light between them"
   },
   {
-   "id": 10,
+   "id": 12,
    "chapter": "The city in your head",
    "kind": "number",
    "onscreen": "2% of weight, 20% of energy",
@@ -135,7 +160,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) holding a tiny brain on one side of a balance scale, a huge pile of food and batteries on the other side"
   },
   {
-   "id": 11,
+   "id": 13,
    "chapter": "1. The 10% myth",
    "kind": "chapter",
    "onscreen": "1. The 10% myth",
@@ -144,7 +169,7 @@
    "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) with a flashlight peeking into a dark street of the brain drawn as a glowing night city inside a glass dome"
   },
   {
-   "id": 12,
+   "id": 14,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -153,7 +178,7 @@
    "image_prompt": "an old 1900s study room with a bearded scholar writing at a desk by lamp light, papers flying, sepia accents"
   },
   {
-   "id": 13,
+   "id": 15,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -162,7 +187,7 @@
    "image_prompt": "a pile of colourful self-help books with a giant glowing 10% sign rising from them like a neon advert"
   },
   {
-   "id": 14,
+   "id": 16,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -173,7 +198,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) lying in a friendly glass brain scanner, a holographic brain above them lit up in many colourful patches"
   },
   {
-   "id": 15,
+   "id": 17,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -182,7 +207,7 @@
    "image_prompt": "a stone-age family by a campfire, one person carrying a huge heavy glowing backpack labelled with a brain icon, looking exhausted"
   },
   {
-   "id": 16,
+   "id": 18,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -195,7 +220,7 @@
    "image_prompt": "one small district of the brain drawn as a glowing night city inside a glass dome going dark like a power cut, with little icons for speech, memory and movement flickering out"
   },
   {
-   "id": 17,
+   "id": 19,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -204,7 +229,7 @@
    "image_prompt": "the brain drawn as a glowing night city inside a glass dome where lights switch on in different districts in a gentle wave, like a living map"
   },
   {
-   "id": 18,
+   "id": 20,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -217,7 +242,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) watching a screen, three glowing districts of their brain highlighted: an eye district, a speech-bubble district and a tiny kitchen with a sandwich"
   },
   {
-   "id": 19,
+   "id": 21,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -226,7 +251,7 @@
    "image_prompt": "close-up of a building in the brain drawn as a glowing night city inside a glass dome with only a few warm windows lit, calm and peaceful"
   },
   {
-   "id": 20,
+   "id": 22,
    "chapter": "1. The 10% myth",
    "kind": "number",
    "onscreen": "~1% highly active at once",
@@ -235,7 +260,7 @@
    "image_prompt": "a glowing power meter beside the brain drawn as a glowing night city inside a glass dome with only a thin slice filled, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) pointing at it"
   },
   {
-   "id": 21,
+   "id": 23,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -244,7 +269,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) holding a glowing lantern on a dark city street, choosing one bright path among many"
   },
   {
-   "id": 22,
+   "id": 24,
    "chapter": "1. The 10% myth",
    "kind": "image",
    "onscreen": null,
@@ -253,7 +278,7 @@
    "image_prompt": "the giant power switch in the brain drawn as a glowing night city inside a glass dome being pushed up, the whole city flashing white too bright, sparks flying"
   },
   {
-   "id": 23,
+   "id": 25,
    "chapter": "2. What if...?",
    "kind": "chapter",
    "onscreen": "2. What if...?",
@@ -262,7 +287,7 @@
    "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) holding a big glass question mark in front of the Mindsphere planet"
   },
   {
-   "id": 24,
+   "id": 26,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -273,7 +298,7 @@
    "image_prompt": "the brain drawn as a glowing night city inside a glass dome with every light flashing in sync like a strobe, wavy lines of electricity across the sky"
   },
   {
-   "id": 25,
+   "id": 27,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -282,7 +307,7 @@
    "image_prompt": "a radio tower in the brain drawn as a glowing night city inside a glass dome sending out scrambled static waves, letters and symbols breaking apart"
   },
   {
-   "id": 26,
+   "id": 28,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -293,7 +318,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) and a friend facing each other with antenna headbands, a thought bubble between them showing only a big question mark, funny mood"
   },
   {
-   "id": 27,
+   "id": 29,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -304,7 +329,7 @@
    "image_prompt": "a person in a wheelchair smiling as a sleek robotic arm lifts a cup of coffee, glowing signal lines from their head to the arm"
   },
   {
-   "id": 28,
+   "id": 30,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -313,7 +338,7 @@
    "image_prompt": "a tiny glass translator device turning glowing city lights into robot gears and signals, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) watching curiously"
   },
   {
-   "id": 29,
+   "id": 31,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -325,7 +350,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) standing in an endless glass library of calendars and diaries, one date page glowing"
   },
   {
-   "id": 30,
+   "id": 32,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -334,7 +359,7 @@
    "image_prompt": "a person sitting on a bench surrounded by too many floating memory screens, looking tired, soft rain"
   },
   {
-   "id": 31,
+   "id": 33,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -343,7 +368,7 @@
    "image_prompt": "an artist drawing a huge detailed city skyline on a long sheet of paper, a helicopter in the sky behind"
   },
   {
-   "id": 32,
+   "id": 34,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -354,7 +379,7 @@
    "image_prompt": "a person in a hospital bed looking surprised as glowing piano keys appear in the air in front of them"
   },
   {
-   "id": 33,
+   "id": 35,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -363,7 +388,7 @@
    "image_prompt": "the brain drawn as a glowing night city inside a glass dome where one district dims and the neighbouring district glows brighter, like a seesaw of light"
   },
   {
-   "id": 34,
+   "id": 36,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -375,7 +400,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) breathing calmly in an icy blue lake, glowing shield shapes around them, snowy mountains"
   },
   {
-   "id": 35,
+   "id": 37,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -384,7 +409,7 @@
    "image_prompt": "a doctor handing a sugar pill to a patient, a soft glow easing a red pain spot on their arm"
   },
   {
-   "id": 36,
+   "id": 38,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -395,7 +420,7 @@
    "image_prompt": "a small friendly glowing guardian figure standing protectively in front of a child near a hot stove"
   },
   {
-   "id": 37,
+   "id": 39,
    "chapter": "2. What if...?",
    "kind": "image",
    "onscreen": null,
@@ -404,7 +429,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) looking down and wiggling their toes in fuzzy socks, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) giving a thumbs up, funny mood"
   },
   {
-   "id": 38,
+   "id": 40,
    "chapter": "Twist",
    "kind": "image",
    "onscreen": null,
@@ -413,26 +438,90 @@
    "image_prompt": "a locked glass door in the brain drawn as a glowing night city inside a glass dome with nothing behind it, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) raising one finger with a sly look"
   },
   {
-   "id": 39,
-   "chapter": "Twist",
+   "id": 41,
+   "chapter": "3. The secret of flow",
+   "kind": "chapter",
+   "onscreen": "3. The secret of flow",
+   "labels": [],
+   "narration": "Remember the feeling from the beginning? Time disappearing, everything just working? That's the closest you'll ever get to a brain at full power. But not for the reason you'd think.",
+   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) back at the night desk from the start, absorbed in drawing, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) quietly floating nearby"
+  },
+  {
+   "id": 42,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "quieter, not louder"
+   ],
+   "narration": "When scientists scan people in flow, their brains don't light up like a stadium. In fact, some areas seem to get quieter.",
+   "image_prompt": "the brain drawn as a glowing night city inside a glass dome where most districts glow calmly while one tall tower at the front dims its lights"
+  },
+  {
+   "id": 43,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "self-monitoring: down"
+   ],
+   "narration": "In one study, jazz musicians improvised inside a brain scanner. While they played freely, a part of the frontal lobe linked to self-monitoring and self-control calmed down.",
+   "image_prompt": "a jazz pianist playing a small keyboard inside a friendly glass scanner, musical notes floating out as glowing ribbons"
+  },
+  {
+   "id": 44,
+   "chapter": "3. The secret of flow",
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "Because you do have one real superpower. And you're using it right now. Your city can rebuild itself.",
-   "image_prompt": "tiny construction workers made of light building new glowing roads in the brain drawn as a glowing night city inside a glass dome"
+   "narration": "One idea is that flow switches off your inner critic. The voice that worries how you look, what others think, whether you'll fail. With that voice quiet, the rest of the city can finally work in peace.",
+   "image_prompt": "a tiny grumpy critic figure with a clipboard falling asleep on a bench in the brain drawn as a glowing night city inside a glass dome, while the districts behind glow brightly and calmly"
   },
   {
-   "id": 40,
-   "chapter": "3. The real upgrade",
-   "kind": "chapter",
-   "onscreen": "3. The real upgrade",
+   "id": 45,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "still being studied"
+   ],
+   "narration": "Scientists are still testing this idea, so take it as a strong hint, not a final answer. But it fits a pattern we've seen all along. Not more brain. The right balance.",
+   "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) holding a glass balance scale with glowing lights perfectly level, small sign 'hypothesis'"
+  },
+  {
+   "id": 46,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "clear goal",
+    "instant feedback",
+    "challenge ≈ skill"
+   ],
+   "narration": "And flow isn't magic either. Researchers found it tends to show up when three things come together: a clear goal, instant feedback, and a challenge that is just a little bit harder than what feels easy.",
+   "image_prompt": "three glowing glass cards floating in a row: a target, a speech bubble with a check mark, and a staircase with one slightly higher step"
+  },
+  {
+   "id": 47,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
    "labels": [],
-   "narration": "Scientists call it neuroplasticity. Every time you learn something, the links between neurons grow stronger. New roads appear in the city.",
+   "narration": "Too easy, and you get bored. Too hard, and you panic. But right on the edge, your brain locks in.",
+   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) walking on a glowing tightrope between a sleepy grey cloud labelled with a yawn and a stormy red cloud, perfectly balanced"
+  },
+  {
+   "id": 48,
+   "chapter": "4. The real upgrade",
+   "kind": "chapter",
+   "onscreen": "4. The real upgrade",
+   "labels": [],
+   "narration": "And there's one more real superpower. Your city can rebuild itself. Scientists call it neuroplasticity. Every time you learn something, the links between neurons grow stronger. New roads appear in the city.",
    "image_prompt": "new glowing bridges forming between two districts of the brain drawn as a glowing night city inside a glass dome at sunrise"
   },
   {
-   "id": 41,
-   "chapter": "3. The real upgrade",
+   "id": 49,
+   "chapter": "4. The real upgrade",
    "kind": "image",
    "onscreen": null,
    "labels": [
@@ -443,8 +532,8 @@
    "image_prompt": "a classic black London taxi driving through a glowing map maze, a seahorse-shaped glowing structure inside a driver's head"
   },
   {
-   "id": 42,
-   "chapter": "3. The real upgrade",
+   "id": 50,
+   "chapter": "4. The real upgrade",
    "kind": "image",
    "onscreen": null,
    "labels": [],
@@ -452,17 +541,17 @@
    "image_prompt": "a small dirt path in the brain drawn as a glowing night city inside a glass dome turning into a wide shining highway"
   },
   {
-   "id": 43,
-   "chapter": "3. The real upgrade",
+   "id": 51,
+   "chapter": "4. The real upgrade",
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "And you can do the same. It sounds almost too simple. But three things have strong science behind them.",
+   "narration": "And you can do the same. It sounds almost too simple. But besides finding your flow, three things have strong science behind them.",
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) looking at three glowing glass cards floating in front of them, numbered one, two, three"
   },
   {
-   "id": 44,
-   "chapter": "3. The real upgrade",
+   "id": 52,
+   "chapter": "4. The real upgrade",
    "kind": "number",
    "onscreen": "1. Sleep",
    "labels": [],
@@ -470,8 +559,8 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) asleep in bed under a starry window while the brain drawn as a glowing night city inside a glass dome above them replays scenes of the day like little films"
   },
   {
-   "id": 45,
-   "chapter": "3. The real upgrade",
+   "id": 53,
+   "chapter": "4. The real upgrade",
    "kind": "number",
    "onscreen": "2. Move",
    "labels": [],
@@ -479,8 +568,8 @@
    "image_prompt": "an older couple walking briskly on a green hill path at sunrise, a small glowing seahorse shape growing above them"
   },
   {
-   "id": 46,
-   "chapter": "3. The real upgrade",
+   "id": 54,
+   "chapter": "4. The real upgrade",
    "kind": "number",
    "onscreen": "3. Learn",
    "labels": [],
@@ -488,8 +577,8 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) learning guitar while words in different languages and dance steps float around as glowing roads"
   },
   {
-   "id": 47,
-   "chapter": "3. The real upgrade",
+   "id": 55,
+   "chapter": "4. The real upgrade",
    "kind": "image",
    "onscreen": null,
    "labels": [],
@@ -497,16 +586,16 @@
    "image_prompt": "a single glowing footstep path climbing up a gentle green hill toward the Mindsphere planet in the sky"
   },
   {
-   "id": 48,
+   "id": 56,
    "chapter": "Ending",
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "So the next time someone tells you that you only use ten percent of your brain, you can smile. Your city is already lit. Every district, every street. Just not all at once.",
+   "narration": "So the next time someone tells you that you only use ten percent of your brain, you can smile. Your city is already lit. Every district, every street. And in flow, you've already felt it at its best. Not with every light on. With the right lights, perfectly in tune.",
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) smiling, behind them the brain drawn as a glowing night city inside a glass dome glowing in gentle waves across all districts"
   },
   {
-   "id": 49,
+   "id": 57,
    "chapter": "Ending",
    "kind": "image",
    "onscreen": null,
@@ -515,7 +604,7 @@
    "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) placing a small glowing lamp on a new road in the brain drawn as a glowing night city inside a glass dome, warm amber light"
   },
   {
-   "id": 50,
+   "id": 58,
    "chapter": "Ending",
    "kind": "image",
    "onscreen": null,

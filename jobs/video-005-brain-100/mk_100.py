@@ -22,12 +22,20 @@ ST = lambda at, value, caption, **k: dict(type='stat', at=at, value=value, capti
 Q = lambda at, text: dict(type='bigq', at=at, text=text)
 VS = lambda at, l, ls, r, rs, at2=None: dict(type='vs', at=at, left=l, left_sub=ls, right=r, right_sub=rs, **({'at2': at2} if at2 else {}))
 
-S = [dict(x) for x in op['scenes'][:4]]          # approved hook: 20 W vs a city, the fight, 'Who wins?'
+S = []
+o3 = dict(op['scenes'][2]); o3.pop('delivery', None); o3.pop('gfx', None); o3.pop('energy', None)
 S += [
- sc("Hook", "But before they fight, a better question. What would one hundred percent actually do to you? To your senses, your memory, your body?",
+ sc("Hook", "Imagine your brain suddenly switched to one hundred percent.",
+    "a glowing human brain drawn as a night city, every district lighting up in a wave of teal and amber light, calm starry sky",
+    labels=['100%'], energy=True),
+ sc("Hook", "Hard math, solved in seconds. Logic puzzles cracked before anyone else has finished reading them.",
+    "glowing equations and a floating puzzle cube of light unfolding and solving itself in mid-air above a calm night desk",
+    labels=['Hard math: seconds', 'Logic puzzles: cracked']),
+ dict(o3, narration="Maybe even sharp enough to take on the smartest machine ever built.", transition='gta'),
+ sc("Hook", "But first, we need to know what a one hundred percent brain would actually give you. And what it would do to your body.",
     "a glowing human silhouette made of night-city lights standing on a hill, a giant dial on the horizon turning from 10 to 100 percent, teal sky",
-    gfx=[Q('actually', '100% = ?')], transition='gta'),
- sc("Title", "", "", kind='title', onscreen="Your Brain at 100% vs AI", transition='dive'),
+    gfx=[Q('actually', '100% = ?')]),
+ sc("Title", "", "", kind='title', onscreen="Your Brain at 100%", transition='dive'),
 
  # ---------- the myth ----------
  sc("The myth", "You've probably heard that we only use ten percent of our brains. It's in movies, ads, and motivational videos.",
@@ -158,7 +166,7 @@ S += [
     labels=['Too easy = boring', 'Too hard = stress', 'Sweet spot = flow']),
 
  # ---------- showdown ----------
- sc("Showdown", "And now, the fight we promised. Your brain, at its very best... versus the smartest AI ever built.",
+ sc("Showdown", "So now you know what your brain can really do. Time to step into the ring. Your brain, at its very best... versus the smartest AI ever built.",
     "epic anime arena under a starry sky, a glowing human brain of teal light facing a towering figure of dark glass with amber circuit lines",
     gfx=[VS('brain', 'YOUR BRAIN', 'at its best', 'AI', 'smartest ever built', 'versus')], transition='gta', energy=True),
  sc("Showdown", "Round one: speed. A processor ticks billions of times per second. A neuron, a few hundred. That's not a contest. Point to the machine.",
@@ -167,20 +175,23 @@ S += [
  sc("Showdown", "Round two: knowledge. A big AI model has read trillions of words. No human could read that in a thousand lifetimes. Point to the machine.",
     f"{T} standing inside a canyon made of stacked glowing books and scrolls, text streams pouring into its chest",
     gfx=[ST('trillions', 10, 'words of training text', suffix=' trillion+'), VS('point', 'BRAIN', '0', 'AI', '2')]),
- sc("Showdown", "Round three: energy. You think all day on twenty watts. The biggest AI systems need power plants. Point to you.",
+ sc("Showdown", "Round three: hard math. In twenty twenty-five, AI models reached gold-medal level at the International Mathematical Olympiad, the toughest maths contest for students. Point to the machine.",
+    "a glowing gold medal hanging in front of a blackboard full of elegant equations, amber circuit lines tracing through the chalk",
+    gfx=[VS('point', 'BRAIN', '0', 'AI', '3')], labels=['Maths Olympiad: gold level']),
+ sc("Showdown", "Round four: energy. You think all day on twenty watts. The biggest AI systems need power plants. Point to you.",
     "a tiny glowing brain balanced on one side of a golden scale, outweighing a giant power plant on the other side",
-    gfx=[B('twenty', [I('Your brain', 20, 'W', 'twenty'), I('AI data center', 100000000, 'W', 'power', AM, overflow=True)], 1000), VS('point', 'BRAIN', '1', 'AI', '2')]),
- sc("Showdown", "Round four: learning. Show a child one giraffe, and they know giraffes forever. AI needs thousands of examples. Point to you.",
+    gfx=[B('twenty', [I('Your brain', 20, 'W', 'twenty'), I('AI data center', 100000000, 'W', 'power', AM, overflow=True)], 1000), VS('point', 'BRAIN', '1', 'AI', '3')]),
+ sc("Showdown", "Round five: learning. Show a child one giraffe, and they know giraffes forever. AI needs thousands of examples. Point to you.",
     "a little child pointing excitedly at a single giraffe peeking over a fence in a sunny park, glowing outline around the giraffe",
-    gfx=[B('giraffe', [I('Child', 1, 'example', 'child'), I('AI', 1000, 'examples', 'thousands', AM, overflow=True)], 20), VS('point', 'BRAIN', '2', 'AI', '2')]),
- sc("Showdown", "Round five: the real world. Folding laundry, climbing stairs, catching a falling glass. Easy for you, still hard for robots. Point to you.",
+    gfx=[B('giraffe', [I('Child', 1, 'example', 'child'), I('AI', 1000, 'examples', 'thousands', AM, overflow=True)], 20), VS('point', 'BRAIN', '2', 'AI', '3')]),
+ sc("Showdown", "Round six: the real world. Folding laundry, climbing stairs, catching a falling glass. Easy for you, still hard for robots. Point to you.",
     "a cosy living room, a glass slipping off a table and a hand of glowing teal light catching it mid-air, a clumsy robot arm tangled in laundry behind",
-    gfx=[VS('point', 'BRAIN', '3', 'AI', '2')], labels=['Easy for you', 'Hard for robots']),
+    gfx=[VS('point', 'BRAIN', '3', 'AI', '3')], labels=['Easy for you', 'Hard for robots']),
  sc("Showdown", "And feeling? It can write a poem about rain. But as far as we can tell, it has never smelled rain. That round stays open.",
     f"{T} gently writing glowing words in the air while real rain falls outside a large window behind it", gfx=[Q('open', '?')]),
- sc("Showdown", "Final score: three to two, for the brain. But the most interesting result came from chess.",
+ sc("Showdown", "Final score: three to three. A tie. And the most interesting result came from chess.",
     "the holographic tournament board in the arena showing a close final score, confetti of light",
-    gfx=[VS('final', 'BRAIN', '3', 'AI', '2')], energy=True),
+    gfx=[VS('final', 'BRAIN', '3', 'AI', '3')], energy=True),
  sc("Showdown", "When humans teamed up with computers, those teams beat the best grandmasters and the best chess programs of their time.",
     "a giant glowing chess board in the night sky, a human hand and an amber glass hand moving the same piece together",
     gfx=[VS('teamed', 'HUMAN + AI', 'winner', 'BEST AI', 'or best player', 'best')]),
@@ -197,7 +208,7 @@ S += [
 ]
 for i, s in enumerate(S, 1): s['id'] = i
 words = sum(len(s['narration'].split()) for s in S)
-script = dict(title="What If Your Brain Ran at 100%? (Brain vs AI)", category="Science",
+script = dict(title="What If Your Brain Ran at 100%?", category="Science",
  description="What would really happen if your brain ran at 100%? Your senses, memory, speed, body and 'superpowers', checked honestly with real science. And at the end: could a 100% brain beat the smartest AI ever built?",
  tags=["brain", "100% brain", "10 percent myth", "neuroscience", "brain vs AI", "flow state", "science explained", "Mindsphere"],
  sources=[
@@ -216,7 +227,8 @@ script = dict(title="What If Your Brain Ran at 100%? (Brain vs AI)", category="S
   "Meta 2024: Llama 3 trained on ~15 trillion tokens",
   "IEA 2025, Energy and AI: data center electricity use",
   "Moravec 1988, Mind Children: what is easy for humans is hard for robots",
-  "Kasparov 2010, NYRB: freestyle (centaur) chess"],
+  "Kasparov 2010, NYRB: freestyle (centaur) chess",
+  "Google DeepMind & OpenAI, July 2025: AI models reach gold-medal standard at IMO 2025"],
  scenes=S, shorts=[])
 json.dump(script, open(os.path.join(HERE, 'script.json'), 'w'), indent=1, ensure_ascii=False)
 print(len(S), 'scenes', words, 'words', round(words / 135, 1), 'min @135wpm')

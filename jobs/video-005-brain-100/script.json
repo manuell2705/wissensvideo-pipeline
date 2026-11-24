@@ -1,5 +1,5 @@
 {
- "title": "What If Your Brain Ran at 100%? (Brain vs AI)",
+ "title": "What If Your Brain Ran at 100%?",
  "category": "Science",
  "description": "What would really happen if your brain ran at 100%? Your senses, memory, speed, body and 'superpowers', checked honestly with real science. And at the end: could a 100% brain beat the smartest AI ever built?",
  "tags": [
@@ -28,111 +28,33 @@
   "Meta 2024: Llama 3 trained on ~15 trillion tokens",
   "IEA 2025, Energy and AI: data center electricity use",
   "Moravec 1988, Mind Children: what is easy for humans is hard for robots",
-  "Kasparov 2010, NYRB: freestyle (centaur) chess"
+  "Kasparov 2010, NYRB: freestyle (centaur) chess",
+  "Google DeepMind & OpenAI, July 2025: AI models reach gold-medal standard at IMO 2025"
  ],
  "scenes": [
   {
-   "id": 1,
    "chapter": "Hook",
    "kind": "image",
    "onscreen": null,
-   "labels": [],
-   "narration": "Your brain runs on about twenty watts. Less than a dim light bulb.",
-   "delivery": [
-    {
-     "text": "Your brain runs on about twenty watts.",
-     "exa": 0.55,
-     "cfg": 0.4,
-     "tempo": 1.0,
-     "pause": 0.3
-    },
-    {
-     "text": "Less than a dim light bulb.",
-     "exa": 0.45,
-     "cfg": 0.3,
-     "tempo": 0.95,
-     "pause": 0.35
-    }
+   "labels": [
+    "100%"
    ],
-   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) sitting at his desk at night next to a single dim old light bulb, a soft glowing brain shape faintly visible inside his head, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) floating beside the bulb comparing the two, cosy dark room",
-   "motion": "the light bulb flickers softly, the glow inside Kai's head pulses gently, Kai turns his head toward the bulb, Orbi bobs up and down, slow camera push in",
-   "ref": "kai",
-   "cutout": true,
-   "transition": "cut",
-   "gfx": [
-    {
-     "type": "bars",
-     "at": "brain",
-     "max": 60,
-     "items": [
-      {
-       "label": "Your brain",
-       "value": 20,
-       "unit": "W",
-       "color": "#3fe0d0",
-       "at": "twenty"
-      },
-      {
-       "label": "Dim light bulb",
-       "value": 40,
-       "unit": "W",
-       "color": "#ffb547",
-       "at": "light"
-      }
-     ]
-    }
-   ]
+   "narration": "Imagine your brain suddenly switched to one hundred percent.",
+   "image_prompt": "a glowing human brain drawn as a night city, every district lighting up in a wave of teal and amber light, calm starry sky",
+   "energy": true,
+   "id": 1
   },
   {
-   "id": 2,
    "chapter": "Hook",
    "kind": "image",
    "onscreen": null,
-   "labels": [],
-   "narration": "The biggest AI systems run in data centers that can draw more power than a small city.",
-   "delivery": [
-    {
-     "text": "The biggest AI systems run in data centers that can draw more power than a small city.",
-     "exa": 0.65,
-     "cfg": 0.45,
-     "tempo": 1.03,
-     "pause": 0.35
-    }
+   "labels": [
+    "Hard math: seconds",
+    "Logic puzzles: cracked"
    ],
-   "image_prompt": "a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city, endless rows of glowing server towers stretching to the horizon at night, power lines and cooling towers, epic scale, tiny cars below for scale",
-   "motion": "the AI titan slowly raises its head and its amber eye brightens, waves of light run along the server towers, steam rises from cooling towers, slow dramatic camera tilt up",
-   "ref": null,
-   "transition": "gta",
-   "gfx": [
-    {
-     "type": "bars",
-     "at": "biggest",
-     "max": 1000,
-     "items": [
-      {
-       "label": "Your brain",
-       "value": 20,
-       "unit": "W",
-       "color": "#3fe0d0",
-       "at": "biggest"
-      },
-      {
-       "label": "AI data center",
-       "value": 100000000,
-       "unit": "W",
-       "color": "#ffb547",
-       "at": "power",
-       "overflow": true
-      }
-     ]
-    },
-    {
-     "type": "icons",
-     "at": "city",
-     "n": 12,
-     "label": "more than a small city"
-    }
-   ]
+   "narration": "Hard math, solved in seconds. Logic puzzles cracked before anyone else has finished reading them.",
+   "image_prompt": "glowing equations and a floating puzzle cube of light unfolding and solving itself in mid-air above a calm night desk",
+   "id": 2
   },
   {
    "id": 3,
@@ -140,83 +62,19 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "So imagine a fight. One human brain, unlocked to one hundred percent... versus the smartest machine ever built.",
-   "delivery": [
-    {
-     "text": "So imagine a fight.",
-     "exa": 0.6,
-     "cfg": 0.35,
-     "tempo": 0.98,
-     "pause": 0.3
-    },
-    {
-     "text": "One human brain, unlocked to one hundred percent...",
-     "exa": 0.85,
-     "cfg": 0.4,
-     "tempo": 1.02,
-     "pause": 0.35
-    },
-    {
-     "text": "versus the smartest machine ever built.",
-     "exa": 0.9,
-     "cfg": 0.45,
-     "tempo": 1.04,
-     "pause": 0.3
-    }
-   ],
+   "narration": "Maybe even sharp enough to take on the smartest machine ever built.",
    "image_prompt": "epic anime arena under a starry sky: Mira (a young woman with a dark ponytail and a warm amber jacket) on the left, glowing teal energy around her head and hands, facing a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city on the right, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) hovering in the middle like a referee, dramatic standoff, wide shot",
    "motion": "Mira's hair and jacket blow in the wind as teal energy swirls around her, the AI titan's amber circuits pulse, Orbi spins between them, camera slowly circles the arena",
    "ref": "mira",
    "cutout": true,
-   "transition": "dive",
-   "energy": false,
-   "gfx": [
-    {
-     "type": "vs",
-     "at": "human",
-     "left": "HUMAN BRAIN",
-     "left_sub": "unlocked to 100%",
-     "right": "AI",
-     "right_sub": "smartest machine ever built",
-     "at2": "versus"
-    }
-   ]
-  },
-  {
-   "id": 4,
-   "chapter": "Hook",
-   "kind": "image",
-   "onscreen": null,
-   "labels": [],
-   "narration": "Who wins?",
-   "delivery": [
-    {
-     "text": "Who wins?",
-     "exa": 0.7,
-     "cfg": 0.3,
-     "tempo": 0.92,
-     "pause": 0.4
-    }
-   ],
-   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) and a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city charging at each other, teal and amber energy beams colliding in a huge burst of light in the middle of the arena, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) shielding its eyes, anime battle climax",
-   "motion": "the teal and amber energy beams collide and explode into a bright flash, shockwave ripples outward, debris and light particles fly, fast dynamic camera shake",
-   "ref": "mira",
-   "transition": "out",
-   "energy": true,
-   "gfx": [
-    {
-     "type": "bigq",
-     "at": "who",
-     "text": "WHO WINS?"
-    }
-   ]
+   "transition": "gta"
   },
   {
    "chapter": "Hook",
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "But before they fight, a better question. What would one hundred percent actually do to you? To your senses, your memory, your body?",
+   "narration": "But first, we need to know what a one hundred percent brain would actually give you. And what it would do to your body.",
    "image_prompt": "a glowing human silhouette made of night-city lights standing on a hill, a giant dial on the horizon turning from 10 to 100 percent, teal sky",
    "gfx": [
     {
@@ -225,18 +83,17 @@
      "text": "100% = ?"
     }
    ],
-   "transition": "gta",
-   "id": 5
+   "id": 4
   },
   {
    "chapter": "Title",
    "kind": "title",
-   "onscreen": "Your Brain at 100% vs AI",
+   "onscreen": "Your Brain at 100%",
    "labels": [],
    "narration": "",
    "image_prompt": "",
    "transition": "dive",
-   "id": 6
+   "id": 5
   },
   {
    "chapter": "The myth",
@@ -254,7 +111,7 @@
      "suffix": "%"
     }
    ],
-   "id": 7
+   "id": 6
   },
   {
    "chapter": "The myth",
@@ -267,7 +124,7 @@
    "narration": "Here's the truth: you already use all of it. Brain scans show that over a single day, practically every region gets busy.",
    "image_prompt": "a human brain drawn as a night city seen from above, district after district lighting up over a day, sun and moon moving overhead",
    "transition": "out",
-   "id": 8
+   "id": 7
   },
   {
    "chapter": "The myth",
@@ -279,7 +136,7 @@
    ],
    "narration": "Just not all at the same time. At any moment, only a small fraction of your neurons is firing. And that's on purpose.",
    "image_prompt": "the brain city at night with only a few calm lights glowing in different districts, the rest resting in soft blue darkness",
-   "id": 9
+   "id": 8
   },
   {
    "chapter": "The myth",
@@ -311,7 +168,7 @@
      "max": 25
     }
    ],
-   "id": 10
+   "id": 9
   },
   {
    "chapter": "The myth",
@@ -324,7 +181,7 @@
    ],
    "narration": "So let's play a game. Fantasy rules: what if the limits disappeared? Let's go through it, piece by piece, and keep it honest.",
    "image_prompt": "a glowing control panel inside a calm observatory, five big sliders labelled with simple icons for eye, memory, lightning, muscle and sprout, all sliding up",
-   "id": 11
+   "id": 10
   },
   {
    "chapter": "1. Senses",
@@ -334,7 +191,7 @@
    "narration": "Level one. Your senses.",
    "image_prompt": "a giant glowing eye made of glass reflecting a sunny meadow",
    "transition": "dive",
-   "id": 12
+   "id": 11
   },
   {
    "chapter": "1. Senses",
@@ -351,7 +208,7 @@
      "caption": "bits per second, from your eyes alone (estimate)"
     }
    ],
-   "id": 13
+   "id": 12
   },
   {
    "chapter": "1. Senses",
@@ -384,7 +241,7 @@
      "max": 50
     }
    ],
-   "id": 14
+   "id": 13
   },
   {
    "chapter": "1. Senses",
@@ -400,7 +257,7 @@
    "ref": "kai",
    "cutout": true,
    "energy": true,
-   "id": 15
+   "id": 14
   },
   {
    "chapter": "1. Senses",
@@ -412,7 +269,7 @@
    ],
    "narration": "You wouldn't feel like a superhero. You'd feel overwhelmed. Your brain's filter is what lets you hear your name across a noisy room.",
    "image_prompt": "a glowing sieve made of light floating over a crowded party, filtering a storm of noise into one clear golden word drifting upward",
-   "id": 16
+   "id": 15
   },
   {
    "chapter": "1. Senses",
@@ -428,7 +285,7 @@
      "text": "FILTER > FLOOD"
     }
    ],
-   "id": 17
+   "id": 16
   },
   {
    "chapter": "2. Memory",
@@ -438,7 +295,7 @@
    "narration": "Level two. Memory.",
    "image_prompt": "an endless glowing library floating in space, books turning into stars",
    "transition": "gta",
-   "id": 18
+   "id": 17
   },
   {
    "chapter": "2. Memory",
@@ -450,7 +307,7 @@
    ],
    "narration": "Some people already live with an extreme memory. With a rare condition called hyperthymesia, they remember almost every day of their lives.",
    "image_prompt": "a corridor of floating glowing calendar pages stretching into the distance, one page opening to show a rainy afternoon",
-   "id": 19
+   "id": 18
   },
   {
    "chapter": "2. Memory",
@@ -462,7 +319,7 @@
    ],
    "narration": "Ask them about a random Tuesday years ago, and they can tell you what they did, and sometimes even the weather.",
    "image_prompt": "a single glowing calendar page for a Tuesday unfolding into a small 3D scene of a rainy street with an umbrella",
-   "id": 20
+   "id": 19
   },
   {
    "chapter": "2. Memory",
@@ -480,7 +337,7 @@
      "prefix": "< "
     }
    ],
-   "id": 21
+   "id": 20
   },
   {
    "chapter": "2. Memory",
@@ -493,7 +350,7 @@
    "narration": "And here's the twist: you don't store memories like files. You rebuild them every time you remember, like retelling a story.",
    "image_prompt": "a memory drawn as a glowing sandcastle being rebuilt by tiny hands of light, slightly different each time, at the edge of a calm sea",
    "transition": "out",
-   "id": 22
+   "id": 21
   },
   {
    "chapter": "2. Memory",
@@ -509,7 +366,7 @@
      "text": "FORGETTING = CLEAN-UP"
     }
    ],
-   "id": 23
+   "id": 22
   },
   {
    "chapter": "3. Speed",
@@ -519,7 +376,7 @@
    "narration": "Level three. Speed.",
    "image_prompt": "a stopwatch made of light floating over a quiet night race track",
    "transition": "dive",
-   "id": 24
+   "id": 23
   },
   {
    "chapter": "3. Speed",
@@ -551,7 +408,7 @@
      "max": 130
     }
    ],
-   "id": 25
+   "id": 24
   },
   {
    "chapter": "3. Speed",
@@ -569,7 +426,7 @@
      "suffix": " ms"
     }
    ],
-   "id": 26
+   "id": 25
   },
   {
    "chapter": "3. Speed",
@@ -583,7 +440,7 @@
    "narration": "Fantasy upgrade: neurons that fire ten times faster. Sounds great. But more firing means more energy, and more energy means more heat.",
    "image_prompt": "a cartoon brain wearing a tiny racing helmet, steam and little flames starting to rise from it",
    "energy": true,
-   "id": 27
+   "id": 26
   },
   {
    "chapter": "3. Speed",
@@ -615,7 +472,7 @@
      "max": 42
     }
    ],
-   "id": 28
+   "id": 27
   },
   {
    "chapter": "3. Speed",
@@ -641,7 +498,7 @@
     }
    ],
    "transition": "out",
-   "id": 29
+   "id": 28
   },
   {
    "chapter": "4. Body",
@@ -651,7 +508,7 @@
    "narration": "Level four. Your body.",
    "image_prompt": "a glowing anatomy figure made of glass standing in a calm sunny field",
    "transition": "gta",
-   "id": 30
+   "id": 29
   },
   {
    "chapter": "4. Body",
@@ -663,7 +520,7 @@
    ],
    "narration": "Your brain is also a bodyguard. It never lets your muscles pull with everything they have, because that could tear tendons or crack bones.",
    "image_prompt": "a glass arm with glowing muscles, a small glowing safety lock on the elbow holding back the muscle fibres",
-   "id": 31
+   "id": 30
   },
   {
    "chapter": "4. Body",
@@ -676,7 +533,7 @@
    "narration": "In extreme moments, with adrenaline flooding in, people have reported surprising bursts of strength. Scientists think the brain loosens that limit for a moment.",
    "image_prompt": "a dramatic anime scene of a glowing silhouette lifting the corner of a car on a rainy street, golden adrenaline sparks around them",
    "energy": true,
-   "id": 32
+   "id": 31
   },
   {
    "chapter": "4. Body",
@@ -688,7 +545,7 @@
    ],
    "narration": "Now imagine no limit at all. And no pain either. Sounds powerful, until you remember why pain exists.",
    "image_prompt": "a glowing red alarm bell in the shape of a nerve, ringing softly next to a bandaged hand",
-   "id": 33
+   "id": 32
   },
   {
    "chapter": "4. Body",
@@ -704,7 +561,7 @@
      "text": "PAIN = ALARM"
     }
    ],
-   "id": 34
+   "id": 33
   },
   {
    "chapter": "5. Learning",
@@ -714,7 +571,7 @@
    "narration": "Level five. Learning.",
    "image_prompt": "a small sprout growing out of a glowing book at dawn",
    "transition": "dive",
-   "id": 35
+   "id": 34
   },
   {
    "chapter": "5. Learning",
@@ -726,7 +583,7 @@
    ],
    "narration": "This is the one upgrade you already have. Every time you practise something, your brain physically rewires itself.",
    "image_prompt": "a glowing brain with new bright paths growing between districts like roads being built overnight",
-   "id": 36
+   "id": 35
   },
   {
    "chapter": "5. Learning",
@@ -744,7 +601,7 @@
      "suffix": "+"
     }
    ],
-   "id": 37
+   "id": 36
   },
   {
    "chapter": "5. Learning",
@@ -757,7 +614,7 @@
    "narration": "And while you sleep, your brain replays the day and keeps what matters. So a well-rested brain is already closer to one hundred percent than a tired one.",
    "image_prompt": "a peaceful bedroom at night, a dreamy glowing replay of the day drifting above the bed like constellations",
    "transition": "out",
-   "id": 38
+   "id": 37
   },
   {
    "chapter": "6. Superpowers",
@@ -767,7 +624,7 @@
    "narration": "Level six. Superpowers.",
    "image_prompt": "a glowing comic-style lightning bolt inside a glass sphere under the stars",
    "transition": "gta",
-   "id": 39
+   "id": 38
   },
   {
    "chapter": "6. Superpowers",
@@ -779,7 +636,7 @@
    ],
    "narration": "In the movie Lucy, a drug unlocks a hundred percent of the brain, and suddenly she can read minds and move objects.",
    "image_prompt": "a cinema screen showing a glowing figure with floating objects around her, film reel frames curling at the edges",
-   "id": 40
+   "id": 39
   },
   {
    "chapter": "6. Superpowers",
@@ -795,7 +652,7 @@
      "text": "NO EVIDENCE"
     }
    ],
-   "id": 41
+   "id": 40
   },
   {
    "chapter": "6. Superpowers",
@@ -815,7 +672,7 @@
     }
    ],
    "energy": true,
-   "id": 42
+   "id": 41
   },
   {
    "chapter": "6. Superpowers",
@@ -833,7 +690,7 @@
      "suffix": "+"
     }
    ],
-   "id": 43
+   "id": 42
   },
   {
    "chapter": "6. Superpowers",
@@ -846,7 +703,7 @@
    "narration": "His brain was wired differently. Some everyday things were hard for him. Every extreme ability seems to come with a cost.",
    "image_prompt": "a golden balance scale floating in space, one side a glowing book, the other a small everyday house key",
    "transition": "out",
-   "id": 44
+   "id": 43
   },
   {
    "chapter": "The real 100%",
@@ -862,7 +719,7 @@
      "text": "THE REAL 100%?"
     }
    ],
-   "id": 45
+   "id": 44
   },
   {
    "chapter": "The real 100%",
@@ -877,7 +734,7 @@
    "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) painting on a giant canvas in a quiet studio at night, warm light, time-lapse clocks gently melting into stars around her",
    "ref": "mira",
    "cutout": true,
-   "id": 46
+   "id": 45
   },
   {
    "chapter": "The real 100%",
@@ -893,7 +750,7 @@
      "text": "LESS NOISE"
     }
    ],
-   "id": 47
+   "id": 46
   },
   {
    "chapter": "The real 100%",
@@ -906,14 +763,14 @@
    ],
    "narration": "Flow shows up when a challenge is just a little harder than your skill. Too easy is boring. Too hard is stress. In between is the sweet spot.",
    "image_prompt": "a glowing curved path between a sleepy grey valley and a stormy cliff, a bright golden lane running exactly in the middle",
-   "id": 48
+   "id": 47
   },
   {
    "chapter": "Showdown",
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "And now, the fight we promised. Your brain, at its very best... versus the smartest AI ever built.",
+   "narration": "So now you know what your brain can really do. Time to step into the ring. Your brain, at its very best... versus the smartest AI ever built.",
    "image_prompt": "epic anime arena under a starry sky, a glowing human brain of teal light facing a towering figure of dark glass with amber circuit lines",
    "gfx": [
     {
@@ -928,7 +785,7 @@
    ],
    "transition": "gta",
    "energy": true,
-   "id": 49
+   "id": 48
   },
   {
    "chapter": "Showdown",
@@ -969,7 +826,7 @@
      "right_sub": "1"
     }
    ],
-   "id": 50
+   "id": 49
   },
   {
    "chapter": "Showdown",
@@ -995,6 +852,27 @@
      "right_sub": "2"
     }
    ],
+   "id": 50
+  },
+  {
+   "chapter": "Showdown",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Maths Olympiad: gold level"
+   ],
+   "narration": "Round three: hard math. In twenty twenty-five, AI models reached gold-medal level at the International Mathematical Olympiad, the toughest maths contest for students. Point to the machine.",
+   "image_prompt": "a glowing gold medal hanging in front of a blackboard full of elegant equations, amber circuit lines tracing through the chalk",
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "point",
+     "left": "BRAIN",
+     "left_sub": "0",
+     "right": "AI",
+     "right_sub": "3"
+    }
+   ],
    "id": 51
   },
   {
@@ -1002,7 +880,7 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "Round three: energy. You think all day on twenty watts. The biggest AI systems need power plants. Point to you.",
+   "narration": "Round four: energy. You think all day on twenty watts. The biggest AI systems need power plants. Point to you.",
    "image_prompt": "a tiny glowing brain balanced on one side of a golden scale, outweighing a giant power plant on the other side",
    "gfx": [
     {
@@ -1033,7 +911,7 @@
      "left": "BRAIN",
      "left_sub": "1",
      "right": "AI",
-     "right_sub": "2"
+     "right_sub": "3"
     }
    ],
    "id": 52
@@ -1043,7 +921,7 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "Round four: learning. Show a child one giraffe, and they know giraffes forever. AI needs thousands of examples. Point to you.",
+   "narration": "Round five: learning. Show a child one giraffe, and they know giraffes forever. AI needs thousands of examples. Point to you.",
    "image_prompt": "a little child pointing excitedly at a single giraffe peeking over a fence in a sunny park, glowing outline around the giraffe",
    "gfx": [
     {
@@ -1074,7 +952,7 @@
      "left": "BRAIN",
      "left_sub": "2",
      "right": "AI",
-     "right_sub": "2"
+     "right_sub": "3"
     }
    ],
    "id": 53
@@ -1087,7 +965,7 @@
     "Easy for you",
     "Hard for robots"
    ],
-   "narration": "Round five: the real world. Folding laundry, climbing stairs, catching a falling glass. Easy for you, still hard for robots. Point to you.",
+   "narration": "Round six: the real world. Folding laundry, climbing stairs, catching a falling glass. Easy for you, still hard for robots. Point to you.",
    "image_prompt": "a cosy living room, a glass slipping off a table and a hand of glowing teal light catching it mid-air, a clumsy robot arm tangled in laundry behind",
    "gfx": [
     {
@@ -1096,7 +974,7 @@
      "left": "BRAIN",
      "left_sub": "3",
      "right": "AI",
-     "right_sub": "2"
+     "right_sub": "3"
     }
    ],
    "id": 54
@@ -1122,7 +1000,7 @@
    "kind": "image",
    "onscreen": null,
    "labels": [],
-   "narration": "Final score: three to two, for the brain. But the most interesting result came from chess.",
+   "narration": "Final score: three to three. A tie. And the most interesting result came from chess.",
    "image_prompt": "the holographic tournament board in the arena showing a close final score, confetti of light",
    "gfx": [
     {
@@ -1131,7 +1009,7 @@
      "left": "BRAIN",
      "left_sub": "3",
      "right": "AI",
-     "right_sub": "2"
+     "right_sub": "3"
     }
    ],
    "energy": true,

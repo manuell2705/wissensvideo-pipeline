@@ -66,6 +66,9 @@ def transcribe(w):
 
 report = []
 for s in script['scenes']:
+    if not s.get('narration', '').strip():          # e.g. a pure title sting: short silence, no words
+        sf.write(str(out / f"scene_{s['id']:03d}.wav"), np.zeros(int(SR * 0.3), np.float32), SR)
+        (out / f"scene_{s['id']:03d}.json").write_text('[]'); continue
     best = None
     for take in range(3):
         torch.manual_seed(1000 * take + s['id'])

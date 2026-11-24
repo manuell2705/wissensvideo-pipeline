@@ -1,0 +1,58 @@
+{
+ "title": "What Happens When Your Brain Reaches 100%?",
+ "scenes": [
+  {
+   "id": 1,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "This is what happens when your brain reaches one hundred percent.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) sitting at his desk at night in a dark cosy room, his eyes wide open, glowing teal and amber lines of light spreading out from his head like a network of neurons across the walls, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) floating beside him in awe",
+   "motion": "the glowing neuron lines spread fast across the room and pulse brighter, Kai slowly looks up in amazement, his hair moves slightly, Orbi rises and spins its ring, camera slowly pushes in"
+  },
+  {
+   "id": 2,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": "86,000,000,000",
+   "labels": [
+    "86 billion neurons"
+   ],
+   "narration": "Every single neuron fires. All eighty-six billion of them. At the same time.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) standing on a rooftop at night looking at a huge futuristic city skyline shaped like a brain, thousands of windows and roads made of light, the city starting to light up district by district",
+   "motion": "the whole city lights up district by district in a wave of teal and amber light, Mira's ponytail and jacket move in the wind, she steps back amazed, camera slowly cranes up"
+  },
+  {
+   "id": 3,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Sounds like a superpower, right? Like in the movies. Perfect memory. Telekinesis. Total control.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) and Mira (a young woman with a dark ponytail and a warm amber jacket) floating in the air above a glowing night city with superpowers, books and glowing equations orbiting around them, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) spinning excitedly between them, epic heroic anime moment",
+   "motion": "Kai and Mira rise higher, books and glowing symbols orbit around them faster, Orbi spins happily, wind in hair and clothes, dynamic camera orbit"
+  },
+  {
+   "id": 4,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Well... we actually know what that looks like. And it is not genius.",
+   "image_prompt": "the brain-shaped glowing night city overloading, all lights flaring blinding white, power lines sparking, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) hovering in front of it looking worried",
+   "motion": "the city lights flare brighter and brighter then flicker and go dark district by district, sparks fly, Orbi backs away worried, camera shakes slightly"
+  },
+  {
+   "id": 5,
+   "chapter": "Title",
+   "kind": "title",
+   "onscreen": "What Happens When Your Brain Reaches 100%?",
+   "labels": [],
+   "narration": "",
+   "image_prompt": "",
+   "still": "render/refs/planet_title.jpg"
+  }
+ ],
+ "shorts": []
+}

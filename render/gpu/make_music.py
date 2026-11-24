@@ -32,6 +32,8 @@ TRACKS = [
      "mysterious, sparse notes, soft pads, cosy blocky sandbox adventure mood, instrumental, no vocals"),
     ("10_action_abenteuer", 120, 140, "fast adventure action music, energetic drums, bright synth lead and staccato strings, "
      "heroic chase, exciting, video game boss battle feel, instrumental, no vocals"),
+    ("11_anime_kampf_roboter", 75, 165, "short intense anime battle music, fast taiko and rock drums, electric guitar riffs, "
+     "dramatic orchestral strings, robotic glitchy synth hits, hero versus giant robot fight, energetic, instrumental, no vocals"),
     ("08_hoffnung_ende", 150, 80, "warm hopeful ending music, piano and soft strings, gentle uplifting melody, emotional and calm, "
      "sunrise, instrumental, background music"),
 ]

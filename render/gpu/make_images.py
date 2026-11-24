@@ -14,7 +14,7 @@ STYLE = ("2D anime illustration in a premium TV-series style, clean confident li
          "cinematic lighting and composition, rich depth, palette of deep night blue, teal, fresh leaf green and warm amber light, "
          "subtle glossy glass and clear water touches (Frutiger Aero accents), soft glow, beautiful detailed background, "
          "no text, no letters, no captions, no watermark")
-NEG = "text, letters, words, caption, watermark, logo, signature, blurry, deformed, extra fingers, bad hands, photo, 3d render, gore"
+NEG = "faces on objects, eyes on planets or organs, text, letters, words, caption, watermark, logo, signature, blurry, deformed, extra fingers, bad hands, photo, 3d render, gore"
 KAI = "Kai, a young man with short dark messy hair and a teal hoodie"
 MIRA = "Mira, a young woman with a dark ponytail and a warm amber jacket"
 ORBI = "Orbi, a small floating glass orb robot with a glowing green orbit ring around it and two simple dot eyes"
@@ -79,7 +79,7 @@ steps, cfg = lightning(ed, 'edit')
 for name, prompt, ch, seed in jobs:
     if not ch or (out / f'{name}.jpg').exists(): continue
     p = prompt.replace('Kai', 'Kai from the reference image').replace('Mira', 'Mira from the reference image').replace('Orbi', 'Orbi from the reference image')
-    p = re.sub(r'\s*\((a young|a small)[^)]*\)', '', p)   # the sheet already defines the look
+    # keep the outfit descriptions: without them the edit model sometimes swaps outfits (Mira in Kai's hoodie)
     t = time.time()
     im = ed(image=[sheet], prompt=f"{p}. Wide 16:9 scene, keep their faces, hair and outfits exactly as in the reference. {STYLE}", negative_prompt=NEG,
             num_inference_steps=steps, true_cfg_scale=cfg, width=W, height=H, generator=torch.Generator('cuda').manual_seed(seed)).images[0]

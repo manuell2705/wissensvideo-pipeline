@@ -1,0 +1,458 @@
+{
+ "title": "What happens if you stop sleeping?",
+ "category": "Health",
+ "description": "Explore the fascinating and terrifying science of sleep deprivation. We follow your body's journey from the first twenty-four hours to the edge of human limits.",
+ "tags": [
+  "sleep deprivation",
+  "science of sleep",
+  "health",
+  "biology",
+  "brain function",
+  "staying awake",
+  "circadian rhythm",
+  "human limits",
+  "mental health",
+  "mindsphere"
+ ],
+ "sources": [
+  "Dawson, D., & Reid, K. (1997). Fatigue, alcohol and performance impairment. Nature. doi:10.1038/40775",
+  "Xie, L., et al. (2013). Sleep drives metabolite clearance from the adult brain. Science. doi:10.1126/science.1241224",
+  "Besedovsky, L., et al. (2012). Sleep and immune function. Pflügers Archiv - European Journal of Physiology. doi:10.1007/s00424-011-1044-0",
+  "Alhola, P., & Polo-Kantola, P. (2007). Sleep deprivation: Impact on cognitive performance. Neuropsychiatric Disease and Treatment. PMC2656292",
+  "Killgore, W. D. (2010). Effects of sleep deprivation on cognition. Progress in Brain Research. doi:10.1016/B978-0-444-53444-6.00007-5",
+  "Tobaldini, E., et al. (2017). Sleep deprivation and autonomic nervous system. Sleep Medicine Reviews. doi:10.1016/j.smrv.2016.07.006",
+  "Walker, M. P. (2017). Why We Sleep: Unlocking the Power of Sleep and Dreams. Penguin Books.",
+  "Cirelli, C., & Tononi, G. (2008). Is sleep essential? PLOS Biology. doi:10.1371/journal.pbio.0060216"
+ ],
+ "scenes": [
+  {
+   "id": 1,
+   "chapter": "Cold Open",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You have been staring at the same line of text for ten minutes. The clock on your wall ticks past three in the morning, but you feel oddly wired. Your eyes are dry, and your thoughts are beginning to drift like smoke.",
+   "image_prompt": "The young protagonist with short dark hair and a teal hoodie sitting at a desk, illuminated by a single warm desk lamp, staring blankly at a book."
+  },
+  {
+   "id": 2,
+   "chapter": "Cold Open",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You tell yourself you can push through just one more hour of work. You think you are winning the battle against the night. But inside your skull, a silent and desperate struggle for survival has already begun.",
+   "image_prompt": "Close-up of the protagonist's face, eyes wide and bloodshot, reflecting the soft glow of a computer screen in a dark room."
+  },
+  {
+   "id": 3,
+   "chapter": "Cold Open",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Every animal we know of sleeps, from the smallest fruit fly to the massive blue whale. It is a biological tax we all must pay. To refuse payment is to invite a slow and systemic collapse of who you are.",
+   "image_prompt": "A wide shot of various animals sleeping in a lush green forest under a bright full moon, including a deer and a small bird."
+  },
+  {
+   "id": 4,
+   "chapter": "Cold Open",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "The longer you stay awake, the more your reality begins to fracture at the edges. Your brain starts to eat itself, your heart rhythm falters, and your memories begin to leak away into the void.",
+   "image_prompt": "A surreal image of a puzzle piece floating away from the protagonist's head, showing a starry galaxy inside the gap."
+  },
+  {
+   "id": 5,
+   "chapter": "The Big Question",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "So, what would really happen to your body and your mind if you simply stopped sleeping altogether?",
+   "image_prompt": "The cute pink cartoon brain mascot looking curious, holding a large magnifying glass over a calendar with days crossed out."
+  },
+  {
+   "id": 6,
+   "chapter": "Title Sting",
+   "kind": "title",
+   "onscreen": "The Science of No Sleep",
+   "narration": "The Science of No Sleep.",
+   "image_prompt": "A clean, minimalist title card with the words 'The Science of No Sleep' in a friendly font against a soft blue sky background."
+  },
+  {
+   "id": 7,
+   "chapter": "Honesty Line",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "We are simplifying complex neurological processes for this journey, as science is an evolving map of reality. You can find all our peer-reviewed sources in the description below.",
+   "image_prompt": "A top-down shot of a clean wooden desk with several open scientific journals and a pair of glasses."
+  },
+  {
+   "id": 8,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "chapter",
+   "onscreen": "1. The First 24 Hours",
+   "narration": "Chapter one: The First Twenty-Four Hours.",
+   "image_prompt": "A chapter header with a large number one and an icon of a sun rising over a modern city skyline."
+  },
+  {
+   "id": 9,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "To understand sleep, imagine your body is a high-tech city that never truly shuts down. During the day, the streets are bustling with activity, commerce, and energy. But every city needs a night maintenance crew.",
+   "image_prompt": "A vibrant, futuristic city with glowing glass buildings and flying vehicles moving through clear blue skies."
+  },
+  {
+   "id": 10,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "When you reach twenty-four hours without sleep, the maintenance crew never shows up. The rubbish bins in the city start to overflow. Small potholes on the main roads remain unrepaired, and the traffic lights begin to lose their timing.",
+   "image_prompt": "The same city at night, but with overflowing bins and a flickering street lamp, looking slightly cluttered."
+  },
+  {
+   "id": 11,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You might feel a strange surge of energy around the time you would normally wake up. This is your circadian rhythm trying to rescue you. It floods your system with stress hormones like cortisol to keep the lights on.",
+   "image_prompt": "The protagonist in a teal hoodie suddenly standing up straight, looking energetic but slightly frazzled, surrounded by glowing orange energy waves."
+  },
+  {
+   "id": 12,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "number",
+   "onscreen": "0.10% Blood Alcohol",
+   "narration": "However, this energy is an illusion. Research shows that after twenty-four hours of wakefulness, your cognitive impairment is equivalent to having a blood alcohol concentration of zero point one zero per cent.",
+   "image_prompt": "A transparent human silhouette with a glowing red brain, next to a floating digital display showing '0.10%'."
+  },
+  {
+   "id": 13,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "In many places, this is well above the legal limit for driving. Your reaction times are sluggish. If a squirrel darted in front of your car, your brain would take twice as long to tell your foot to hit the brake.",
+   "image_prompt": "A view from inside a car at night, a squirrel illuminated by headlights, with the protagonist's hands gripping the steering wheel tightly."
+  },
+  {
+   "id": 14,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Your emotional centre, the amygdala, becomes hyper-reactive. You might find a silly internet video hilariously funny or become irrationally angry because you dropped a spoon. The city's social order is starting to fray.",
+   "image_prompt": "The protagonist laughing hysterically at a phone screen, then suddenly looking very frustrated at a fallen spoon on the floor."
+  },
+  {
+   "id": 15,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Your brain's ability to learn new things also hits a wall. Without sleep, the hippocampus, which acts like a temporary storage warehouse for new memories, shuts its doors. The incoming delivery trucks have nowhere to go.",
+   "image_prompt": "The cute pink brain mascot trying to push a large box into a warehouse door that is locked with a heavy chain."
+  },
+  {
+   "id": 16,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "The information simply bounces off and vanishes. This is why pulling an all-nighter to study for an exam is often a losing game. You are trying to stock a warehouse that has already stopped accepting shipments.",
+   "image_prompt": "The protagonist at a desk covered in books, with glowing words and equations floating around them but failing to enter their head."
+  },
+  {
+   "id": 17,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Your body also begins to crave high-calorie foods. Your levels of leptin, the hormone that tells you you are full, drop. Meanwhile, ghrelin, the hunger hormone, spikes. The city's power plants are demanding coal.",
+   "image_prompt": "A close-up of a hand reaching for a glowing, colourful doughnut in a dark kitchen, with a digital scale showing 'Hunger: 100%'."
+  },
+  {
+   "id": 18,
+   "chapter": "1. The First Twenty-Four Hours",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You are tired, hungry, and as clumsy as if you had spent the night at a pub. And yet, this is only the very beginning of the descent into the dark.",
+   "image_prompt": "The protagonist slumped in a chair, looking exhausted, with a half-eaten doughnut on the table and a clock showing 7:00 AM."
+  },
+  {
+   "id": 19,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "chapter",
+   "onscreen": "2. The Hallucination Threshold",
+   "narration": "Chapter two: The Hallucination Threshold.",
+   "image_prompt": "A chapter header with a large number two and an icon of an eye with a swirling, psychedelic pupil."
+  },
+  {
+   "id": 20,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "By forty-eight to seventy-two hours, the city is in a state of emergency. The night maintenance crew has been missing for three shifts. The rubbish is piling up in the streets, blocking traffic and attracting pests.",
+   "image_prompt": "The futuristic city now looking cluttered with piles of glowing digital 'trash' and stalled vehicles on the glass bridges."
+  },
+  {
+   "id": 21,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "This rubbish is literal. Scientists have discovered a system called the glymphatic system. It is a plumbing network that flushes toxic proteins, like beta-amyloid, out of your brain while you sleep.",
+   "image_prompt": "A cutaway of a brain showing clear blue fluid flowing through channels, washing away small grey specks."
+  },
+  {
+   "id": 22,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Without this flushing, the toxins build up. Your brain starts to malfunction in strange ways. You begin to experience microsleeps. These are brief moments, lasting only seconds, where your brain simply switches off.",
+   "image_prompt": "The protagonist walking down a hallway, their eyes closing for a split second while their body continues to move like a robot."
+  },
+  {
+   "id": 23,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You might be mid-sentence or walking across a room, and for three seconds, you are legally asleep. You have no control over this. The city's power grid is failing, and the lights are flickering uncontrollably.",
+   "image_prompt": "A wide shot of the city at night, with entire blocks of buildings going dark and then flickering back on."
+  },
+  {
+   "id": 24,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Then come the hallucinations. Your brain is so desperate for REM sleep—the stage where we dream—that it starts to force dreams into your waking life. The boundary between what is real and what is imagined dissolves.",
+   "image_prompt": "The protagonist sitting on a sofa, seeing the pattern on the wallpaper begin to move and flow like a river."
+  },
+  {
+   "id": 25,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You might see shadow people in the corner of your eye. You might hear someone calling your name in an empty house. Your brain is trying to make sense of a world it can no longer process correctly.",
+   "image_prompt": "A shadowy, blurred figure standing in a doorway behind the protagonist, who is looking at a blank wall."
+  },
+  {
+   "id": 26,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Your immune system also begins to crumble. Natural killer cells, the city guards that hunt down viruses and even early-stage cancer cells, drop by over seventy per cent after just one night of short sleep.",
+   "image_prompt": "A microscopic view of a friendly-looking white blood cell wearing a guard hat, looking very tired and leaning on a spear."
+  },
+  {
+   "id": 27,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "number",
+   "onscreen": "70% Fewer Immune Cells",
+   "narration": "Seventy per cent. Without sleep, you are essentially leaving the city gates wide open for any passing infection to walk right in. Your body can no longer mount an effective defence.",
+   "image_prompt": "A digital counter showing a green bar dropping rapidly to a small red sliver, with the text 'Immune Strength'."
+  },
+  {
+   "id": 28,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Your speech becomes slurred and monotonous. You struggle to find simple words. It feels like you are wading through thick mud, trying to reach a shore that keeps moving further away.",
+   "image_prompt": "The protagonist trying to speak, but the speech bubbles coming out of their mouth are tangled, messy scribbles."
+  },
+  {
+   "id": 29,
+   "chapter": "2. The Hallucination Threshold",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "At this stage, your body is no longer just tired. It is in pain. Your sensitivity to physical discomfort increases. Every ache is magnified, and your spirit begins to break under the weight of the waking world.",
+   "image_prompt": "The protagonist curled up on a rug, looking small and fragile, with a soft blue glow surrounding them like a heavy blanket."
+  },
+  {
+   "id": 30,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "chapter",
+   "onscreen": "3. The Internal Infrastructure",
+   "narration": "Chapter three: The Internal Infrastructure.",
+   "image_prompt": "A chapter header with a large number three and an icon of a beating heart made of glowing glass pipes."
+  },
+  {
+   "id": 31,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "If we look deeper than the brain, we see the city's heavy machinery failing. Your heart is the central power station, and it is under immense strain. Without sleep, your blood pressure begins to climb steadily.",
+   "image_prompt": "A cutaway of a human chest showing a heart glowing with a stressed red light, with pipes around it vibrating."
+  },
+  {
+   "id": 32,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Your sympathetic nervous system—the fight or flight response—is stuck in the 'on' position. It is like a fire alarm that won't stop ringing, even though there is no fire. This constant stress damages your arteries.",
+   "image_prompt": "An alarm bell on a wall ringing violently, with the protagonist covering their ears in a bright, clean room."
+  },
+  {
+   "id": 33,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Even your metabolism begins to fail. Your cells become less sensitive to insulin. If you stop sleeping for long enough, your body starts to mimic the early stages of type two diabetes.",
+   "image_prompt": "The pink brain mascot looking at a digital screen showing a 'Warning' sign and a glucose molecule icon."
+  },
+  {
+   "id": 34,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "The city is no longer able to process its fuel. It is starving in the middle of plenty. Your temperature regulation also breaks down. You might feel freezing cold one minute and burning hot the next.",
+   "image_prompt": "The protagonist shivering while wearing a heavy coat indoors, with a thermometer showing fluctuating temperatures."
+  },
+  {
+   "id": 35,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "This is because sleep is when your body does its most vital thermodynamic work. It is the time when the city's heating and cooling systems are calibrated. Without it, the infrastructure begins to warp and melt.",
+   "image_prompt": "A visual of a thermostat on a wall with the needle spinning wildly between blue and red zones."
+  },
+  {
+   "id": 36,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "number",
+   "onscreen": "86 Billion Neurons",
+   "narration": "Your eighty-six billion neurons are designed to fire in a coordinated dance. But without the nightly reset of sleep, that dance becomes a chaotic riot. The electrical signals in your brain start to cross and short-circuit.",
+   "image_prompt": "A beautiful, abstract view of glowing neurons firing, but the connections are sparking and looking jagged like lightning."
+  },
+  {
+   "id": 37,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "In some studies, long-term sleep deprivation has even led to a breakdown in the blood-brain barrier. This is the city's ultimate security wall, designed to keep harmful substances out of your most precious organ.",
+   "image_prompt": "A thick glass wall with a small crack appearing, protecting a glowing brain from a dark, swirling fog outside."
+  },
+  {
+   "id": 38,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "When the wall cracks, the city is truly lost. This is why sleep is not a luxury or a lifestyle choice. It is a fundamental biological requirement, as vital as the air you breathe or the water you drink.",
+   "image_prompt": "The protagonist standing in a lush green park, taking a deep breath of fresh air under a clear blue sky."
+  },
+  {
+   "id": 39,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "If you are struggling with chronic sleep issues, please do not try to push through it alone. Talk to a medical professional. Your city's infrastructure depends on the rest it receives.",
+   "image_prompt": "A kind doctor in a white coat talking to the protagonist in a bright, friendly clinic room."
+  },
+  {
+   "id": 40,
+   "chapter": "3. The Internal Infrastructure",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "But how long can a human actually survive without sleep? Is there a point where the city simply goes dark forever? The answer lies in a rare and tragic corner of medical science.",
+   "image_prompt": "A wide shot of a sunset over a calm ocean, the light slowly fading into a deep purple twilight."
+  },
+  {
+   "id": 41,
+   "chapter": "4. The Point of No Return",
+   "kind": "chapter",
+   "onscreen": "4. The Point of No Return",
+   "narration": "Chapter four: The Point of No Return.",
+   "image_prompt": "A chapter header with a large number four and an icon of a clock with no hands."
+  },
+  {
+   "id": 42,
+   "chapter": "4. The Point of No Return",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "The world record for staying awake is held by Randy Gardner, who stayed awake for eleven days in nineteen sixty-four. By the end, he could not perform simple maths and had significant cognitive deficits.",
+   "image_prompt": "A vintage-style black and white television screen showing a young man sitting on a sofa, looking extremely tired."
+  },
+  {
+   "id": 43,
+   "chapter": "4. The Point of No Return",
+   "kind": "number",
+   "onscreen": "11 Days Awake",
+   "narration": "Eleven days. It is a feat that has never been officially repeated because of the extreme danger involved. We simply do not know the absolute limit for a healthy human being, because it would be unethical to test it.",
+   "image_prompt": "A calendar with eleven days crossed out in red ink, sitting on a table next to a cold cup of coffee."
+  },
+  {
+   "id": 44,
+   "chapter": "4. The Point of No Return",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "However, there is a rare genetic condition called Fatal Familial Insomnia. People with this condition eventually lose the ability to fall asleep at all. Over several months, they descend into a state of permanent wakefulness.",
+   "image_prompt": "A medical diagram of a brain with the thalamus highlighted in a soft, glowing orange light."
+  },
+  {
+   "id": 45,
+   "chapter": "4. The Point of No Return",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "For these individuals, the maintenance crew never returns, and the city cannot be repaired. It leads to profound dementia and, eventually, death. It is the ultimate proof that sleep is not an optional extra.",
+   "image_prompt": "An empty park bench at night under a single street lamp, with autumn leaves blowing across the ground."
+  },
+  {
+   "id": 46,
+   "chapter": "4. The Point of No Return",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Some myths suggest we can train ourselves to need less sleep, or that some people only need four hours. While a tiny percentage of the population has a 'short-sleep' gene, for ninety-nine per cent of us, this is a dangerous fantasy.",
+   "image_prompt": "The cute pink brain mascot wearing a superhero cape, looking at its reflection in a mirror and seeing its tired self."
+  },
+  {
+   "id": 47,
+   "chapter": "4. The Point of No Return",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "You cannot outsmart your biology with caffeine or willpower. The city will eventually demand its dues. The question is whether you will pay them voluntarily, or wait until the system forces a shutdown.",
+   "image_prompt": "A close-up of a hand turning off a glowing computer monitor, the room becoming dark and peaceful."
+  },
+  {
+   "id": 48,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Tonight, when you lay your head on the pillow, remember the city within you. The night maintenance crew is waiting for the signal to start their work. They will clear the trash, repair the roads, and prepare you for a new day.",
+   "image_prompt": "The protagonist tucked into a cosy bed with a soft teal duvet, looking peaceful and asleep as moonlight streams through a window."
+  },
+  {
+   "id": 49,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Sleep is not the absence of life, but the very thing that makes life possible. It is the quiet miracle that allows you to be you. So, let the lights dim, let the streets go quiet, and give your city the rest it deserves.",
+   "image_prompt": "A wide shot of the futuristic city from the beginning, but now the lights are soft and dim, and the stars are bright in the sky above."
+  },
+  {
+   "id": 50,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "narration": "Subscribe to Mindsphere for more curious science about you. Sweet dreams.",
+   "image_prompt": "The Mindsphere logo—a simple glowing sphere with a leaf sprout—floating gently over a calm, dark blue ocean under a starry sky."
+  }
+ ],
+ "shorts": [
+  {
+   "title": "What 24 Hours Without Sleep Does to You #shorts",
+   "scene_ids": [
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "title": "Your Brain Hallucinates Without Sleep #shorts",
+   "scene_ids": [
+    22,
+    23,
+    24,
+    25
+   ]
+  },
+  {
+   "title": "The Brain's Secret Cleaning System #shorts",
+   "scene_ids": [
+    20,
+    21,
+    36,
+    37
+   ]
+  }
+ ]
+}

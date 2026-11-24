@@ -136,6 +136,9 @@ def img_cloudflare(prompt, seed, w, h, path):
     path.write_bytes(base64.b64decode(j['result']['image']))
 
 
+DEAD = set()  # image providers that answered with a payment/auth error
+
+
 def make_images(scenes, outdir, landscape=True):
     prov = os.environ.get('IMAGE_PROVIDER', 'pollinations')
     (outdir / 'img').mkdir(parents=True, exist_ok=True)
@@ -150,13 +153,23 @@ def make_images(scenes, outdir, landscape=True):
         fns = [img_cloudflare] if prov == 'cloudflare' else [img_pollinations]
         if prov == 'pollinations' and os.environ.get('CF_API_TOKEN'):
             fns.append(img_cloudflare)
+        fns = [f for f in fns if f.__name__ not in DEAD]
+        if not fns:
+            continue
         for attempt in range(4):
             fn = fns[min(attempt // 2, len(fns) - 1)]
             try:
                 fn(s['image_prompt'], 1000 + s['id'], w, h, p); s['img'] = str(p); log('image', s['id'], fn.__name__); break
             except Exception as e:
-                log('image fail', s['id'], fn.__name__, e); time.sleep(8 * (attempt + 1))
-        if prov == 'pollinations':
+                log('image fail', s['id'], fn.__name__, e)
+                # payment/auth errors will not fix themselves: stop asking this provider (saves ~1 min per scene)
+                if getattr(e, 'code', None) in (401, 402, 403):
+                    DEAD.add(fn.__name__); log('provider disabled', fn.__name__)
+                    fns = [f for f in fns if f.__name__ not in DEAD]
+                    if not fns: break
+                    continue
+                time.sleep(8 * (attempt + 1))
+        if prov == 'pollinations' and 'img_pollinations' not in DEAD:
             time.sleep(3)  # be polite to the free service
 
 

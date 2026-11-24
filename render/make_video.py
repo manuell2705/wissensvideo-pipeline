@@ -258,7 +258,7 @@ const { spawn } = require('child_process');
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', fps, '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '19', '-pix_fmt', 'yuv420p', '-r', fps, out], { stdio: ['pipe', 'inherit', 'inherit'] });
   for (let f = +f0; f < +f1; f++) {
-    await page.evaluate((t) => window.seekTo(t), f / +fps);
+    await page.evaluate(async (t) => await window.seekTo(t), f / +fps);
     const buf = await page.screenshot({ type: 'jpeg', quality: 92 });
     if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
     if (f % 250 === 0) console.log('frame', f, '/', f1);
@@ -309,6 +309,15 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
                     sh['line'] = f"line_{s['id']:03d}.jpg"
                     try: sketch(f, rdir / sh['line'])
                     except Exception as e: log('sketch fail', s['id'], e); sh['line'] = None
+            if k == 0:
+                clip = outdir / 'clips' / f"clip_{s['id']:03d}.mp4"
+                if clip.exists():   # real motion (Wan 2.2): extract frames at render fps, play at <=1x, then hold
+                    vd = rdir / f"v_{s['id']:03d}"; vd.mkdir(exist_ok=True)
+                    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-i', str(clip), '-vf', f'fps={fps},scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080',
+                                    '-q:v', '3', str(vd / '%04d.jpg')], check=True)
+                    n = len(list(vd.glob('*.jpg')))
+                    sh['video'] = {'dir': vd.name, 'n': n, 'fps': fps}
+                    sh['line'] = None
             shots.append(sh)
         prev_ch = s['chapter']
         energy = '!' in s['narration'] or bool(re.search(r'\b(boom|suddenly|explod|fire|blackout|switch)', s['narration'].lower()))

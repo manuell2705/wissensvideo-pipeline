@@ -51,6 +51,9 @@
   .cap .w.hot { color: var(--amber); }
   /* anime motion pass */
   .shots { position: absolute; inset: 0; }
+  .vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .counter { position: absolute; right: 5%; top: 9%; padding: calc(var(--u)*1.6) calc(var(--u)*3.2); text-align: right; }
+  .counter .v { font-weight: 700; font-size: calc(var(--u) * 6.2); color: var(--amber); text-shadow: 0 0 26px rgba(255,181,71,.5); font-variant-numeric: tabular-nums; }
   .shot { position: absolute; inset: 0; overflow: hidden; }
   .line, .paper { position: absolute; inset: -6%; background-size: cover; background-position: center; }
   .paper { background: #0c1e3f; }
@@ -71,7 +74,7 @@
 // Our motion rules (from the GSAP + LottieFiles motion-design guidance):
 // - something always moves (Ken Burns + particles), ease out on entrances, ease in on exits,
 // - stagger text, overshoot only on small "pop" elements, transitions 0.5-0.8 s.
-const V = window.VIDEO;
+const V = window.VIDEO; window.PENDING = [];
 const W = V.width, H = V.height;
 document.documentElement.style.setProperty('--w', W + 'px');
 document.documentElement.style.setProperty('--h', H + 'px');
@@ -101,6 +104,15 @@ V.scenes.forEach((s, i) => {
     if (sh.img) b.style.backgroundImage = `url("${sh.img}")`;
     wrap.appendChild(b); if (k === 0) bg = b;
     const st = sh.t, sd = sh.d;
+    if (sh.video) {
+      // real animation clip: frame-accurate image sequence, plays at <= 1x speed, then holds the last frame
+      const im = document.createElement('img'); im.className = 'vid'; b.appendChild(im);
+      const vlen = sh.video.n / sh.video.fps, rate = Math.max(0.6, Math.min(1, vlen / Math.max(0.1, sh.d)));
+      const pr = { f: 1 }; const setF = () => { const f = Math.max(1, Math.min(sh.video.n, Math.round(pr.f)));
+        const src = `${sh.video.dir}/${String(f).padStart(4, '0')}.jpg`; if (im.getAttribute('src') !== src) { im.setAttribute('src', src); window.PENDING.push(im); } };
+      tl.fromTo(pr, { f: 1 }, { f: sh.video.n, duration: vlen / rate, ease: 'none', onUpdate: setF, immediateRender: false }, st);
+      tl.call(setF, null, st); setF();
+    }
     // camera per shot: Ken Burns with varied direction (+ a slight 3D drift so it never feels like a slideshow)
     const dir = (i + k) % 4;
     const fromS = [1.02, 1.14, 1.05, 1.12][dir], toS = [1.14, 1.02, 1.16, 1.04][dir];
@@ -200,6 +212,18 @@ V.scenes.forEach((s, i) => {
     tl.to(n, { opacity: 0, scale: 1.08, duration: 0.45, ease: 'power2.in' }, t0 + d - 0.5);
     tl.to(dark, { opacity: 0, duration: 0.45 }, t0 + d - 0.5);
   }
+  if (s.kind === 'image' && s.onscreen && /\d/.test(s.onscreen)) {
+    const target = parseFloat(s.onscreen.replace(/[^\d.]/g, '')) || 0, suf = s.onscreen.replace(/[\d.,]/g, '');
+    const c = document.createElement('div'); c.className = 'counter glass'; c.innerHTML = `<div class="v">0</div>`; el.appendChild(c);
+    const v = c.querySelector('.v'); const pr = { x: 0 };
+    const fmt = () => { v.textContent = Math.round(pr.x).toLocaleString('en-US') + suf; };
+    const ct = (s.labels && s.labels.length) ? Math.max(t0 + 0.3, s.labels[0].t - 0.2) : t0 + 0.5;
+    tl.fromTo(c, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(2)' }, ct);
+    tl.fromTo(pr, { x: 0 }, { x: target, duration: Math.min(2.2, d * 0.5), ease: 'expo.out', onUpdate: fmt, immediateRender: false }, ct);
+    tl.call(fmt, null, ct); fmt();
+    tl.fromTo(c, { boxShadow: '0 0 0px rgba(255,181,71,0)' }, { boxShadow: '0 0 60px rgba(255,181,71,.8)', duration: 0.3, yoyo: true, repeat: 1 }, ct + Math.min(2.2, d * 0.5));
+    tl.to(c, { opacity: 0, y: -12, duration: 0.4, ease: 'power2.in' }, t0 + d - 0.4);
+  }
   // info cards: each appears exactly when its key word is spoken
   if (s.labels && s.labels.length) {
     const box = document.createElement('div'); box.className = 'cards'; el.appendChild(box);
@@ -232,7 +256,9 @@ if (V.captions) {
   tl.fromTo(g, { x: 0, y: 0 }, { keyframes: { x: [0, -37, 22, -11, 41, 0], y: [0, 19, -33, 27, -8, 0] }, duration: 0.5, ease: 'steps(6)', repeat: Math.ceil(V.total / 0.5) }, 0); }
 if (V.brand) { const b = document.createElement('div'); b.className = 'brand'; b.textContent = V.brand; stage.appendChild(b); }
 tl.set({}, {}, V.total);
-window.seekTo = (t) => { tl.seek(t, false); return true; };
+window.seekTo = async (t) => { window.PENDING = []; tl.seek(t, false);
+  const vis = [...document.querySelectorAll('img.vid')].filter(i => i.getAttribute('src'));
+  await Promise.all(vis.map(i => (i.complete && i.naturalWidth) ? null : i.decode().catch(() => null))); return true; };
 window.READY = true;
 </script>
 </body>

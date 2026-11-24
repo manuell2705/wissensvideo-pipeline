@@ -31,7 +31,7 @@ jobs:
                            else ["NVIDIA GeForce RTX 4090", "NVIDIA RTX A5000", "NVIDIA GeForce RTX 3090", "NVIDIA L4"]),
             "gpuCount": 1, "cloudType": "COMMUNITY", "containerDiskInGb": (200 if os.environ["GPU"] == "big" else 60), "volumeInGb": 0,
             "env": {"RUNPOD_API_KEY": os.environ["RUNPOD_API_KEY"], "GH_TOKEN": os.environ["GH_TOKEN"], "REPO": os.environ["GITHUB_REPOSITORY"],
-                    "TASK_CMD": os.environ["TASK_CMD"], "PIP_PKGS": os.environ["PIP_PKGS"], "HF_HUB_ENABLE_HF_TRANSFER": "1", "RESULT_TAG": "gpu-" + os.environ["GITHUB_RUN_ID"]},
+                    "TASK_CMD": os.environ["TASK_CMD"], "PIP_PKGS": os.environ["PIP_PKGS"], "RESULT_TAG": "gpu-" + os.environ["GITHUB_RUN_ID"]},
             "dockerStartCmd": ["bash", "-c", "curl -sL https://raw.githubusercontent.com/" + os.environ["GITHUB_REPOSITORY"] + "/main/render/gpu/pod_job.sh | bash"]}))
           PY
           )

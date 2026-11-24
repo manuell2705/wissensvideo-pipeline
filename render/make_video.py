@@ -225,6 +225,23 @@ def shot_files(outdir, s):
     return [one] if one.exists() else []
 
 
+def detail_points(img, n):
+    """Pick n 'interesting' points (most edges/detail) on a 4x3 grid, far apart, for detail shots."""
+    from PIL import Image, ImageFilter
+    im = Image.open(img).convert('L').resize((320, 180)).filter(ImageFilter.FIND_EDGES)
+    px = im.load(); cells = []
+    for gy in range(3):
+        for gx in range(4):
+            x0, y0 = 20 + gx * 70, 15 + gy * 50
+            e = sum(px[x, y] for x in range(x0, x0 + 70, 3) for y in range(y0, y0 + 50, 3))
+            cells.append((e, (x0 + 35) / 320 * 100, (y0 + 25) / 180 * 100))
+    cells.sort(reverse=True); out = []
+    for e, x, y in cells:
+        if all(abs(x - a['x']) + abs(y - a['y']) > 35 for a in out): out.append({'x': round(x, 1), 'y': round(y, 1), 'z': 1.45})
+        if len(out) >= n: break
+    return out
+
+
 def shot_times(s, n):
     """Split the scene into n shots; cut on a sentence start close to the even split, so cuts land on speech rhythm."""
     d, off = s['dur'], s['start']
@@ -321,10 +338,17 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
     vs, prev_ch = [], None
     for i, s in enumerate(scenes):
         files = shot_files(outdir, s) if not s.get('img') or Path(s['img']).parent == outdir / 'img' else [Path(s['img'])]
+        crops = [None] * len(files)
+        # 'small scenes' without extra GPU: a long scene with one picture gets 1-2 calm detail shots (zoom into the busiest regions)
+        nv = 1 if s['dur'] < 7 else (2 if s['dur'] < 12 else 3)
+        if len(files) == 1 and nv > 1 and s['kind'] == 'image' and not s.get('cutout') and os.environ.get('DETAIL', '1') == '1' \
+                and not (outdir / 'clips' / f"clip_{s['id']:03d}.mp4").exists():
+            pts = detail_points(files[0], nv - 1)
+            files = files * (1 + len(pts)); crops = [None] + pts
         times = shot_times(s, len(files)) if files else [(s['start'], s['dur'])]
         shots = []
         for k, ((t, d), f) in enumerate(zip(times, files or [None])):
-            sh = {'t': round(t, 3), 'd': round(d, 3), 'img': None, 'line': None}
+            sh = {'t': round(t, 3), 'd': round(d, 3), 'img': None, 'line': None, 'crop': crops[k] if k < len(crops) else None}
             if f:
                 sh['img'] = f"img_{s['id']:03d}_{k}.jpg"; shutil.copy(f, rdir / sh['img'])
                 # 'being drawn' reveal on chapter openings and every 4th scene (first shot only)
@@ -413,6 +437,9 @@ def main():
     fps = int(os.environ.get('FPS', 25)); workers = int(os.environ.get('WORKERS', 4))
     only = os.environ.get('ONLY', 'all')
     scenes = script['scenes']
+    if os.environ.get('SCENE_IDS'):   # excerpt, e.g. SCENE_IDS=16-19 (for quick ~20 s previews)
+        a_, b_ = (int(x) for x in os.environ['SCENE_IDS'].split('-'))
+        scenes = [s for s in scenes if a_ <= s['id'] <= b_]; script['scenes'] = scenes
     if os.environ.get('LIMIT_SCENES'): scenes = scenes[:int(os.environ['LIMIT_SCENES'])]; script['scenes'] = scenes
     music = os.environ.get('MUSIC') or (str(HERE.parent / 'assets' / 'music.mp3'))
     log('voice'); make_voice(scenes, out, os.environ.get('VOICE', 'bm_george'), float(os.environ.get('SPEED', 1.0)))

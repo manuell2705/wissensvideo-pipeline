@@ -35,8 +35,10 @@ jobs:
             "dockerStartCmd": ["bash", "-c", "curl -sL https://raw.githubusercontent.com/" + os.environ["GITHUB_REPOSITORY"] + "/main/render/gpu/pod_job.sh | bash"]}))
           PY
           )
-          R=$(curl -s -X POST https://rest.runpod.io/v1/pods -H "Authorization: Bearer $RUNPOD_API_KEY" -H 'Content-Type: application/json' -d "$BODY")
-          echo "$R" | python3 -c "import json,sys; d=json.load(sys.stdin); print({k: d.get(k) for k in ('id','desiredStatus','costPerHr','gpu','machine','error')})"
+          getent hosts rest.runpod.io || nslookup rest.runpod.io || true
+          R=$(curl -sS --retry 6 --retry-all-errors --retry-delay 10 -X POST https://rest.runpod.io/v1/pods -H "Authorization: Bearer $RUNPOD_API_KEY" -H 'Content-Type: application/json' -d "$BODY")
+          echo "RAW: ${R:0:300}"
+          echo "$R" | python3 -c "import json,sys; d=json.load(sys.stdin); d=d[0] if isinstance(d,list) else d; print({k: d.get(k) for k in ('id','desiredStatus','costPerHr','gpu','machine','error')})"
           POD=$(echo "$R" | python3 -c "import json,sys; print(json.load(sys.stdin).get('id',''))")
           [ -n "$POD" ] || exit 1
           echo "POD=$POD" >> $GITHUB_ENV

@@ -17,9 +17,10 @@ import soundfile as sf
 
 HERE = Path(__file__).resolve().parent
 SR = 24000
-STYLE = ("2D anime-inspired cartoon illustration, clean bold outlines, flat cel shading, vibrant saturated colours, "
-         "deep navy and teal palette with warm amber highlights, soft glow, cinematic composition, "
-         "educational explainer style, no text, no letters, no watermark")
+STYLE = ("2D anime-inspired cartoon illustration, clean bold navy outlines, flat cel shading, "
+         "Frutiger Aero aesthetic: bright sky blue, aqua and fresh green palette, glossy glass and water surfaces, "
+         "floating soap bubbles, soft lens glow, clean optimistic nature, warm amber accents, "
+         "calm friendly cozy mood, cinematic composition, educational explainer style, no text, no letters, no watermark")
 NEG = "text, letters, words, watermark, logo, photo, realistic, 3d render, gore, blood, deformed hands"
 
 
@@ -224,7 +225,7 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
         if s.get('img'):
             img = f"img_{s['id']:03d}.jpg"; shutil.copy(s['img'], rdir / img)
         vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'img': img})
-    data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND')}
+    data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND', 'MINDSPHERE')}
     (rdir / 'data.js').write_text('window.VIDEO = ' + json.dumps(data) + ';')
     shutil.copy(HERE / 'template.html', rdir / 'index.html')
     (rdir / 'render.js').write_text(RENDER_JS)

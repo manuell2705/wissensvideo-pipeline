@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       variants: { description: 'JSON list', required: false, default: '["default","george","lewis","daniel","michael","fenrir","emma","minimax_narrator"]' }
+      script: { description: 'chatterbox_v3.py or chatterbox_v4.py', required: false, default: 'chatterbox_v3.py' }
 permissions:
   contents: write
 jobs:
@@ -24,7 +25,7 @@ jobs:
       - env:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-        run: python render/chatterbox_v3.py s ${{ matrix.variant }}
+        run: python render/${{ inputs.script }} s ${{ matrix.variant }}
       - uses: actions/upload-artifact@v4
         with: { name: 'cb-${{ matrix.variant }}', path: s/*.mp3 }
   release:
@@ -35,4 +36,4 @@ jobs:
       - uses: actions/download-artifact@v4
         with: { path: s, merge-multiple: true }
       - env: { GH_TOKEN: '${{ github.token }}' }
-        run: gh release create "chatterbox-v3-${{ github.run_number }}" s/*.mp3 -R ${{ github.repository }} --title "Chatterbox v3" --notes "Directed per sentence"
+        run: gh release create "chatterbox-${{ github.run_number }}-${{ inputs.script }}" s/*.mp3 -R ${{ github.repository }} --title "Chatterbox v3" --notes "Directed per sentence"

@@ -1,8 +1,31 @@
-# Mindsphere characters and world (used in every image prompt)
-- Kai: a young man with short dark messy hair and a teal hoodie. Stands for "you".
-- Mira: a young woman with a dark ponytail and a warm amber jacket. Stands for "you".
-- Kai and Mira alternate scene by scene; every 4th character scene shows both together.
-- The character always acts out exactly what the narration says in that scene.
-- Orbi: a small floating glass orb robot with a glowing orbit ring and two simple dot eyes. Companion, holds info signs, appears at the honesty line and in jokes.
-- World: Mindsphere, a small green glass planet with a glowing orbit ring. Districts: Body City (health/biology), Gedankengarten (psychology), observatory on the ring (universe), floating archive islands (history), hills and waterfalls (nature).
-- Look: 2D anime cartoon, clean dark teal line art, soft cel shading, night blue / teal / leaf green / warm amber, day and night scenes, light Frutiger Aero touches (glass, water, soft glow). No text in images, no bubbles.
+# Mindsphere: fixed main characters (locked 2026-11-24, never change)
+
+Reference image: `render/refs/sheet_figuren.jpg`. It is always passed to the image model as the reference.
+Crops: Kai = left 62 %, Mira = right 62 %, full sheet when both appear.
+
+## Kai
+- Young man, about 20, warm light-brown skin, big dark-brown eyes
+- Short, messy, spiky dark hair
+- Teal-green hoodie with white drawstrings, dark trousers
+- Curious, calm, a little dreamy
+
+## Mira
+- Young woman, about 20, light skin, big dark eyes
+- Dark hair in a high ponytail
+- Warm amber-orange zip jacket over a cream shirt with a dark-green collar, dark trousers
+- Brave, cheerful, energetic
+
+## Orbi (companion robot)
+- Small floating glass sphere, white-blue, with a dark visor face and two glowing green dot eyes
+- Glowing green orbit ring around its middle, a tiny water drop dripping below it
+- Never speaks; reacts with movement (spinning, bobbing)
+
+## AI titan (opponent in the Brain vs AI series)
+- Huge figure of dark glass panels with glowing amber circuit lines and calm amber eyes
+- Stands over endless data-center cities
+
+## Rules
+- Only show the characters that the narration is about. Same outfit every time.
+- Motion stays simple: breathing, a small turn of the head, camera moves. No AI morph clips.
+- The world stands still and calm. The presentation (graphics, zooms, GTA switch) carries the movement.
+- Style: 2D anime TV series, clean line art, cel shading; night blue / teal / leaf green / amber; about 40 % Frutiger Aero (glass, glow, water).

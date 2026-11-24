@@ -128,7 +128,7 @@ def img_pollinations(prompt, seed, w, h, path):
 def img_cloudflare(prompt, seed, w, h, path):
     acc, tok = os.environ['CF_ACCOUNT_ID'], os.environ['CF_API_TOKEN']
     url = f"https://api.cloudflare.com/client/v4/accounts/{acc}/ai/run/@cf/black-forest-labs/flux-1-schnell"
-    body = json.dumps({'prompt': f"{prompt}. {STYLE}", 'steps': 6, 'seed': seed}).encode()
+    body = json.dumps({'prompt': f"{prompt}. {STYLE}", 'steps': 6}).encode()
     req = urllib.request.Request(url, data=body, headers={'Authorization': f'Bearer {tok}', 'Content-Type': 'application/json'})
     with urllib.request.urlopen(req, timeout=180) as r:
         j = json.loads(r.read())

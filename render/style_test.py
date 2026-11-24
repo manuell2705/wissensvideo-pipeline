@@ -35,7 +35,7 @@ def save(data, ct, path):
         data = base64.b64decode(img)
     path.write_bytes(data)
 MODELS = {
- 'schnell': lambda p: post_json('@cf/black-forest-labs/flux-1-schnell', {'prompt': p, 'steps': 8, 'seed': 7}),
+ 'schnell': lambda p: post_json('@cf/black-forest-labs/flux-1-schnell', {'prompt': p, 'steps': 8}),
  'lucid': lambda p: post_json('@cf/leonardo/lucid-origin', {'prompt': p, 'width': 1280, 'height': 720, 'seed': 7}),
  'flux2dev': lambda p: post_multi('@cf/black-forest-labs/flux-2-dev', {'prompt': p, 'width': '1280', 'height': '720', 'steps': '20', 'seed': '7'}),
 }

@@ -43,7 +43,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "You know that feeling. You're drawing, or playing, or writing, and suddenly the world goes quiet. Time disappears. Every move just... happens.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) drawing at a desk at night, completely absorbed, the room around them fading into soft glowing lines, a clock melting gently"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) drawing at a desk at night, completely absorbed, the room around them fading into soft glowing lines, a clock melting gently"
   },
   {
    "id": 2,
@@ -52,7 +52,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "No doubts. No hunger. No little voice asking if you're good enough. Just you, and the thing you're doing, perfectly in sync.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) skateboarding down a glowing hill road at sunset, a calm focused smile, everything else blurred into colour"
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) skateboarding down a glowing hill road at sunset, a calm focused smile, everything else blurred into colour"
   },
   {
    "id": 3,
@@ -83,7 +83,7 @@
     "Hollywood version"
    ],
    "narration": "Movies love it. One pill, one strange accident, and suddenly you learn languages in an afternoon, read minds, and move things with a glance.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) swallowing a glowing pill, books and objects floating around them, dramatic cinema-poster lighting"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) swallowing a glowing pill, books and objects floating around them, dramatic cinema-poster lighting"
   },
   {
    "id": 6,
@@ -92,7 +92,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "So is flow the secret ninety percent waking up? And what would happen if you went all the way? Superpowers? Total control of your body? Remembering every breakfast you've ever had?",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) surrounded by floating thought bubbles: a lightning bolt, a heart, a stack of breakfast plates going up to the sky"
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) surrounded by floating thought bubbles: a lightning bolt, a heart, a stack of breakfast plates going up to the sky"
   },
   {
    "id": 7,
@@ -157,7 +157,7 @@
    "onscreen": "2% of weight, 20% of energy",
    "labels": [],
    "narration": "Your brain makes up only about two percent of your body weight. But it burns around twenty percent of your energy. It is, by far, the most expensive thing you own.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) holding a tiny brain on one side of a balance scale, a huge pile of food and batteries on the other side"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) holding a tiny brain on one side of a balance scale, a huge pile of food and batteries on the other side"
   },
   {
    "id": 13,
@@ -195,7 +195,7 @@
     "every region active"
    ],
    "narration": "But brain scans disagree. Watch a brain over a single day, and practically every region lights up at some point. There is no silent ninety percent.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) lying in a friendly glass brain scanner, a holographic brain above them lit up in many colourful patches"
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) lying in a friendly glass brain scanner, a holographic brain above them lit up in many colourful patches"
   },
   {
    "id": 17,
@@ -239,7 +239,7 @@
     "hunger"
    ],
    "narration": "Right now, as you watch this, your seeing district decodes the picture. Your language areas turn my words into meaning. And somewhere, a quiet part checks whether you're hungry.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) watching a screen, three glowing districts of their brain highlighted: an eye district, a speech-bubble district and a tiny kitchen with a sandwich"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) watching a screen, three glowing districts of their brain highlighted: an eye district, a speech-bubble district and a tiny kitchen with a sandwich"
   },
   {
    "id": 21,
@@ -266,7 +266,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "Your brain doesn't work by switching everything on. It works by choosing which few lights matter right now.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) holding a glowing lantern on a dark city street, choosing one bright path among many"
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) holding a glowing lantern on a dark city street, choosing one bright path among many"
   },
   {
    "id": 24,
@@ -315,7 +315,7 @@
     "telepathy: no evidence"
    ],
    "narration": "Okay. But could you read minds? Sadly, no. No study has ever shown reliable telepathy.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) and a friend facing each other with antenna headbands, a thought bubble between them showing only a big question mark, funny mood"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) and a friend facing each other with antenna headbands, a thought bubble between them showing only a big question mark, funny mood"
   },
   {
    "id": 29,
@@ -347,7 +347,7 @@
     "a few dozen known cases"
    ],
    "narration": "What about remembering everything? A few dozen people on Earth come close. They have something called highly superior autobiographical memory. Name any date, and they can tell you what day of the week it was, and what they did.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) standing in an endless glass library of calendars and diaries, one date page glowing"
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) standing in an endless glass library of calendars and diaries, one date page glowing"
   },
   {
    "id": 32,
@@ -397,7 +397,7 @@
     "fewer symptoms"
    ],
    "narration": "Could you control your body with your mind? Partly. In one study, volunteers trained in breathing techniques and cold exposure were given a bacterial toxin, and had far fewer flu-like symptoms than untrained people.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) breathing calmly in an icy blue lake, glowing shield shapes around them, snowy mountains"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) breathing calmly in an icy blue lake, glowing shield shapes around them, snowy mountains"
   },
   {
    "id": 37,
@@ -426,7 +426,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "Did you just quietly check that you can still feel your toes? Good. Your bodyguard is working.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) looking down and wiggling their toes in fuzzy socks, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) giving a thumbs up, funny mood"
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) looking down and wiggling their toes in fuzzy socks, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) giving a thumbs up, funny mood"
   },
   {
    "id": 40,
@@ -444,7 +444,7 @@
    "onscreen": "3. The secret of flow",
    "labels": [],
    "narration": "Remember the feeling from the beginning? Time disappearing, everything just working? That's the closest you'll ever get to a brain at full power. But not for the reason you'd think.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) back at the night desk from the start, absorbed in drawing, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) quietly floating nearby"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) back at the night desk from the start, absorbed in drawing, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) quietly floating nearby"
   },
   {
    "id": 42,
@@ -508,7 +508,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "Too easy, and you get bored. Too hard, and you panic. But right on the edge, your brain locks in.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) walking on a glowing tightrope between a sleepy grey cloud labelled with a yawn and a stormy red cloud, perfectly balanced"
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) walking on a glowing tightrope between a sleepy grey cloud labelled with a yawn and a stormy red cloud, perfectly balanced"
   },
   {
    "id": 48,
@@ -547,7 +547,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "And you can do the same. It sounds almost too simple. But besides finding your flow, three things have strong science behind them.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) looking at three glowing glass cards floating in front of them, numbered one, two, three"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) looking at three glowing glass cards floating in front of them, numbered one, two, three"
   },
   {
    "id": 52,
@@ -556,7 +556,7 @@
    "onscreen": "1. Sleep",
    "labels": [],
    "narration": "One: sleep. While you sleep, your brain replays the day and strengthens what matters. Skip it, and much of what you learned simply fades.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) asleep in bed under a starry window while the brain drawn as a glowing night city inside a glass dome above them replays scenes of the day like little films"
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) asleep in bed under a starry window while the brain drawn as a glowing night city inside a glass dome above them replays scenes of the day like little films"
   },
   {
    "id": 53,
@@ -574,7 +574,7 @@
    "onscreen": "3. Learn",
    "labels": [],
    "narration": "Three: learn something genuinely new. A language, an instrument, a dance. New skills build new roads, at almost any age.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) learning guitar while words in different languages and dance steps float around as glowing roads"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) learning guitar while words in different languages and dance steps float around as glowing roads"
   },
   {
    "id": 55,
@@ -592,7 +592,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "So the next time someone tells you that you only use ten percent of your brain, you can smile. Your city is already lit. Every district, every street. And in flow, you've already felt it at its best. Not with every light on. With the right lights, perfectly in tune.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) smiling, behind them the brain drawn as a glowing night city inside a glass dome glowing in gentle waves across all districts"
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) smiling, behind them the brain drawn as a glowing night city inside a glass dome glowing in gentle waves across all districts"
   },
   {
    "id": 57,
@@ -601,7 +601,7 @@
    "onscreen": null,
    "labels": [],
    "narration": "And that's the beautiful part. You don't need to switch everything on. You get to choose which lights to keep burning, and which new roads to build.",
-   "image_prompt": "the protagonist (young person with short dark hair and a teal hoodie) placing a small glowing lamp on a new road in the brain drawn as a glowing night city inside a glass dome, warm amber light"
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) placing a small glowing lamp on a new road in the brain drawn as a glowing night city inside a glass dome, warm amber light"
   },
   {
    "id": 58,

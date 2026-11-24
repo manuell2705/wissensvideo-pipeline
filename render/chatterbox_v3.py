@@ -48,7 +48,7 @@ elif ref and ref[0] == 'aura':
 elif ref:
     ref_path = Path(ref[1])
 from chatterbox.tts import ChatterboxTTS
-model = ChatterboxTTS.from_pretrained(device='cpu')
+model = ChatterboxTTS.from_pretrained(device=__import__('os').environ.get('DEVICE', 'cpu'))
 parts = []
 LIVELY = 1.25 if variant.endswith('_lively') else (0.9 if ref and ref[0] == 'aura' else 1.0)
 for text, exa, cfg, pause in SEGS:

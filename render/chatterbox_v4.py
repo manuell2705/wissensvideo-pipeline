@@ -31,7 +31,7 @@ if REF is None:
     a = np.concatenate([r.audio.cpu().numpy() for r in kp(txt, voice='bm_george', speed=1.0)])
     REF = str(out / '_ref.wav'); sf.write(REF, a, 24000)
 from chatterbox.tts import ChatterboxTTS
-model = ChatterboxTTS.from_pretrained(device='cpu'); SR = model.sr
+model = ChatterboxTTS.from_pretrained(device=__import__('os').environ.get('DEVICE', 'cpu')); SR = model.sr
 def trim(w, thr=0.012):
     idx = np.where(np.abs(w) > thr)[0]
     if len(idx) == 0: return w

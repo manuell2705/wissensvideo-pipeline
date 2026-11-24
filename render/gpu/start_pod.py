@@ -1,8 +1,9 @@
 """Create a RunPod pod via REST API v2, trying GPU types in order. Prints pod id to $GITHUB_ENV."""
 import json, os, sys, time, urllib.request, urllib.error
-KEY = os.environ["RUNPOD_API_KEY"]; BIG = os.environ.get("GPU") == "big"
-GPUS = (["NVIDIA RTX A6000", "NVIDIA L40S", "NVIDIA A40", "NVIDIA RTX 6000 Ada Generation", "NVIDIA L40"] if BIG
-        else ["NVIDIA GeForce RTX 4090", "NVIDIA RTX A5000", "NVIDIA GeForce RTX 3090", "NVIDIA L4", "NVIDIA RTX A4500"])
+KEY = os.environ["RUNPOD_API_KEY"]; KIND = os.environ.get("GPU", "small"); BIG = KIND in ("big", "h100")
+GPUS = {"h100": ["NVIDIA H100 80GB HBM3", "NVIDIA H100 PCIe", "NVIDIA H100 NVL", "NVIDIA A100-SXM4-80GB", "NVIDIA A100 80GB PCIe"],
+        "big": ["NVIDIA RTX A6000", "NVIDIA L40S", "NVIDIA A40", "NVIDIA RTX 6000 Ada Generation", "NVIDIA L40"],
+        "small": ["NVIDIA GeForce RTX 4090", "NVIDIA RTX A5000", "NVIDIA GeForce RTX 3090", "NVIDIA L4", "NVIDIA RTX A4500"]}[KIND]
 repo = os.environ["GITHUB_REPOSITORY"]
 def req(method, path, body=None):
     r = urllib.request.Request("https://api.runpod.io" + path, method=method, data=json.dumps(body).encode() if body else None,

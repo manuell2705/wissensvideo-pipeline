@@ -6,7 +6,7 @@ on:
       task_cmd: { description: 'Command run inside the pod (in repo root, outputs to gpu_out/)', required: true }
       max_minutes: { description: 'Hard time limit', required: false, default: '60' }
       pip_pkgs: { description: 'pip packages for the pod', required: false, default: 'chatterbox-tts kokoro soundfile' }
-      gpu: { description: 'small (24 GB, voice) or big (48 GB, images)', required: false, default: 'small' }
+      gpu: { description: 'small (24 GB, voice), big (48 GB), h100 (80 GB, fastest)', required: false, default: 'small' }
 permissions:
   contents: write
 jobs:

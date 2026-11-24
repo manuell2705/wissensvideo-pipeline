@@ -16,4 +16,4 @@ export DEVICE=cuda HF_HUB_ENABLE_HF_TRANSFER=1
 mkdir -p /w/gpu_out
 bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt
 echo done > /w/gpu_out/zz_DONE.txt
-python render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out
+python render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out final

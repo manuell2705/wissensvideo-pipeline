@@ -1,0 +1,979 @@
+{
+ "title": "100% Brain vs AI: Who Wins?",
+ "category": "Science",
+ "description": "What if your brain ran at 100%... and had to fight the smartest AI ever built? Five rounds: speed, memory, energy, learning and feeling.",
+ "tags": [
+  "brain",
+  "AI",
+  "artificial intelligence",
+  "neuroscience",
+  "100% brain",
+  "brain vs AI",
+  "science explained",
+  "Mindsphere"
+ ],
+ "sources": [
+  "Azevedo et al. 2009, J Comp Neurol: ~86 billion neurons",
+  "Raichle & Gusnard 2002, PNAS: brain energy ~20 W",
+  "Bartol et al. 2015, eLife: synaptic information storage, petabyte-scale estimate",
+  "Purves et al., Neuroscience: conduction velocity up to ~120 m/s",
+  "IEA 2025, Energy and AI: data center electricity use",
+  "de Vries 2023, Joule / Luccioni et al. 2023: AI training energy (GWh range)",
+  "Meta 2024: Llama 3 trained on ~15 trillion tokens",
+  "Gilkerson et al. 2017 / Hart & Risley: words heard by young children",
+  "LePort et al. 2012, Neurobiol Learn Mem: highly superior autobiographical memory",
+  "NINDS: seizures as abnormal synchronous neural activity",
+  "Kasparov 2010, NYRB 'The Chess Master and the Computer': freestyle (centaur) chess"
+ ],
+ "scenes": [
+  {
+   "id": 1,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Your brain runs on about twenty watts. Less than a dim light bulb.",
+   "delivery": [
+    {
+     "text": "Your brain runs on about twenty watts.",
+     "exa": 0.55,
+     "cfg": 0.4,
+     "tempo": 1.0,
+     "pause": 0.3
+    },
+    {
+     "text": "Less than a dim light bulb.",
+     "exa": 0.45,
+     "cfg": 0.3,
+     "tempo": 0.95,
+     "pause": 0.35
+    }
+   ],
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) sitting at his desk at night next to a single dim old light bulb, a soft glowing brain shape faintly visible inside his head, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) floating beside the bulb comparing the two, cosy dark room",
+   "motion": "the light bulb flickers softly, the glow inside Kai's head pulses gently, Kai turns his head toward the bulb, Orbi bobs up and down, slow camera push in",
+   "ref": "kai",
+   "cutout": true,
+   "transition": "cut",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "brain",
+     "max": 60,
+     "items": [
+      {
+       "label": "Your brain",
+       "value": 20,
+       "unit": "W",
+       "color": "#3fe0d0",
+       "at": "twenty"
+      },
+      {
+       "label": "Dim light bulb",
+       "value": 40,
+       "unit": "W",
+       "color": "#ffb547",
+       "at": "light"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "The biggest AI systems run in data centers that can draw more power than a small city.",
+   "delivery": [
+    {
+     "text": "The biggest AI systems run in data centers that can draw more power than a small city.",
+     "exa": 0.65,
+     "cfg": 0.45,
+     "tempo": 1.03,
+     "pause": 0.35
+    }
+   ],
+   "image_prompt": "a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city, endless rows of glowing server towers stretching to the horizon at night, power lines and cooling towers, epic scale, tiny cars below for scale",
+   "motion": "the AI titan slowly raises its head and its amber eye brightens, waves of light run along the server towers, steam rises from cooling towers, slow dramatic camera tilt up",
+   "ref": null,
+   "transition": "gta",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "biggest",
+     "max": 1000,
+     "items": [
+      {
+       "label": "Your brain",
+       "value": 20,
+       "unit": "W",
+       "color": "#3fe0d0",
+       "at": "biggest"
+      },
+      {
+       "label": "AI data center",
+       "value": 100000000,
+       "unit": "W",
+       "color": "#ffb547",
+       "at": "power",
+       "overflow": true
+      }
+     ]
+    },
+    {
+     "type": "icons",
+     "at": "city",
+     "n": 12,
+     "label": "more than a small city"
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So imagine a fight. One human brain, unlocked to one hundred percent... versus the smartest machine ever built.",
+   "delivery": [
+    {
+     "text": "So imagine a fight.",
+     "exa": 0.6,
+     "cfg": 0.35,
+     "tempo": 0.98,
+     "pause": 0.3
+    },
+    {
+     "text": "One human brain, unlocked to one hundred percent...",
+     "exa": 0.85,
+     "cfg": 0.4,
+     "tempo": 1.02,
+     "pause": 0.35
+    },
+    {
+     "text": "versus the smartest machine ever built.",
+     "exa": 0.9,
+     "cfg": 0.45,
+     "tempo": 1.04,
+     "pause": 0.3
+    }
+   ],
+   "image_prompt": "epic anime arena under a starry sky: Mira (a young woman with a dark ponytail and a warm amber jacket) on the left, glowing teal energy around her head and hands, facing a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city on the right, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) hovering in the middle like a referee, dramatic standoff, wide shot",
+   "motion": "Mira's hair and jacket blow in the wind as teal energy swirls around her, the AI titan's amber circuits pulse, Orbi spins between them, camera slowly circles the arena",
+   "ref": "mira",
+   "cutout": true,
+   "transition": "dive",
+   "energy": false,
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "human",
+     "left": "HUMAN BRAIN",
+     "left_sub": "unlocked to 100%",
+     "right": "AI",
+     "right_sub": "smartest machine ever built",
+     "at2": "versus"
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Who wins?",
+   "delivery": [
+    {
+     "text": "Who wins?",
+     "exa": 0.7,
+     "cfg": 0.3,
+     "tempo": 0.92,
+     "pause": 0.4
+    }
+   ],
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) and a towering AI titan made of dark glass panels and glowing amber circuit lines with one calm amber eye, standing over a vast data-center city charging at each other, teal and amber energy beams colliding in a huge burst of light in the middle of the arena, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) shielding its eyes, anime battle climax",
+   "motion": "the teal and amber energy beams collide and explode into a bright flash, shockwave ripples outward, debris and light particles fly, fast dynamic camera shake",
+   "ref": "mira",
+   "transition": "out",
+   "energy": true,
+   "gfx": [
+    {
+     "type": "bigq",
+     "at": "who",
+     "text": "WHO WINS?"
+    }
+   ]
+  },
+  {
+   "chapter": "Title",
+   "kind": "title",
+   "onscreen": "100% Brain vs AI: Who Wins?",
+   "labels": [],
+   "narration": "",
+   "image_prompt": "",
+   "transition": "dive",
+   "id": 5
+  },
+  {
+   "chapter": "Intro",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Now, to be fair, nobody can actually switch a brain to one hundred percent. But we can play this game honestly, with real science. Five rounds. One winner.",
+   "image_prompt": "a glowing holographic tournament board floating in a calm night sky above a glass city, five empty round slots shining teal and amber",
+   "id": 6
+  },
+  {
+   "chapter": "Intro",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And here's a secret before we start: you already use all of your brain. Just not all at the same time.",
+   "image_prompt": "a human brain drawn as a night city seen from above, different districts lighting up one after another, never all at once",
+   "gfx": [
+    {
+     "type": "bigq",
+     "at": "all",
+     "text": "100% \u2014 just not at once"
+    }
+   ],
+   "id": 7
+  },
+  {
+   "chapter": "Intro",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "10% myth"
+   ],
+   "narration": "Scans show that over a day, practically every region gets busy. The ten percent idea is a myth.",
+   "image_prompt": "a glass brain scanner in a calm teal lab, the brain image glowing in many colourful regions",
+   "transition": "out",
+   "id": 8
+  },
+  {
+   "chapter": "Intro",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "AI improves fast"
+   ],
+   "narration": "Why does this matter? Because every few months, AI gets better at something we thought only humans could do. So it's fair to ask: what are you actually better at?",
+   "image_prompt": "a calendar of glowing pages flipping fast while a chip symbol grows bigger on each page, a human silhouette watching calmly",
+   "id": 9
+  },
+  {
+   "chapter": "Intro",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So let's give your brain the fantasy version. Every limit removed. Perfect focus. No sleep needed. And put it in the ring against the smartest AI ever built. The rules: real numbers only.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) stepping into a glowing arena from a tunnel, teal energy around his head, crowds of light in the stands",
+   "ref": "kai",
+   "cutout": true,
+   "transition": "gta",
+   "id": 10
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "chapter",
+   "onscreen": "1. Speed",
+   "labels": [],
+   "narration": "Round one. Speed.",
+   "image_prompt": "a stopwatch made of light floating between a glowing brain and a glowing computer chip, dark stadium lights",
+   "id": 11
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "The fastest signals in your nerves race at about one hundred and twenty meters per second. That's faster than a race car.",
+   "image_prompt": "a glowing nerve fibre like a highway with a bright pulse of light racing along it past a red race car",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "signals",
+     "items": [
+      {
+       "label": "Race car",
+       "value": 90,
+       "unit": "m/s",
+       "at": "faster",
+       "color": "#ffb547"
+      },
+      {
+       "label": "Nerve signal",
+       "value": 120,
+       "unit": "m/s",
+       "at": "hundred",
+       "color": "#3fe0d0"
+      }
+     ],
+     "max": 130
+    }
+   ],
+   "id": 12
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "But inside a chip, electric signals move at a big fraction of the speed of light. Millions of times faster.",
+   "image_prompt": "the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) raising one hand, beams of light racing through transparent circuit boards around it",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "chip",
+     "items": [
+      {
+       "label": "Nerve signal",
+       "value": 120,
+       "unit": "m/s",
+       "at": "signals",
+       "color": "#3fe0d0"
+      },
+      {
+       "label": "Chip signal",
+       "value": 150000000,
+       "unit": "m/s",
+       "at": "fraction",
+       "color": "#ffb547",
+       "overflow": true
+      }
+     ],
+     "max": 120
+    }
+   ],
+   "transition": "gta",
+   "id": 13
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "A neuron can fire maybe a few hundred times per second. A processor ticks billions of times. On pure speed, it's not even close.",
+   "image_prompt": "split image: on the left a single neuron sparking slowly like a firefly, on the right a computer chip flashing like a strobe",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "neuron",
+     "items": [
+      {
+       "label": "Neuron",
+       "value": 500,
+       "unit": "per s",
+       "at": "neuron",
+       "color": "#3fe0d0"
+      },
+      {
+       "label": "Processor",
+       "value": 3000000000,
+       "unit": "per s",
+       "at": "billions",
+       "color": "#ffb547",
+       "overflow": true
+      }
+     ],
+     "max": 600
+    }
+   ],
+   "id": 14
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Your reaction time is about a quarter of a second. See a ball, move your hand. For an AI system that's an eternity... but you do it without any instructions at all.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) catching a ball flying toward him in a park at sunset, a little stopwatch hologram showing 0.25 s",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "quarter",
+     "max": 0.3,
+     "items": [
+      {
+       "label": "Your reaction",
+       "value": 0.25,
+       "unit": "s",
+       "at": "quarter",
+       "color": "#3fe0d0"
+      }
+     ]
+    }
+   ],
+   "ref": "kai",
+   "cutout": true,
+   "id": 15
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "too hot to handle"
+   ],
+   "narration": "Fantasy time: what if your neurons could fire as fast as a chip? Your brain would heat up like an overclocked computer. Brain tissue is very sensitive to heat, so that upgrade would cook you before you finished a sentence.",
+   "image_prompt": "a cartoon brain wearing a tiny racing helmet, steam and little flames rising from it, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) spraying it with a water hose",
+   "id": 16
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": "100,000,000,000,000",
+   "labels": [
+    "86 billion neurons",
+    "~100 trillion connections"
+   ],
+   "narration": "But your brain has a trick of its own. It works in parallel. About eighty-six billion neurons, linked by something like a hundred trillion connections, all working at the same time.",
+   "image_prompt": "an enormous glowing web of neurons stretching like a galaxy, countless tiny pulses travelling at once",
+   "id": 17
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "That's how you recognise a friend's face in a crowd in a fraction of a second, while walking, talking, and dodging a bicycle.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) walking through a busy night market crowd, smiling and waving at a friend far away, a bicycle zooming past her",
+   "ref": "mira",
+   "cutout": true,
+   "id": 18
+  },
+  {
+   "chapter": "1. Speed",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Round one goes to the machine.",
+   "image_prompt": "the holographic tournament board, round one slot glowing amber with the symbol of the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes)",
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "round",
+     "left": "BRAIN",
+     "left_sub": "0",
+     "right": "AI",
+     "right_sub": "1"
+    }
+   ],
+   "energy": true,
+   "id": 19
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "chapter",
+   "onscreen": "2. Memory",
+   "labels": [],
+   "narration": "Round two. Memory.",
+   "image_prompt": "an endless glowing library floating in space, books turning into stars",
+   "transition": "dive",
+   "id": 20
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": "15,000,000,000,000",
+   "labels": [
+    "trillions of words"
+   ],
+   "narration": "A large language model has read more text than any human ever could. Trillions of words.",
+   "image_prompt": "the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) standing inside a canyon made of stacked glowing books and scrolls, text streams pouring into its chest",
+   "id": 21
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": "1,000,000 GB",
+   "labels": [
+    "~1 petabyte (estimate)"
+   ],
+   "narration": "But your brain isn't small either. One estimate suggests its storage could be around a petabyte. That's roughly a million gigabytes.",
+   "image_prompt": "a human brain made of glass with countless tiny glowing drawers and memory cubes inside, warm amber light",
+   "transition": "out",
+   "id": 22
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And some people remember almost every day of their lives. Ask them about a random Tuesday years ago, and they'll tell you the weather.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) standing in a corridor of floating glowing calendar pages, one page opening to show a rainy day scene",
+   "ref": "mira",
+   "cutout": true,
+   "id": 23
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "But you remember differently. You don't store files. You rebuild a memory every time you recall it, like retelling a story. That's why memories change a little, every time.",
+   "image_prompt": "a memory drawn as a glowing sandcastle being rebuilt by tiny hands of light, slightly different each time, at the edge of a calm sea",
+   "transition": "dive",
+   "id": 24
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "AI hallucinations"
+   ],
+   "narration": "And here's a weak spot for the machine: AI can make up facts and sound completely sure about them. Researchers call it hallucinating. Your memory isn't perfect either, but you usually know when you're unsure.",
+   "image_prompt": "the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) confidently presenting a glowing chart that is clearly upside down, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) tilting its head in confusion",
+   "id": 25
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "forgetting = a feature"
+   ],
+   "narration": "Fantasy version: perfect recall of everything. Sounds amazing, until you realise you could never forget a single embarrassing moment. Forgetting is a feature, not a bug.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) covering his face in embarrassment while dozens of floating glowing screens replay awkward moments around him",
+   "ref": "kai",
+   "cutout": true,
+   "id": 26
+  },
+  {
+   "chapter": "2. Memory",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Still, the machine never forgets a fact. You forget where you left your keys. This round is close... but it goes to the AI.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) searching under a sofa cushion for his keys at night while Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) points at the keys on the table",
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "close",
+     "left": "BRAIN",
+     "left_sub": "0",
+     "right": "AI",
+     "right_sub": "2"
+    }
+   ],
+   "ref": "kai",
+   "cutout": true,
+   "id": 27
+  },
+  {
+   "chapter": "3. Energy",
+   "kind": "chapter",
+   "onscreen": "3. Energy",
+   "labels": [],
+   "narration": "Round three. Energy.",
+   "image_prompt": "a single glowing light bulb in darkness next to a huge power station on the horizon",
+   "transition": "gta",
+   "id": 28
+  },
+  {
+   "chapter": "3. Energy",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Remember: you run on about twenty watts. A banana and a sandwich, and you can think all day.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) eating a banana at a sunny kitchen table, a tiny glowing brain above his head powered by the banana like a battery",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "twenty",
+     "items": [
+      {
+       "label": "Your whole brain",
+       "value": 20,
+       "unit": "W",
+       "at": "twenty",
+       "color": "#3fe0d0"
+      }
+     ],
+     "max": 100
+    }
+   ],
+   "ref": "kai",
+   "cutout": true,
+   "id": 29
+  },
+  {
+   "chapter": "3. Energy",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Training one of the biggest AI models can use as much electricity as thousands of homes use in a year.",
+   "image_prompt": "a vast glowing data center at night, thousands of small houses around it whose lights flicker as power flows into the center",
+   "gfx": [
+    {
+     "type": "icons",
+     "at": "thousands",
+     "n": 14,
+     "label": "thousands of homes for a year"
+    }
+   ],
+   "id": 30
+  },
+  {
+   "chapter": "3. Energy",
+   "kind": "image",
+   "onscreen": "400 kcal",
+   "labels": [
+    "your brain per day"
+   ],
+   "narration": "Twenty watts is about four hundred food calories a day. If your brain needed as much power as a big data center, you'd have to eat millions of sandwiches. Every day.",
+   "image_prompt": "a mountain of sandwiches piled up to the clouds in a cartoon city square, a tiny person looking up at it in shock",
+   "id": 31
+  },
+  {
+   "chapter": "3. Energy",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "rising fast"
+   ],
+   "narration": "And the gap keeps growing. Data centers already use a noticeable share of the world's electricity, and AI is making that share rise fast.",
+   "image_prompt": "a night view of the Earth from space with bright glowing hotspots where data centers are, power lines pulsing toward them",
+   "transition": "out",
+   "id": 32
+  },
+  {
+   "chapter": "3. Energy",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "For the energy it uses, your brain is one of the most efficient thinking machines we know. Round three: the brain. Easily.",
+   "image_prompt": "a tiny glowing brain balanced on one side of a golden scale, outweighing a giant power plant on the other side",
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "round",
+     "left": "BRAIN",
+     "left_sub": "1",
+     "right": "AI",
+     "right_sub": "2"
+    }
+   ],
+   "energy": true,
+   "id": 33
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "chapter",
+   "onscreen": "4. Learning",
+   "labels": [],
+   "narration": "Round four. Learning.",
+   "image_prompt": "a small sprout growing out of a glowing book at dawn",
+   "transition": "dive",
+   "id": 34
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "By age five, a child has heard maybe tens of millions of words. And from that alone, they speak a whole language.",
+   "image_prompt": "a little child pointing at a bird in a sunny park, colourful word bubbles floating around as glowing shapes without letters",
+   "gfx": [
+    {
+     "type": "bars",
+     "at": "child",
+     "items": [
+      {
+       "label": "A child (age 5)",
+       "value": 30,
+       "unit": "million words",
+       "at": "child",
+       "color": "#3fe0d0"
+      },
+      {
+       "label": "An AI model",
+       "value": 15000000,
+       "unit": "million words",
+       "at": "language",
+       "color": "#ffb547",
+       "overflow": true
+      }
+     ],
+     "max": 40
+    }
+   ],
+   "id": 35
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "AI models need hundreds of thousands of times more text to get there. Show a kid one giraffe, and they'll recognise giraffes forever.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) showing a picture of a giraffe to a smiling child, a real giraffe peeking over a fence behind them",
+   "ref": "mira",
+   "cutout": true,
+   "transition": "out",
+   "id": 36
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And you transfer what you learn. Learn to ride a bike, and a scooter is suddenly easy. Most AI systems struggle to carry a skill into a completely new situation.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) riding a bike on a sunny hill path, then the same path continuing with her on a scooter, smiling confidently",
+   "ref": "mira",
+   "cutout": true,
+   "id": 37
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "You even learn while you sleep. In deep sleep, your brain replays the day and keeps what matters. A trained AI model mostly stays the same, until someone trains it again.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) sleeping peacefully, above her a dreamy glowing replay of her day drifting like constellations, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) dimmed and resting nearby",
+   "ref": "mira",
+   "cutout": true,
+   "id": 38
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "neuroplasticity"
+   ],
+   "narration": "Fantasy version: a brain that learns as fast as it wants. Honestly? Your real brain is closer to that than you think. Every time you practise something, it physically rewires itself.",
+   "image_prompt": "a glowing brain with new bright paths growing between districts like roads being built overnight",
+   "id": 39
+  },
+  {
+   "chapter": "4. Learning",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Learning fast from tiny examples is still a human superpower. Round four: the brain.",
+   "image_prompt": "the holographic tournament board, round four slot glowing teal with a brain symbol",
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "round",
+     "left": "BRAIN",
+     "left_sub": "2",
+     "right": "AI",
+     "right_sub": "2"
+    }
+   ],
+   "energy": true,
+   "id": 40
+  },
+  {
+   "chapter": "5. Feeling",
+   "kind": "chapter",
+   "onscreen": "5. Feeling",
+   "labels": [],
+   "narration": "Final round. Creativity and feeling.",
+   "image_prompt": "a paint brush and a glowing circuit pen crossing like swords under a starry sky",
+   "transition": "gta",
+   "id": 41
+  },
+  {
+   "chapter": "5. Feeling",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "AI can write a poem in a second. Paint a picture. Compose a song. And honestly, some of it is impressive.",
+   "image_prompt": "the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) gently painting a glowing landscape on a giant canvas, musical notes of light drifting around",
+   "id": 42
+  },
+  {
+   "chapter": "5. Feeling",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "But it learned all of that from things humans made. Every style it copies, someone once invented. You can come up with something that has never existed before.",
+   "image_prompt": "a glowing paintbrush drawing a completely new strange beautiful flower that grows into the sky, a chip trying to copy it from below",
+   "id": 43
+  },
+  {
+   "chapter": "5. Feeling",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "But it doesn't know what rain smells like. It has never missed someone. As far as we can tell, there's nothing it feels like to be an AI.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) standing alone at a window at night watching rain, a soft reflection of a friend's face in the glass",
+   "ref": "kai",
+   "cutout": true,
+   "id": 44
+  },
+  {
+   "chapter": "5. Feeling",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "emotions guide decisions"
+   ],
+   "narration": "And your feelings aren't a weakness in this fight. They tell you what matters. People who lose access to their emotions often struggle with even simple decisions, like what to eat for lunch.",
+   "image_prompt": "a glowing compass inside a heart shape pointing toward a warm light, floating over a calm lake at dusk",
+   "transition": "out",
+   "id": 45
+  },
+  {
+   "chapter": "5. Feeling",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And here's the strange part: we don't fully know what consciousness is. So this round... stays open.",
+   "image_prompt": "a mysterious glowing question mark made of stars floating above both a brain and a chip",
+   "gfx": [
+    {
+     "type": "bigq",
+     "at": "open",
+     "text": "?"
+    }
+   ],
+   "transition": "dive",
+   "id": 46
+  },
+  {
+   "chapter": "The 100% twist",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Now, the promised upgrade. What if your brain really fired at one hundred percent? Every neuron, all at once?",
+   "image_prompt": "the brain night city with every single light switching on at the same moment, blinding white",
+   "id": 47
+  },
+  {
+   "chapter": "The 100% twist",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "movie myth"
+   ],
+   "narration": "Movies love this idea. One pill, and suddenly you can read minds and move objects. Real neuroscience is less dramatic, but honestly, more interesting.",
+   "image_prompt": "a cinema screen showing a glowing pill and a person floating with superpowers, popcorn and a skeptical Orbi in the front row",
+   "id": 48
+  },
+  {
+   "chapter": "The 100% twist",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "seizure = everything at once"
+   ],
+   "narration": "We actually know what that looks like. It's called a seizure. Not genius. Chaos.",
+   "image_prompt": "the brain city lights flickering wildly and shorting out, lightning between the districts, then darkness",
+   "energy": true,
+   "id": 49
+  },
+  {
+   "chapter": "The 100% twist",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Your brain is powerful precisely because it doesn't use everything at once. It chooses. Like an orchestra, where silence matters as much as sound.",
+   "image_prompt": "a glowing orchestra on a floating stage, some musicians playing while others rest calmly, the music forming the shape of a brain",
+   "transition": "out",
+   "id": 50
+  },
+  {
+   "chapter": "The 100% twist",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So the real upgrade isn't more power. It's better connections, good sleep, focus, and practice. Those are the settings you can actually change.",
+   "image_prompt": "a glowing control panel with four sliders labelled by icons: a moon, a target, a running shoe and a book, being gently pushed up by a hand of light",
+   "gfx": [
+    {
+     "type": "icons",
+     "at": "connections",
+     "n": 4,
+     "label": "sleep \u00b7 focus \u00b7 move \u00b7 practise"
+    }
+   ],
+   "id": 51
+  },
+  {
+   "chapter": "Final score",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So, the final score. Speed and memory: the machine. Energy and learning: you.",
+   "image_prompt": "the holographic tournament board showing a tie, the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) on one side and a glowing human brain on the other",
+   "gfx": [
+    {
+     "type": "vs",
+     "at": "final",
+     "left": "BRAIN",
+     "left_sub": "2",
+     "right": "AI",
+     "right_sub": "2"
+    }
+   ],
+   "id": 52
+  },
+  {
+   "chapter": "Final score",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "human + AI teams"
+   ],
+   "narration": "But in chess, something surprising happened. Teams of humans working with computers beat both the best players and the best programs.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) sitting at a giant glowing chess board, the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) standing beside her as a teammate, pointing at a move together",
+   "ref": "mira",
+   "cutout": true,
+   "id": 53
+  },
+  {
+   "chapter": "Final score",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Maybe that's the real answer. Not brain versus AI. Brain plus AI.",
+   "image_prompt": "a glowing human brain and a glowing chip connecting with a bridge of light over a calm night city",
+   "gfx": [
+    {
+     "type": "bigq",
+     "at": "plus",
+     "text": "BRAIN + AI"
+    }
+   ],
+   "transition": "dive",
+   "id": 54
+  },
+  {
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Your brain doesn't need to run at one hundred percent. It needs the right lights on, at the right time. And now, you have tools no human ever had.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) and Mira (a young woman with a dark ponytail and a warm amber jacket) standing on a hill at sunrise looking over a glowing city, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) floating between them",
+   "cutout": true,
+   "id": 55
+  },
+  {
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Use the machine for speed and memory. Keep the parts that only you have: curiosity, feeling, and the courage to try something new.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) holding a glowing tablet showing data while Mira (a young woman with a dark ponytail and a warm amber jacket) sketches a new idea in a notebook beside him, both on a rooftop at dusk, Orbi (a small floating glass orb robot with a glowing green orbit ring and two dot eyes) watching happily",
+   "cutout": true,
+   "id": 56
+  },
+  {
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "The question isn't who wins. It's what you'll build. See you on the next orbit.",
+   "image_prompt": "a small green glass planet with a glowing orbit ring floating in space at sunrise, tiny forests and a glass city on it",
+   "id": 57
+  }
+ ],
+ "shorts": []
+}

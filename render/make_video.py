@@ -17,10 +17,10 @@ import soundfile as sf
 
 HERE = Path(__file__).resolve().parent
 SR = 24000
-STYLE = ("2D anime-inspired cartoon illustration, clean bold navy outlines, flat cel shading, "
-         "Frutiger Aero aesthetic: bright sky blue, aqua and fresh green palette, glossy glass and water surfaces, "
-         "soft lens glow, clean optimistic nature, warm amber accents, "
-         "calm friendly cozy mood, cinematic composition, educational explainer style, no text, no letters, no watermark")
+STYLE = ("2D anime-inspired cartoon illustration, clean bold dark outlines, flat cel shading, crisp simple shapes, "
+         "vivid varied colours: lush green nature, clear sky blue, warm golden sunlight, white clouds, "
+         "with glossy glass and clear water accents in Frutiger Aero style, bright daylight, high clarity, sharp details, "
+         "cheerful cosy mood, cinematic composition, educational explainer style, no text, no letters, no watermark")
 NEG = "text, letters, words, watermark, logo, photo, realistic, 3d render, gore, blood, deformed hands"
 
 

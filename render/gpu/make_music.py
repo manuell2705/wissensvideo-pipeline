@@ -1,6 +1,6 @@
 """Background music for Mindsphere videos with ACE-Step 1.5 (MIT licence, open weights). Runs inside the RunPod pod.
 Usage: python render/gpu/make_music.py <ace_step_dir> <out_dir>
-Makes original tracks (calm 'cosy sandbox game' piano ambient, lo-fi beats, action tracks, one rap intro)
+Makes original tracks (calm 'cosy sandbox game' piano ambient, lo-fi beats, action tracks). Instrumental only: the owner wants no rap or vocals.
 and an ~11.5 min demo soundtrack joined with crossfades. Two takes per track so we can pick the better one."""
 import os, sys, time, json, subprocess, traceback
 from pathlib import Path
@@ -28,15 +28,13 @@ TRACKS = [
      "confident and energetic, instrumental, no vocals"),
     ("07_spannung_dunkel", 120, 90, "suspenseful dark ambient, ticking percussion, low drones, mysterious synth, building tension, "
      "cinematic, instrumental"),
+    ("09_ruhig_klavier_hoehle", 150, 70, "gentle ambient piano with soft echo, calm underground cave exploration, warm and slightly "
+     "mysterious, sparse notes, soft pads, cosy blocky sandbox adventure mood, instrumental, no vocals"),
+    ("10_action_abenteuer", 120, 140, "fast adventure action music, energetic drums, bright synth lead and staccato strings, "
+     "heroic chase, exciting, video game boss battle feel, instrumental, no vocals"),
     ("08_hoffnung_ende", 150, 80, "warm hopeful ending music, piano and soft strings, gentle uplifting melody, emotional and calm, "
      "sunrise, instrumental, background music"),
 ]
-RAP = ("09_rap_intro_mit_stimme", 60, 95, "energetic hip hop, male rap vocals, punchy drums, catchy synth hook, confident, "
-       "fun and smart, English",
-       "[verse]\nEighty-six billion sparks in your head\nFiring all day while you lie in your bed\n"
-       "Twenty watts only, still faster than light\nYour brain at a hundred, let's see if it's right\n"
-       "[chorus]\nMind on, mind on, sphere in the sky\nMindsphere, Mindsphere, ask me why\n")
-
 def log(*a): print(*a, flush=True); open(OUT / "_log.txt", "a").write(" ".join(map(str, a)) + "\n")
 
 dit = AceStepHandler()
@@ -78,7 +76,6 @@ made = {}
 for name, dur, bpm, cap in TRACKS:
     made[name] = gen(name, dur, bpm, cap)
     subprocess.run([sys.executable, str(Path(__file__).with_name("upload_release.py")), os.environ.get("RESULT_TAG", "music"), str(OUT)])
-made[RAP[0]] = gen(RAP[0], RAP[1], RAP[2], RAP[3], lyrics=RAP[4], instrumental=False)
 
 # ~11.5 min demo soundtrack: chapter order of a typical video, first 90 s of take 1 of each, 4 s crossfades (8*90-7*4 = 692 s)
 order = ["05_action_gehirn_vs_ki", "01_ruhig_klavier_tag", "03_lofi_beat_wissen", "04_neugier_synth", "02_ruhig_nacht_sterne",

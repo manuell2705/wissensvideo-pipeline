@@ -1,0 +1,617 @@
+{
+ "title": "Flow State: Is This Your Brain at 100%?",
+ "category": "Biology",
+ "description": "That feeling when time disappears and everything just works: flow. Is that your brain at 100%? And what would happen if you really switched everything on? Superpowers, mind reading, perfect memory, total body control: we go through the questions everyone secretly asks, and answer them honestly with science. Every claim is sourced below.",
+ "tags": [
+  "flow state",
+  "the zone",
+  "10 percent myth",
+  "neuroscience",
+  "neuroplasticity",
+  "Lucy movie",
+  "superpowers",
+  "savant",
+  "memory",
+  "science explained",
+  "Mindsphere"
+ ],
+ "sources": [
+  "Azevedo et al. (2009), Equal numbers of neuronal and nonneuronal cells make the human brain an isometrically scaled-up primate brain, J Comp Neurol. https://doi.org/10.1002/cne.21974",
+  "Raichle & Gusnard (2002), Appraising the brain's energy budget, PNAS. https://doi.org/10.1073/pnas.172399499",
+  "Lennie (2003), The cost of cortical computation, Current Biology. https://doi.org/10.1016/S0960-9822(03)00135-0",
+  "James, W. (1907), The Energies of Men, Science 25:321-332.",
+  "Hochberg et al. (2012), Reach and grasp by people with tetraplegia using a neurally controlled robotic arm, Nature. https://doi.org/10.1038/nature11076",
+  "Parker, Cahill & McGaugh (2006), A case of unusual autobiographical remembering, Neurocase. https://doi.org/10.1080/13554790500473680",
+  "Treffert (2014), Savant syndrome: realities, myths and misconceptions, J Autism Dev Disord. https://doi.org/10.1007/s10803-013-1897-z",
+  "Kox et al. (2014), Voluntary activation of the sympathetic nervous system and attenuation of the innate immune response in humans, PNAS. https://doi.org/10.1073/pnas.1322174111",
+  "Wager et al. (2004), Placebo-induced changes in fMRI in the anticipation and experience of pain, Science. https://doi.org/10.1126/science.1093065",
+  "Cox et al. (2006), An SCN9A channelopathy causes congenital inability to experience pain, Nature. https://doi.org/10.1038/nature05413",
+  "Maguire et al. (2000), Navigation-related structural change in the hippocampi of taxi drivers, PNAS. https://doi.org/10.1073/pnas.070039597",
+  "Walker & Stickgold (2004), Sleep-dependent learning and memory consolidation, Neuron. https://doi.org/10.1016/j.neuron.2004.08.031",
+  "Erickson et al. (2011), Exercise training increases size of hippocampus and improves memory, PNAS. https://doi.org/10.1073/pnas.1015950108",
+  "Csikszentmihalyi, M. (1990), Flow: The Psychology of Optimal Experience. Harper & Row.",
+  "Dietrich (2004), Neurocognitive mechanisms underlying the experience of flow, Consciousness and Cognition. https://doi.org/10.1016/j.concog.2004.07.002",
+  "Limb & Braun (2008), Neural substrates of spontaneous musical performance: an fMRI study of jazz improvisation, PLoS ONE. https://doi.org/10.1371/journal.pone.0001679",
+  "Ulrich et al. (2014), Neural correlates of experimentally induced flow experiences, NeuroImage. https://doi.org/10.1016/j.neuroimage.2013.10.019",
+  "NINDS: Epilepsy and Seizures. https://www.ninds.nih.gov/health-information/disorders/epilepsy-and-seizures"
+ ],
+ "scenes": [
+  {
+   "id": 1,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "You know that feeling. You're drawing, or playing, or writing, and suddenly the world goes quiet. Time disappears. Every move just... happens.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) drawing at a desk at night, completely absorbed, the room around them fading into soft glowing lines, a clock melting gently"
+  },
+  {
+   "id": 2,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "No doubts. No hunger. No little voice asking if you're good enough. Just you, and the thing you're doing, perfectly in sync.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) skateboarding down a glowing hill road at sunset, a calm focused smile, everything else blurred into colour"
+  },
+  {
+   "id": 3,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "flow state"
+   ],
+   "narration": "Athletes call it the zone. Scientists call it flow. And people who've felt it often say the same thing: it feels like your brain is finally running at full power.",
+   "image_prompt": "a split scene: a basketball player, a musician and a gamer, each surrounded by the same soft teal glow"
+  },
+  {
+   "id": 4,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Like a hidden switch was flipped. Which brings us to an old, famous claim. You only use ten percent of your brain.",
+   "image_prompt": "a giant old-fashioned power switch inside the brain drawn as a glowing night city inside a glass dome, most of the city dark and sleeping, a tiny figure looking up at the switch"
+  },
+  {
+   "id": 5,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Hollywood version"
+   ],
+   "narration": "Movies love it. One pill, one strange accident, and suddenly you learn languages in an afternoon, read minds, and move things with a glance.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) swallowing a glowing pill, books and objects floating around them, dramatic cinema-poster lighting"
+  },
+  {
+   "id": 6,
+   "chapter": "Hook",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So is flow the secret ninety percent waking up? And what would happen if you went all the way? Superpowers? Total control of your body? Remembering every breakfast you've ever had?",
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) surrounded by floating thought bubbles: a lightning bolt, a heart, a stack of breakfast plates going up to the sky"
+  },
+  {
+   "id": 7,
+   "chapter": "Hook",
+   "kind": "title",
+   "onscreen": "Flow State: Your Brain at 100%?",
+   "labels": [],
+   "narration": "This is your brain. In flow. And at one hundred percent.",
+   "image_prompt": "the green glass planet Mindsphere with a glowing orbit ring in space, a bright brain-shaped city glowing on its surface, epic title composition"
+  },
+  {
+   "id": 8,
+   "chapter": "Honesty",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "Simplified!",
+    "Sources below"
+   ],
+   "narration": "Before we start: brains are the most complicated objects we know of, so we're simplifying a lot. Every study we mention is linked in the description.",
+   "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) holding up a small glass sign next to a stack of science journals, friendly wink"
+  },
+  {
+   "id": 9,
+   "chapter": "The city in your head",
+   "kind": "number",
+   "onscreen": "86 billion neurons",
+   "labels": [],
+   "narration": "Inside your head sit about eighty-six billion neurons. If each one were a person, your brain could hold the population of more than ten Earths.",
+   "image_prompt": "ten small blue-green Earths lined up in a row, each full of tiny glowing dots like people"
+  },
+  {
+   "id": 10,
+   "chapter": "The city in your head",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "neuron",
+    "synapse"
+   ],
+   "narration": "Each neuron is connected to thousands of others, through tiny gaps called synapses. Together they form something like a city. A city of light.",
+   "image_prompt": "two glowing neurons reaching toward each other with a tiny sparkling gap between them, a city skyline of neurons behind"
+  },
+  {
+   "id": 11,
+   "chapter": "The city in your head",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "seeing",
+    "hearing",
+    "moving",
+    "feeling"
+   ],
+   "narration": "Picture it at night. Roads of nerve fibres. Districts for seeing, hearing, moving and feeling. And in every window, a neuron that can switch its light on.",
+   "image_prompt": "wide aerial view of the brain drawn as a glowing night city inside a glass dome, districts with little glass signs shaped like an eye, an ear, a hand and a heart, roads of light between them"
+  },
+  {
+   "id": 12,
+   "chapter": "The city in your head",
+   "kind": "number",
+   "onscreen": "2% of weight, 20% of energy",
+   "labels": [],
+   "narration": "Your brain makes up only about two percent of your body weight. But it burns around twenty percent of your energy. It is, by far, the most expensive thing you own.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) holding a tiny brain on one side of a balance scale, a huge pile of food and batteries on the other side"
+  },
+  {
+   "id": 13,
+   "chapter": "1. The 10% myth",
+   "kind": "chapter",
+   "onscreen": "1. The 10% myth",
+   "labels": [],
+   "narration": "So does this city really sit ninety percent dark? Let's check.",
+   "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) with a flashlight peeking into a dark street of the brain drawn as a glowing night city inside a glass dome"
+  },
+  {
+   "id": 14,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Nobody knows exactly where the myth began. It's often blamed on the psychologist William James, who wrote that we use only a small part of our possible mental resources. Which is not the same thing at all.",
+   "image_prompt": "an old 1900s study room with a bearded scholar writing at a desk by lamp light, papers flying, sepia accents"
+  },
+  {
+   "id": 15,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Self-help books loved the idea, and turned a vague sentence into a hard number. Ten percent.",
+   "image_prompt": "a pile of colourful self-help books with a giant glowing 10% sign rising from them like a neon advert"
+  },
+  {
+   "id": 16,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "every region active"
+   ],
+   "narration": "But brain scans disagree. Watch a brain over a single day, and practically every region lights up at some point. There is no silent ninety percent.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) lying in a friendly glass brain scanner, a holographic brain above them lit up in many colourful patches"
+  },
+  {
+   "id": 17,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And evolution would never allow it. Remember, the brain is wildly expensive. Carrying around ninety percent dead weight that eats energy? Natural selection would have thrown it out long ago.",
+   "image_prompt": "a stone-age family by a campfire, one person carrying a huge heavy glowing backpack labelled with a brain icon, looking exhausted"
+  },
+  {
+   "id": 18,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "speech",
+    "memory",
+    "movement"
+   ],
+   "narration": "Even small injuries prove the point. Damage almost any part of the brain, even a tiny one, and something changes. Speech, memory, movement, personality.",
+   "image_prompt": "one small district of the brain drawn as a glowing night city inside a glass dome going dark like a power cut, with little icons for speech, memory and movement flickering out"
+  },
+  {
+   "id": 19,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So the truth is: you already use all of your brain. Just not all at the same time.",
+   "image_prompt": "the brain drawn as a glowing night city inside a glass dome where lights switch on in different districts in a gentle wave, like a living map"
+  },
+  {
+   "id": 20,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "vision",
+    "language",
+    "hunger"
+   ],
+   "narration": "Right now, as you watch this, your seeing district decodes the picture. Your language areas turn my words into meaning. And somewhere, a quiet part checks whether you're hungry.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) watching a screen, three glowing districts of their brain highlighted: an eye district, a speech-bubble district and a tiny kitchen with a sandwich"
+  },
+  {
+   "id": 21,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Most windows in the city are dark at any moment. And that is not a flaw. It's the design.",
+   "image_prompt": "close-up of a building in the brain drawn as a glowing night city inside a glass dome with only a few warm windows lit, calm and peaceful"
+  },
+  {
+   "id": 22,
+   "chapter": "1. The 10% myth",
+   "kind": "number",
+   "onscreen": "~1% highly active at once",
+   "labels": [],
+   "narration": "Energy is the reason. Your cortex can only afford to keep a small fraction of its neurons highly active at once. Some estimates say around one percent.",
+   "image_prompt": "a glowing power meter beside the brain drawn as a glowing night city inside a glass dome with only a thin slice filled, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) pointing at it"
+  },
+  {
+   "id": 23,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Your brain doesn't work by switching everything on. It works by choosing which few lights matter right now.",
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) holding a glowing lantern on a dark city street, choosing one bright path among many"
+  },
+  {
+   "id": 24,
+   "chapter": "1. The 10% myth",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So what if we ignored all that, and flipped every switch in the city at the same time? Spoiler: it does not end with superpowers. It ends with a blackout.",
+   "image_prompt": "the giant power switch in the brain drawn as a glowing night city inside a glass dome being pushed up, the whole city flashing white too bright, sparks flying"
+  },
+  {
+   "id": 25,
+   "chapter": "2. What if...?",
+   "kind": "chapter",
+   "onscreen": "2. What if...?",
+   "labels": [],
+   "narration": "Let's go through the questions everyone secretly asks. Starting with the big one.",
+   "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) holding a big glass question mark in front of the Mindsphere planet"
+  },
+  {
+   "id": 26,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "seizure"
+   ],
+   "narration": "What if all your neurons fired at once? We actually know what that looks like. When huge groups of neurons fire together, out of control, the result is a seizure.",
+   "image_prompt": "the brain drawn as a glowing night city inside a glass dome with every light flashing in sync like a strobe, wavy lines of electricity across the sky"
+  },
+  {
+   "id": 27,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Not genius. Not telekinesis. The lights all flash together, the signals turn into noise, and for a moment nothing makes sense at all.",
+   "image_prompt": "a radio tower in the brain drawn as a glowing night city inside a glass dome sending out scrambled static waves, letters and symbols breaking apart"
+  },
+  {
+   "id": 28,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "telepathy: no evidence"
+   ],
+   "narration": "Okay. But could you read minds? Sadly, no. No study has ever shown reliable telepathy.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) and a friend facing each other with antenna headbands, a thought bubble between them showing only a big question mark, funny mood"
+  },
+  {
+   "id": 29,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "brain-computer interface"
+   ],
+   "narration": "But moving things with your thoughts? That one is surprisingly real. With a small brain implant, people who are paralysed have controlled computer cursors and even robotic arms, just by imagining the movement.",
+   "image_prompt": "a person in a wheelchair smiling as a sleek robotic arm lifts a cup of coffee, glowing signal lines from their head to the arm"
+  },
+  {
+   "id": 30,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "No pill. No secret ninety percent. Just a very clever translator between the city's lights and a machine.",
+   "image_prompt": "a tiny glass translator device turning glowing city lights into robot gears and signals, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) watching curiously"
+  },
+  {
+   "id": 31,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "HSAM",
+    "a few dozen known cases"
+   ],
+   "narration": "What about remembering everything? A few dozen people on Earth come close. They have something called highly superior autobiographical memory. Name any date, and they can tell you what day of the week it was, and what they did.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) standing in an endless glass library of calendars and diaries, one date page glowing"
+  },
+  {
+   "id": 32,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Sounds amazing, right? But the first person studied described it as a burden. Every embarrassing moment, every loss, replayed in full colour. Forgetting, it turns out, is a gift.",
+   "image_prompt": "a person sitting on a bench surrounded by too many floating memory screens, looking tired, soft rain"
+  },
+  {
+   "id": 33,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Then there are savants. Stephen Wiltshire can fly over a city once, and then draw its skyline in astonishing detail from memory.",
+   "image_prompt": "an artist drawing a huge detailed city skyline on a long sheet of paper, a helicopter in the sky behind"
+  },
+  {
+   "id": 34,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "acquired savant syndrome"
+   ],
+   "narration": "And in rare cases, such talents appear suddenly. After a head injury, a handful of people have woken up with new skills, like playing the piano, that they never had before.",
+   "image_prompt": "a person in a hospital bed looking surprised as glowing piano keys appear in the air in front of them"
+  },
+  {
+   "id": 35,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Scientists think this may happen when some brain areas grow quieter, and others get room to shine. Again: not more brain. A different balance.",
+   "image_prompt": "the brain drawn as a glowing night city inside a glass dome where one district dims and the neighbouring district glows brighter, like a seesaw of light"
+  },
+  {
+   "id": 36,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "trained group",
+    "fewer symptoms"
+   ],
+   "narration": "Could you control your body with your mind? Partly. In one study, volunteers trained in breathing techniques and cold exposure were given a bacterial toxin, and had far fewer flu-like symptoms than untrained people.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) breathing calmly in an icy blue lake, glowing shield shapes around them, snowy mountains"
+  },
+  {
+   "id": 37,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And the placebo effect shows that simply expecting to feel better can really reduce pain. Your thoughts do reach your body. But you can't regrow a finger by wishing.",
+   "image_prompt": "a doctor handing a sugar pill to a patient, a soft glow easing a red pain spot on their arm"
+  },
+  {
+   "id": 38,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "pain = bodyguard"
+   ],
+   "narration": "And feeling no pain at all? That exists too. It's rare, and it's dangerous. Children with this condition can break a bone or burn a hand without noticing. Pain is a bodyguard, not a weakness.",
+   "image_prompt": "a small friendly glowing guardian figure standing protectively in front of a child near a hot stove"
+  },
+  {
+   "id": 39,
+   "chapter": "2. What if...?",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Did you just quietly check that you can still feel your toes? Good. Your bodyguard is working.",
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) looking down and wiggling their toes in fuzzy socks, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) giving a thumbs up, funny mood"
+  },
+  {
+   "id": 40,
+   "chapter": "Twist",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So: no hidden ninety percent. No superpowers waiting behind a locked door. The end. Well... almost.",
+   "image_prompt": "a locked glass door in the brain drawn as a glowing night city inside a glass dome with nothing behind it, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) raising one finger with a sly look"
+  },
+  {
+   "id": 41,
+   "chapter": "3. The secret of flow",
+   "kind": "chapter",
+   "onscreen": "3. The secret of flow",
+   "labels": [],
+   "narration": "Remember the feeling from the beginning? Time disappearing, everything just working? That's the closest you'll ever get to a brain at full power. But not for the reason you'd think.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) back at the night desk from the start, absorbed in drawing, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) quietly floating nearby"
+  },
+  {
+   "id": 42,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "quieter, not louder"
+   ],
+   "narration": "When scientists scan people in flow, their brains don't light up like a stadium. In fact, some areas seem to get quieter.",
+   "image_prompt": "the brain drawn as a glowing night city inside a glass dome where most districts glow calmly while one tall tower at the front dims its lights"
+  },
+  {
+   "id": 43,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "self-monitoring: down"
+   ],
+   "narration": "In one study, jazz musicians improvised inside a brain scanner. While they played freely, a part of the frontal lobe linked to self-monitoring and self-control calmed down.",
+   "image_prompt": "a jazz pianist playing a small keyboard inside a friendly glass scanner, musical notes floating out as glowing ribbons"
+  },
+  {
+   "id": 44,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "One idea is that flow switches off your inner critic. The voice that worries how you look, what others think, whether you'll fail. With that voice quiet, the rest of the city can finally work in peace.",
+   "image_prompt": "a tiny grumpy critic figure with a clipboard falling asleep on a bench in the brain drawn as a glowing night city inside a glass dome, while the districts behind glow brightly and calmly"
+  },
+  {
+   "id": 45,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "still being studied"
+   ],
+   "narration": "Scientists are still testing this idea, so take it as a strong hint, not a final answer. But it fits a pattern we've seen all along. Not more brain. The right balance.",
+   "image_prompt": "Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) holding a glass balance scale with glowing lights perfectly level, small sign 'hypothesis'"
+  },
+  {
+   "id": 46,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "clear goal",
+    "instant feedback",
+    "challenge ≈ skill"
+   ],
+   "narration": "And flow isn't magic either. Researchers found it tends to show up when three things come together: a clear goal, instant feedback, and a challenge that is just a little bit harder than what feels easy.",
+   "image_prompt": "three glowing glass cards floating in a row: a target, a speech bubble with a check mark, and a staircase with one slightly higher step"
+  },
+  {
+   "id": 47,
+   "chapter": "3. The secret of flow",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Too easy, and you get bored. Too hard, and you panic. But right on the edge, your brain locks in.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) walking on a glowing tightrope between a sleepy grey cloud labelled with a yawn and a stormy red cloud, perfectly balanced"
+  },
+  {
+   "id": 48,
+   "chapter": "4. The real upgrade",
+   "kind": "chapter",
+   "onscreen": "4. The real upgrade",
+   "labels": [],
+   "narration": "And there's one more real superpower. Your city can rebuild itself. Scientists call it neuroplasticity. Every time you learn something, the links between neurons grow stronger. New roads appear in the city.",
+   "image_prompt": "new glowing bridges forming between two districts of the brain drawn as a glowing night city inside a glass dome at sunrise"
+  },
+  {
+   "id": 49,
+   "chapter": "4. The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [
+    "25,000 streets",
+    "hippocampus"
+   ],
+   "narration": "London taxi drivers have to memorise around twenty-five thousand streets. Brain scans showed that a part of their brain that handles navigation, the hippocampus, was larger than in other people.",
+   "image_prompt": "a classic black London taxi driving through a glowing map maze, a seahorse-shaped glowing structure inside a driver's head"
+  },
+  {
+   "id": 50,
+   "chapter": "4. The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Their brains didn't get more percent. They got better roads.",
+   "image_prompt": "a small dirt path in the brain drawn as a glowing night city inside a glass dome turning into a wide shining highway"
+  },
+  {
+   "id": 51,
+   "chapter": "4. The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And you can do the same. It sounds almost too simple. But besides finding your flow, three things have strong science behind them.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) looking at three glowing glass cards floating in front of them, numbered one, two, three"
+  },
+  {
+   "id": 52,
+   "chapter": "4. The real upgrade",
+   "kind": "number",
+   "onscreen": "1. Sleep",
+   "labels": [],
+   "narration": "One: sleep. While you sleep, your brain replays the day and strengthens what matters. Skip it, and much of what you learned simply fades.",
+   "image_prompt": "Kai (young man, short dark hair, teal hoodie) and Mira (young woman, dark ponytail, amber jacket) asleep in bed under a starry window while the brain drawn as a glowing night city inside a glass dome above them replays scenes of the day like little films"
+  },
+  {
+   "id": 53,
+   "chapter": "4. The real upgrade",
+   "kind": "number",
+   "onscreen": "2. Move",
+   "labels": [],
+   "narration": "Two: move. In one study, older adults who walked briskly three times a week for a year grew their hippocampus by about two percent. Roughly like turning the clock back by one to two years.",
+   "image_prompt": "an older couple walking briskly on a green hill path at sunrise, a small glowing seahorse shape growing above them"
+  },
+  {
+   "id": 54,
+   "chapter": "4. The real upgrade",
+   "kind": "number",
+   "onscreen": "3. Learn",
+   "labels": [],
+   "narration": "Three: learn something genuinely new. A language, an instrument, a dance. New skills build new roads, at almost any age.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) learning guitar while words in different languages and dance steps float around as glowing roads"
+  },
+  {
+   "id": 55,
+   "chapter": "4. The real upgrade",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "No pill. No switch. Just small things, done again and again.",
+   "image_prompt": "a single glowing footstep path climbing up a gentle green hill toward the Mindsphere planet in the sky"
+  },
+  {
+   "id": 56,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "So the next time someone tells you that you only use ten percent of your brain, you can smile. Your city is already lit. Every district, every street. And in flow, you've already felt it at its best. Not with every light on. With the right lights, perfectly in tune.",
+   "image_prompt": "Mira (a young woman with a dark ponytail and a warm amber jacket) smiling, behind them the brain drawn as a glowing night city inside a glass dome glowing in gentle waves across all districts"
+  },
+  {
+   "id": 57,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "And that's the beautiful part. You don't need to switch everything on. You get to choose which lights to keep burning, and which new roads to build.",
+   "image_prompt": "Kai (a young man with short dark messy hair and a teal hoodie) placing a small glowing lamp on a new road in the brain drawn as a glowing night city inside a glass dome, warm amber light"
+  },
+  {
+   "id": 58,
+   "chapter": "Ending",
+   "kind": "image",
+   "onscreen": null,
+   "labels": [],
+   "narration": "Your brain isn't waiting for an upgrade. It's waiting for you. If you'd like to explore more of the Mindsphere with us, subscribe. See you on the next orbit.",
+   "image_prompt": "the green glass planet Mindsphere with its glowing orbit ring, Orbi (a small floating glass orb robot with a glowing orbit ring and two dot eyes) waving goodbye in the foreground, stars and soft lens glow"
+  }
+ ],
+ "shorts": []
+}

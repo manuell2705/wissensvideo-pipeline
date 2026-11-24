@@ -6,7 +6,7 @@ set -x
 export DEBIAN_FRONTEND=noninteractive
 apt-get update -q && apt-get install -y -q ffmpeg espeak-ng git > /dev/null
 git clone -q "https://github.com/$REPO" /w && cd /w
-pip install -q chatterbox-tts kokoro soundfile 2>&1 | tail -2
+pip install -q ${PIP_PKGS:-chatterbox-tts kokoro soundfile} 2>&1 | tail -3
 export DEVICE=cuda
 mkdir -p /w/gpu_out
 bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt

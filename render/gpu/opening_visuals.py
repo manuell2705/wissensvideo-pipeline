@@ -13,13 +13,23 @@ STYLE = ("2D anime illustration in a premium TV-series style, clean confident li
          "detailed background, no text, no letters, no watermark")
 NEG = "faces on objects, text, letters, words, caption, watermark, blurry, deformed, extra fingers, bad hands, photo, 3d render"
 sheet = Image.open('render/refs/sheet_figuren.jpg').convert('RGB')
+SW, SH = sheet.size
+REFS = {'kai': sheet.crop((0, 0, int(SW * 0.62), SH)), 'mira': sheet.crop((int(SW * 0.38), 0, SW, SH)), None: sheet}
+def ref_for(s):
+    # only the characters that are meant to be in the shot, otherwise the edit model adds both
+    if 'ref' in s and s['ref'] is None and 'Orbi' not in s['image_prompt'] and 'Kai' not in s['image_prompt'] and 'Mira' not in s['image_prompt']: return None
+    return REFS.get(s.get('ref'), sheet)
 from diffusers import QwenImageEditPlusPipeline
 ed = QwenImageEditPlusPipeline.from_pretrained("Qwen/Qwen-Image-Edit-2509", torch_dtype=torch.bfloat16).to('cuda')
 for s in script['scenes']:
     if not s.get('image_prompt'): continue
     p = s['image_prompt'].replace('Kai (', 'Kai from the reference image (').replace('Mira (', 'Mira from the reference image (').replace('Orbi (', 'Orbi from the reference image (')
     t = time.time()
-    im = ed(image=[sheet], prompt=f"{p}. Wide 16:9 cinematic scene, keep faces, hair and outfits exactly as in the reference. {STYLE}", negative_prompt=NEG,
+    r = ref_for(s)
+    if r is None:   # no character: plain text-to-image through the edit model with a neutral canvas is poor -> use the sheet only for style
+        r = Image.open('render/refs/planet_title.jpg').convert('RGB')   # style reference without people
+        p = p + '. Completely new scene, only keep the art style and colours of the reference image'
+    im = ed(image=[r], prompt=f"{p}. Wide 16:9 cinematic scene, keep faces, hair and outfits exactly as in the reference. {STYLE}", negative_prompt=NEG,
             num_inference_steps=30, true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10)).images[0]
     im.save(out / f"scene_{s['id']:03d}_1.jpg", quality=93); print('still', s['id'], round(time.time() - t), 's', flush=True)
 upload()

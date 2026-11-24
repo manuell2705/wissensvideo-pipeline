@@ -1,0 +1,32 @@
+name: Chatterbox v3
+on: { workflow_dispatch: {} }
+permissions:
+  contents: write
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [default, george, lewis, daniel, michael, fenrir, emma, minimax_narrator]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11', cache: 'pip' }
+      - run: |
+          sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+          pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts kokoro soundfile
+      - run: python render/chatterbox_v3.py s ${{ matrix.variant }}
+      - uses: actions/upload-artifact@v4
+        with: { name: 'cb-${{ matrix.variant }}', path: s/*.mp3 }
+  release:
+    needs: voice
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: s, merge-multiple: true }
+      - env: { GH_TOKEN: '${{ github.token }}' }
+        run: gh release create "chatterbox-v3-${{ github.run_number }}" s/*.mp3 -R ${{ github.repository }} --title "Chatterbox v3" --notes "Directed per sentence"

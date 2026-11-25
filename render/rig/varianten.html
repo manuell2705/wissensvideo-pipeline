@@ -1,0 +1,14 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#0b1d3f}svg{display:block}</style></head>
+<body><svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script src="../vendor/gsap.min.js"></script><script src="characters.js"></script><script>
+const svg=document.getElementById('svg');const d=E('defs',{},svg);const lg=E('linearGradient',{id:'sky',x1:0,y1:0,x2:0,y2:1},d);
+E('stop',{offset:0,'stop-color':'#0a1b3d'},lg);E('stop',{offset:.65,'stop-color':'#123f66'},lg);E('stop',{offset:1,'stop-color':'#16575f'},lg);
+E('rect',{width:1920,height:1080,fill:'url(#sky)'},svg);
+E('path',{d:'M0,840 C400,800 800,830 1200,812 C1500,800 1750,820 1920,808 L1920,1080 L0,1080 Z',fill:'#185e5e'},svg);
+const tl=gsap.timeline({paused:true});
+[['A',380,'A  Mütze'],['B',960,'B  Kurzes Wuschelhaar'],['C',1540,'C  Kapuze auf']].forEach(([v,x,l])=>{
+ E('ellipse',{cx:x,cy:985,rx:170,ry:22,fill:'#0b2c33',opacity:.55},svg);
+ const p=Person(svg,{x,y:980,s:0.95,v}); p.pose(tl,0.8,v==='A'?'point':v==='B'?'open':'thumbs'); p.face(tl,0.8,v==='B'?'grin':'smile');
+ const t=E('text',{x,y:1050,'text-anchor':'middle','font-size':44,'font-weight':700,fill:'#fff','font-family':'Inter,sans-serif'},svg);t.textContent=l;});
+tl.seek(1.5);
+</script></body></html>

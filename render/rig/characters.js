@@ -9,9 +9,10 @@ const C = { skin: '#f7d6bd', skinSh: '#e9b99c', hair: '#3a2a2e', hairHi: '#5c444
             jeans: '#2b3a5c', jeansSh: '#22304c', shoe: '#f2f5f7', sole: '#9fb3c8', line: '#14203a', iris: '#2a3150', blush: '#f29c9c', white: '#ffffff' };
 const ST = { stroke: C.line, 'stroke-width': 5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
 
-// The neutral 'you' figure: chin-length hair, hoodie, jeans, so women and men can see themselves in it.
+// The gender-neutral 'you' figure (neither clearly woman nor man): hoodie, jeans, simple eyes, variants A/B/C for the head.
 function Person(parent, o = {}) {
   // local coordinates: feet on y=0, head top near y=-860; facing the viewer
+  const v = o.v || 'A';   // look variant: A beanie, B short tousled hair, C hood up (all gender-neutral)
   const root = G(parent, { class: 'kai' });
   const body = G(root);                       // whole body (bob / lean)
   const legL = G(body), legR = G(body);
@@ -33,12 +34,12 @@ function Person(parent, o = {}) {
   const armFront = G(body);                   // viewer-right arm (Kai's left), used for pointing
   const neck = E('path', { d: 'M-24,-700 L-22,-650 C-10,-640 10,-640 22,-650 L24,-700 Z', fill: C.skinSh, ...ST }, body);
   const head = G(body);                       // pivot at the neck
-  const hairBack = E('path', { d: 'M-112,-800 C-136,-720 -132,-660 -112,-626 C-96,-612 -80,-618 -74,-640 L74,-640 C80,-618 96,-612 112,-626 C132,-660 136,-720 112,-800 Z', fill: C.hair, ...ST }, head);
-  E('ellipse', { cx: -100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head);   // ears
-  E('ellipse', { cx: 100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head);
+  if (v === 'C') E('path', { d: 'M-156,-760 C-166,-884 -70,-936 0,-936 C70,-936 166,-884 156,-760 C154,-690 132,-646 100,-626 L-100,-626 C-132,-646 -154,-690 -156,-760 Z', fill: C.hoodSh, ...ST }, head);   // hood back
+  if (v !== 'C') { E('ellipse', { cx: -100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head);   // ears
+    E('ellipse', { cx: 100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head); }
   E('path', { d: 'M-100,-800 C-104,-720 -86,-660 -40,-636 C-16,-626 16,-626 40,-636 C86,-660 104,-720 100,-800 C80,-860 -80,-860 -100,-800 Z', fill: C.skin, ...ST }, head);
-  E('ellipse', { cx: -56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .55 }, head);
-  E('ellipse', { cx: 56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .55 }, head);
+  E('ellipse', { cx: -56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .22 }, head);
+  E('ellipse', { cx: 56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .22 }, head);
   E('path', { d: 'M-4,-722 C0,-716 6,-716 8,-720', stroke: C.skinSh, 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, head);
   const eyes = [];
   for (const sx of [-1, 1]) {
@@ -49,7 +50,7 @@ function Person(parent, o = {}) {
     E('ellipse', { cx: sx * 53, cy: -752, rx: 9, ry: 12, fill: '#11152a' }, iris);
     E('circle', { cx: sx * 47, cy: -764, r: 6, fill: C.white }, iris);
     E('circle', { cx: sx * 59, cy: -746, r: 3, fill: C.white }, iris);
-    E('path', { d: `M${sx * 22},-768 C${sx * 36},-798 ${sx * 74},-798 ${sx * 86},-770`, stroke: C.line, 'stroke-width': 8, fill: 'none', 'stroke-linecap': 'round' }, eg);  // lash line
+    E('path', { d: `M${sx * 22},-768 C${sx * 36},-798 ${sx * 74},-798 ${sx * 86},-770`, stroke: C.line, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, eg);  // upper lid (thin, no lashes)
     eyes.push({ g: eg, iris, cx: sx * 53, cy: -758 });
   }
   const brows = [-1, 1].map(sx => E('path', { d: `M${sx * 28},-806 C${sx * 44},-816 ${sx * 66},-816 ${sx * 80},-808`, stroke: C.hair, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, head));
@@ -61,9 +62,21 @@ function Person(parent, o = {}) {
     worry: E('path', { d: 'M-18,-684 C-8,-694 8,-694 18,-684', stroke: C.line, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, head),
   };
   const hairFront = G(head);
-  E('path', { d: 'M-114,-770 C-124,-850 -76,-904 -4,-906 C70,-908 120,-860 116,-780 C116,-740 112,-700 108,-672 C96,-700 94,-740 92,-780 C70,-800 40,-806 20,-800 C0,-790 -30,-786 -50,-796 C-70,-806 -86,-800 -92,-780 C-94,-740 -98,-700 -108,-672 C-114,-700 -116,-740 -114,-770 Z', fill: C.hair, ...ST }, hairFront);
-  E('path', { d: 'M-40,-800 C-30,-830 -20,-860 0,-880 M30,-802 C36,-836 50,-860 70,-870 M-80,-790 C-80,-820 -70,-850 -50,-870', stroke: '#24181b', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
-  E('path', { d: 'M-60,-870 C-30,-890 30,-892 60,-866', stroke: C.hairHi, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
+  if (v === 'A') {   // beanie with short tufts at the sides
+    E('path', { d: 'M-104,-772 C-98,-752 -94,-740 -88,-732 L-84,-770 Z M104,-772 C98,-752 94,-740 88,-732 L84,-770 Z', fill: C.hair, ...ST, 'stroke-width': 4 }, hairFront);
+    E('path', { d: 'M-112,-786 C-118,-872 -62,-918 0,-918 C62,-918 118,-872 112,-786 Z', fill: '#f0a63a', ...ST }, hairFront);
+    for (const x of [-60, -20, 20, 60]) E('path', { d: `M${x},-812 C${x * 1.05},-850 ${x * 0.9},-880 ${x * 0.6},-904`, stroke: '#c9821f', 'stroke-width': 4, fill: 'none' }, hairFront);
+    E('path', { d: 'M-120,-806 C-60,-822 60,-822 120,-806 L118,-772 C60,-788 -60,-788 -118,-772 Z', fill: '#d88d24', ...ST }, hairFront);
+    E('circle', { cx: 0, cy: -926, r: 24, fill: '#f6c56a', ...ST }, hairFront);
+  } else if (v === 'B') {   // short tousled hair, ears free
+    E('path', { d: 'M-108,-770 C-124,-862 -62,-912 0,-910 C66,-910 124,-862 108,-770 C102,-792 94,-802 82,-808 C70,-790 52,-798 42,-814 C28,-796 8,-800 -4,-816 C-18,-798 -40,-800 -52,-814 C-64,-798 -84,-796 -96,-808 C-102,-796 -106,-784 -108,-770 Z', fill: C.hair, ...ST }, hairFront);
+    E('path', { d: 'M-40,-880 C-20,-896 20,-898 46,-884', stroke: C.hairHi, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
+    E('path', { d: 'M-20,-912 C-14,-936 4,-944 18,-940 C8,-932 4,-922 6,-910', fill: C.hair, ...ST, 'stroke-width': 4 }, hairFront);   // cowlick
+  } else {   // hood up, small fringe
+    E('path', { d: 'M-92,-796 C-74,-852 74,-852 92,-796 C64,-812 34,-806 0,-818 C-34,-806 -64,-812 -92,-796 Z', fill: C.hair, ...ST, 'stroke-width': 4 }, hairFront);
+    E('path', { d: 'M-120,-700 C-128,-860 -64,-904 0,-904 C64,-904 128,-860 120,-700', stroke: C.line, 'stroke-width': 34, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
+    E('path', { d: 'M-120,-700 C-128,-860 -64,-904 0,-904 C64,-904 128,-860 120,-700', stroke: C.hoodHi, 'stroke-width': 24, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
+  }
   const sweat = E('path', { d: 'M96,-820 C86,-800 88,-786 98,-784 C108,-786 110,-800 96,-820 Z', fill: '#8fd8ff', stroke: '#2a6ea0', 'stroke-width': 3, opacity: 0 }, head);
   // arms: upper arm (shoulder pivot) > forearm (elbow pivot) > hand
   const arm = (g, sx) => {

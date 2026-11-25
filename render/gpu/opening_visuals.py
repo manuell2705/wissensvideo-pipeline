@@ -35,8 +35,8 @@ for s in order:
     t = time.time()
     r = ref_for(s)
     if r is None:   # no character: plain text-to-image through the edit model with a neutral canvas is poor -> use the sheet only for style
-        r = Image.open('render/refs/planet_title.jpg').convert('RGB')   # style reference without people
-        p = p + '. Completely new scene, only keep the art style and colours of the reference image'
+        r = Image.open('render/refs/style_topic.jpg').convert('RGB')   # style reference without people or faces
+        p = p + '. Completely new scene, only keep the art style and colours of the reference image. No people, no characters, no faces on planets, objects or buildings, no text'
     im = ed(image=[r], prompt=f"{p}. Wide 16:9 cinematic scene, keep faces, hair and outfits exactly as in the reference. {STYLE}", negative_prompt=NEG,
             num_inference_steps=30, true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10)).images[0]
     im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(out / f"scene_{s['id']:03d}_1.jpg"); print('still', s['id'], round(time.time() - t), 's', flush=True)

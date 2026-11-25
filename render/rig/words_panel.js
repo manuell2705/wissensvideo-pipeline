@@ -1,23 +1,3 @@
-// Narration lines for the control-panel test (script v5: hook 1-5 + senses 11-14).
-// WORDS[id] = [[word, start], ...] relative to the line start. Estimated until real word stamps (whisper) replace this file.
-const LINES = {
-  1: "Your brain is the most complex thing we know of in the universe. And most of the time, it runs in power-saving mode.",
-  2: "Eighty-six billion neurons, and only a small share of them fire at any moment. All on about twenty watts. Roughly the power of a dim light bulb.",
-  3: "So let's do something slightly irresponsible. Let's take everything science knows about the brain, and turn it all the way up.",
-  4: "Sharper senses. Perfect memory. Faster thoughts. And at the end, we'll see if this brain can keep up with the fastest computer on Earth.",
-  5: "Of course, every upgrade comes with a price. Let's find out which ones are worth paying.",
-  11: "Right now, your eyes, ears and skin flood your brain with an estimated billion bits of information every second.",
-  12: "Your conscious mind works with about ten. A fire hose, feeding a drinking straw.",
-  13: "So let's remove the straw.",
-  14: "Congratulations. You now notice every sound in the room, every flicker of light, every thread of your socks. Unfortunately, you notice them all at the same time.",
-};
-const WORDS = {}, LDUR = {};
-for (const id in LINES) {
-  let t = 0; WORDS[id] = [];
-  for (const w of LINES[id].split(/\s+/)) {
-    WORDS[id].push([w, +t.toFixed(2)]);
-    t += 0.13 + w.replace(/[^A-Za-z0-9]/g, '').length * 0.052;
-    if (/[.?!]$/.test(w)) t += 0.42; else if (/[,:;]$/.test(w)) t += 0.18;
-  }
-  LDUR[id] = +t.toFixed(2);
-}
+// Real word stamps (faster-whisper) for voice Kokoro am_fenrir@1.08, release panel-fenrir-1
+const WORDS = {"1": [["Your", 0.0], ["brain", 0.38], ["is", 0.72], ["the", 0.96], ["most", 1.12], ["complex", 1.3], ["thing", 1.84], ["we", 2.2], ["know", 2.44], ["of", 2.66], ["in", 2.88], ["the", 3.0], ["universe,", 3.1], ["and", 3.84], ["most", 4.0], ["of", 4.2], ["the", 4.36], ["time,", 4.48], ["it", 4.92], ["runs", 5.06], ["in", 5.34], ["power", 5.7], ["-saving", 5.98], ["mode.", 6.36]], "2": [["86", 0.0], ["billion", 0.68], ["neurons", 1.04], ["and", 1.62], ["only", 1.94], ["a", 2.2], ["small", 2.38], ["share", 2.7], ["of", 3.02], ["them", 3.18], ["fire", 3.32], ["at", 3.64], ["any", 3.88], ["moment,", 4.12], ["all", 4.78], ["on", 4.96], ["about", 5.18], ["20", 5.44], ["watts,", 5.82], ["roughly", 6.66], ["the", 6.86], ["power", 7.12], ["of", 7.42], ["a", 7.62], ["dim", 7.74], ["light", 7.9], ["bulb.", 8.14]], "3": [["So", 0.0], ["let's", 0.36], ["do", 0.68], ["something", 0.84], ["slightly", 1.16], ["irresponsible.", 1.56], ["Let's", 3.06], ["take", 3.2], ["everything", 3.36], ["science", 3.88], ["knows", 4.26], ["about", 4.66], ["the", 5.04], ["brain", 5.22], ["and", 5.5], ["turn", 5.78], ["it", 6.0], ["all", 6.12], ["the", 6.32], ["way", 6.5], ["up.", 6.7]], "4": [["Sharper", 0.0], ["senses,", 0.62], ["perfect", 1.28], ["memory,", 1.5], ["faster", 2.42], ["thoughts,", 2.68], ["and", 3.56], ["at", 3.62], ["the", 3.72], ["end", 3.86], ["we'll", 4.12], ["see", 4.38], ["if", 4.58], ["this", 4.72], ["brain", 4.92], ["can", 5.28], ["keep", 5.54], ["up", 5.76], ["with", 5.96], ["the", 6.12], ["fastest", 6.26], ["computer", 6.62], ["on", 7.08], ["Earth.", 7.44]], "5": [["Of", 0.0], ["course,", 0.3], ["every", 0.74], ["upgrade", 1.04], ["comes", 1.5], ["with", 1.82], ["a", 2.04], ["price,", 2.16], ["let's", 2.84], ["find", 3.08], ["out", 3.3], ["which", 3.48], ["ones", 3.68], ["are", 3.96], ["worth", 4.12], ["paying.", 4.3]], "11": [["Right", 0.0], ["now,", 0.4], ["your", 0.84], ["eyes,", 0.94], ["ears,", 1.48], ["and", 1.98], ["skin", 2.04], ["flood", 2.34], ["your", 2.64], ["brain", 2.82], ["with", 3.08], ["an", 3.32], ["estimated", 3.48], ["billion", 3.94], ["bits", 4.36], ["of", 4.72], ["information", 4.88], ["every", 5.34], ["second.", 5.8]], "12": [["Your", 0.0], ["conscious", 0.32], ["mind", 0.7], ["works", 1.16], ["with", 1.44], ["about", 1.66], ["ten,", 1.88], ["a", 2.58], ["fire", 2.72], ["hose", 3.02], ["feeding", 3.42], ["a", 3.7], ["drinking", 3.92], ["straw.", 4.12]], "13": [["So", 0.0], ["let's", 0.3], ["remove", 0.54], ["the", 0.74], ["straw.", 0.92]], "14": [["Congratulations!", 0.0], ["You", 1.4], ["now", 1.56], ["notice", 1.7], ["every", 2.0], ["sound", 2.38], ["in", 2.68], ["the", 2.9], ["room,", 3.02], ["every", 3.52], ["flicker", 3.72], ["of", 4.0], ["light,", 4.24], ["every", 4.68], ["thread", 4.88], ["of", 5.14], ["your", 5.28], ["socks.", 5.4], ["Unfortunately,", 6.78], ["you", 6.94], ["notice", 7.2], ["them", 7.46], ["all", 7.7], ["at", 7.94], ["the", 8.08], ["same", 8.2], ["time.", 8.42]]};
+const LDUR = {"1": 7.45, "2": 9.1, "3": 7.55, "4": 8.35, "5": 5.3, "11": 6.9, "12": 5.17, "13": 1.77, "14": 9.47};

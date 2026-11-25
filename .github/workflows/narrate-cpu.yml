@@ -1,0 +1,24 @@
+name: Narrate test clip (free, CPU)
+on:
+  workflow_dispatch:
+    inputs:
+      lines: { description: 'path to lines json', required: true }
+      voice: { description: 'kokoro:<id>@speed or chatterbox:<ref>@exa', required: true }
+      tag: { description: 'release tag', required: true }
+permissions:
+  contents: write
+jobs:
+  narrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: |
+          sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+          pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts kokoro soundfile faster-whisper
+      - run: python render/narrate_cpu.py "${{ inputs.lines }}" out "${{ inputs.voice }}"
+      - env: { GH_TOKEN: '${{ github.token }}' }
+        run: cd out && rm -f _ref.wav && gh release create "${{ inputs.tag }}" *.wav words.json -R ${{ github.repository }} --title "${{ inputs.tag }}" --notes "${{ inputs.voice }}"

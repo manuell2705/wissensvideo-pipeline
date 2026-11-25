@@ -1,5 +1,6 @@
 """Video 005: 'What if your brain ran at 100%?' Main body = brain/body/abilities at 100% (honest), finale = logical 100%-brain vs AI showdown."""
-import json, os
+import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 HERE = os.path.dirname(os.path.abspath(__file__))
 K = "Kai (a young man with short dark messy hair and a teal hoodie)"
 M = "Mira (a young woman with a dark ponytail and a warm amber jacket)"
@@ -243,6 +244,11 @@ S += [
 base = [s for s in S if not s.get('late')]
 for i, s in enumerate(base, 1): s['id'] = i
 for i, s in enumerate([s for s in S if s.get('late')], len(base) + 1): s['id'] = i; s.pop('late')
+from perf import PERF   # performed wording for the lively George voice
+import sys as _sys
+if '--plain' not in _sys.argv:
+    for s in S:
+        if s['id'] in PERF: s['narration'] = PERF[s['id']]
 words = sum(len(s['narration'].split()) for s in S)
 script = dict(title="What If Your Brain Ran at 100%?", category="Science",
  description="What would really happen if your brain ran at 100%? Your senses, memory, speed, body and 'superpowers', checked honestly with real science. And at the end: could a 100% brain beat the smartest AI ever built?",

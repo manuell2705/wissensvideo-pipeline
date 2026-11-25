@@ -9,8 +9,11 @@ from pathlib import Path
 import numpy as np, soundfile as sf, torch
 script = json.loads(Path(sys.argv[1]).read_text()); variant = sys.argv[2] if len(sys.argv) > 2 else 'george_boot_warm'
 out = Path('gpu_out'); out.mkdir(exist_ok=True)
-REF = 'render/refs/george_cb.wav'
-EXA = {'george_boot_lively': 1.2}.get(variant, 1.0); CFG = {'george_boot_warm': 0.8}.get(variant, 1.0)
+REF = 'render/refs/george_lively.wav' if variant.startswith('george_live') else 'render/refs/george_cb.wav'
+EXA = {'george_boot_lively': 1.2, 'george_live': 1.0, 'george_live_plus': 1.15}.get(variant, 1.0)
+CFG = {'george_boot_warm': 0.8}.get(variant, 1.0)
+LIVE = variant.startswith('george_live')   # 'fascinated narrator': stronger emotion, low cfg (natural flow), longer beats
+TEMP = 0.85 if LIVE else 0.8
 from chatterbox.tts import ChatterboxTTS
 model = ChatterboxTTS.from_pretrained(device='cuda'); SR = model.sr
 from transformers import pipeline
@@ -29,7 +32,7 @@ def beats(scene):
             if cur: groups.append(' '.join(cur)); cur = []
             groups.append(x); continue
         cur.append(x)
-        if sum(len(y.split()) for y in cur) >= 14:     # 1-3 sentences per beat keeps the melody flowing
+        if sum(len(y.split()) for y in cur) >= (20 if LIVE else 14):     # 1-3 sentences per beat keeps the melody flowing
             groups.append(' '.join(cur)); cur = []
     if cur:
         if groups and len(' '.join(cur).split()) <= 4 and '...' not in groups[-1] and not cur[-1].endswith(('!', '?')):
@@ -42,6 +45,12 @@ def beats(scene):
         elif n <= 4 or '...' in g:   exa, cfg, tp, pause = 0.50, 0.30, 0.94, 0.40   # slow, weighty
         elif g.endswith('?'):        exa, cfg, tp, pause = 0.70, 0.40, 1.00, 0.30   # curious
         else:                        exa, cfg, tp, pause = 0.60, 0.45, 1.00, 0.22   # normal storytelling
+        if LIVE:   # performed: wonder slower, facts brisk, punchlines with a breath; never flat
+            if g.endswith('!'):          exa, cfg, tp, pause = 1.00, 0.30, 1.05, 0.28
+            elif n <= 4 or '...' in g:   exa, cfg, tp, pause = 0.80, 0.30, 0.97, 0.38
+            elif g.endswith('?'):        exa, cfg, tp, pause = 0.90, 0.32, 0.99, 0.28
+            elif re.search(r'\d|hundred|thousand|million|billion|trillion|percent', g): exa, cfg, tp, pause = 0.95, 0.30, 1.03, 0.22
+            else:                        exa, cfg, tp, pause = 0.82, 0.30, 1.02, 0.18
         if calm_end: exa, tp = exa * 0.85, tp * 0.96
         res.append((g, exa, cfg, tp, pause))
     return res
@@ -79,7 +88,7 @@ for _k, s in enumerate(_order):
         torch.manual_seed(1000 * take + s['id'])
         parts = []
         for text, exa, cfg, tp, pause in beats(s):
-            w = model.generate(text, audio_prompt_path=REF, exaggeration=min(1.5, exa * EXA), cfg_weight=cfg * CFG, temperature=0.8)
+            w = model.generate(text, audio_prompt_path=REF, exaggeration=min(1.5, exa * EXA), cfg_weight=cfg * CFG, temperature=TEMP)
             w = tempo(trim(w.squeeze(0).cpu().numpy()), tp)
             f = int(0.01 * SR); w[:f] *= np.linspace(0, 1, f); w[-f:] *= np.linspace(1, 0, f)
             parts += [w, np.zeros(int(SR * pause), dtype=np.float32)]

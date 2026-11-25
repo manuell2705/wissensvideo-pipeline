@@ -1,4 +1,4 @@
-"""V2 image plan: every shot shows literally what George says in that moment (no channel-style props like planets or bubbles).
+"""V2 image plan (shots later redone via fix_v2.json override these prompts): every shot shows literally what George says in that moment (no channel-style props like planets or bubbles).
 Writes shots_a.json / shots_b.json (two halves for two GPUs in parallel)."""
 import json
 from pathlib import Path

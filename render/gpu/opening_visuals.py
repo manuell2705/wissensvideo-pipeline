@@ -11,7 +11,7 @@ def upload():
 STYLE = ("2D anime illustration in a premium TV-series style, clean confident line art, soft cel shading, expressive faces, cinematic lighting, "
          "rich depth, palette of deep night blue, teal, fresh leaf green and warm amber light, subtle glossy glass accents, soft glow, "
          "detailed background, no text, no letters, no watermark")
-NEG = "faces on objects, text, letters, words, caption, watermark, blurry, deformed, extra fingers, bad hands, photo, 3d render"
+NEG = "faces on objects, face on brain, face on cell, eyes on objects, cartoon mascot, superhero costume, mask, logo, text, letters, words, caption, watermark, blurry, deformed, extra fingers, bad hands, photo, 3d render"
 sheet = Image.open('render/refs/sheet_figuren.jpg').convert('RGB')
 SW, SH = sheet.size
 REFS = {'kai': sheet.crop((0, 0, int(SW * 0.62), SH)), 'mira': sheet.crop((int(SW * 0.38), 0, SW, SH)), None: sheet}
@@ -34,6 +34,7 @@ for s in order:
     if done == len([x for x in order if x['id'] in PRE and x.get('image_prompt')]) and PRE and done: upload()   # quick preview first
     if not s.get('image_prompt'): continue
     for k, prompt in enumerate(s.get('shots') or [s['image_prompt']]):   # several shots per scene: scene_XXX_1.jpg, _2, _3
+        if not prompt: continue   # fix jobs: only redo the listed shots
         f = out / f"scene_{s['id']:03d}_{k + 1}.jpg"
         if f.exists(): continue
         done += 1
@@ -42,14 +43,14 @@ for s in order:
         t = time.time()
         r = None if T2I else ref_for(dict(s, image_prompt=prompt))
         if T2I:
-            im = ed(prompt=f"{p}. Wide 16:9 cinematic scene, clear and easy to read composition. {STYLE}", negative_prompt=NEG, num_inference_steps=40,
+            im = ed(prompt=f"{p}. Widescreen cinematic scene, clear and easy to read composition. {STYLE}", negative_prompt=NEG, num_inference_steps=40,
                     true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10 + k)).images[0]
             im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(f); print('still', s['id'], k + 1, round(time.time() - t), 's', flush=True)
             continue
         if r is None:   # no named character: face-free style reference, only for look and colours
             r = Image.open('render/refs/style_topic.jpg').convert('RGB')
             p = p + '. Completely new scene, only keep the art style and colours of the reference image. No faces on objects or buildings, no text, no letters'
-        im = ed(image=[r], prompt=f"{p}. Wide 16:9 cinematic scene, clear and easy to read composition. {STYLE}", negative_prompt=NEG,
+        im = ed(image=[r], prompt=f"{p}. Widescreen cinematic scene, clear and easy to read composition. {STYLE}", negative_prompt=NEG,
                 num_inference_steps=30, true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10 + k)).images[0]
         im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(f); print('still', s['id'], k + 1, round(time.time() - t), 's', flush=True)
 upload()

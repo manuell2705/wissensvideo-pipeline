@@ -1,0 +1,104 @@
+{
+ "scenes": [
+  {
+   "id": 6,
+   "image_prompt": "x",
+   "shots": [
+    null,
+    "a wall of three blank screens without any writing: a cinema poster frame, a street billboard and a smartphone, each showing a picture of a brain with only a small part lit"
+   ]
+  },
+  {
+   "id": 7,
+   "image_prompt": "x",
+   "shots": [
+    "a warm sepia lecture hall around 1900, an old bearded professor in front of an empty chalkboard speaking to students in old-fashioned clothes",
+    null,
+    "old newspapers with unreadable tiny print flying through the air, a vague glowing cloud shrinking into a small solid red wax seal"
+   ]
+  },
+  {
+   "id": 9,
+   "image_prompt": "x",
+   "shots": [
+    null,
+    "scientific illustration of a dark neuron network, simple star-shaped cells with long branches, only a handful sparkling with small electric pulses, no faces, no eyes"
+   ]
+  },
+  {
+   "id": 13,
+   "image_prompt": "x",
+   "shots": [
+    null,
+    "inside a nerve fibre bundle: countless tiny light pulses racing along long glowing fibres toward a distant bright point, like rush hour traffic lights, no faces"
+   ]
+  },
+  {
+   "id": 14,
+   "image_prompt": "x",
+   "shots": [
+    "a huge waterfall of light pouring into a big glass funnel in a dark cave, only a thin trickle coming out at the bottom, no people, no faces"
+   ]
+  },
+  {
+   "id": 18,
+   "image_prompt": "x",
+   "shots": [
+    "a fine golden mesh filter floating in mid-air, a chaotic torrent of colourful light sparks pouring in from above and one clean bright stream coming out below, no people, no faces"
+   ]
+  },
+  {
+   "id": 30,
+   "image_prompt": "x",
+   "shots": [
+    "scientific illustration of a single neuron cell, star-shaped with long branches, firing a rapid storm of bright electric pulses along its branches, no face, no eyes"
+   ]
+  },
+  {
+   "id": 32,
+   "image_prompt": "x",
+   "shots": [
+    null,
+    "a vast landscape of glowing neuron cells like a forest of thin trees with long branches stretching to the horizon at night, no faces",
+    "macro view of countless thin glowing connections between neuron branches lighting up all at once like a city grid seen from a plane, no faces"
+   ]
+  },
+  {
+   "id": 40,
+   "image_prompt": "x",
+   "shots": [
+    null,
+    "scientific illustration of neuron branches growing new glowing connections that link up, no face, no eyes"
+   ]
+  },
+  {
+   "id": 44,
+   "image_prompt": "x",
+   "shots": [
+    "a young person with short brown hair and a teal jacket seen from below in a dramatic heroic pose at night, lightning crackling around their raised hand, comic-style action lines"
+   ]
+  },
+  {
+   "id": 55,
+   "image_prompt": "x",
+   "shots": [
+    null,
+    "scientific illustration of a single neuron cell sending one slow calm pulse of light along its branch, no face, no eyes"
+   ]
+  },
+  {
+   "id": 62,
+   "image_prompt": "x",
+   "shots": [
+    "a stadium arena at night with two tall plain glowing light pillars of exactly the same height side by side, confetti of light, no writing, no numbers, no faces"
+   ]
+  },
+  {
+   "id": 64,
+   "image_prompt": "x",
+   "shots": [
+    "a simple glowing brain illustration seen from the side where just a few areas glow warm like lit windows, the rest calm and dark blue, no face, no eyes"
+   ]
+  }
+ ]
+}

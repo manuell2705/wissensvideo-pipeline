@@ -9,17 +9,19 @@ assets = []
 for tg in tag.split(','):   # several GPU releases can be combined, e.g. gpu-1,gpu-2
     assets += json.load(urllib.request.urlopen(urllib.request.Request(f'https://api.github.com/repos/{repo}/releases/tags/{tg.strip()}', headers=H)))['assets']
 import time
-def get(url):   # retry: 10 parallel runners can hit GitHub's download limits (403/429) for a moment
+def get(a):   # public repo: plain download link first (no auth header to forward on the CDN redirect), API as fallback; retry on limits
     for k in range(6):
-        try: return urllib.request.urlopen(urllib.request.Request(url, headers={**H, 'Accept': 'application/octet-stream'}), timeout=120).read()
+        try:
+            if k % 2 == 0: return urllib.request.urlopen(a['browser_download_url'], timeout=120).read()
+            return urllib.request.urlopen(urllib.request.Request(a['url'], headers={**H, 'Accept': 'application/octet-stream'}), timeout=120).read()
         except Exception as e:
             if k == 5: raise
-            print('retry', url, e, flush=True); time.sleep(5 * 2 ** k)
+            print('retry', a['name'], e, flush=True); time.sleep(5 * 2 ** k)
 latest = {a['name']: a for a in assets}   # a later release overrides an older file with the same name -> download only that one
 for n, a in latest.items():
     if not (n.endswith('.jpg') or (n.startswith('scene_') and n.endswith(('.wav', '.json')))): continue
     d = out / ('img' if n.endswith('.jpg') else 'audio')
-    (d / n).write_bytes(get(a['url']))
+    (d / n).write_bytes(get(a))
 here = Path(__file__).resolve().parents[1]
 t = out / 'img' / 'scene_005_1.jpg'
 if not t.exists(): t.write_bytes((here / 'refs' / 'planet_title.jpg').read_bytes())   # title card background

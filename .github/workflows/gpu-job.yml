@@ -25,6 +25,7 @@ jobs:
           MAX_MIN: ${{ inputs.max_minutes }}
         run: |
           TAG="gpu-${{ github.run_id }}"; echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "BAL0=$(python3 render/gpu/balance.py || echo ?)" >> $GITHUB_ENV; echo "T0=$(date +%s)" >> $GITHUB_ENV
           python3 render/gpu/start_pod.py
       - name: Wait for result
         env: { GH_TOKEN: '${{ github.token }}', RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}' }
@@ -48,3 +49,10 @@ jobs:
             [ "$g" = "404" ] && echo "pod gone" && exit 0; sleep 10
           done
           echo "::error::pod $POD may still exist"; exit 1
+      - name: Cost report
+        if: always()
+        env: { RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}' }
+        run: |
+          sleep 60   # RunPod books the last minutes with a short delay
+          B1=$(python3 render/gpu/balance.py || echo ?); MIN=$(( ($(date +%s) - ${T0:-$(date +%s)}) / 60 ))
+          echo "COST_REPORT pod=$POD minutes=$MIN balance_before=$BAL0 balance_after=$B1 spent=$(python3 -c "print(round($BAL0-$B1,2))" 2>/dev/null || echo ?)" | tee -a $GITHUB_STEP_SUMMARY

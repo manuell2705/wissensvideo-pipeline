@@ -38,7 +38,7 @@ const ST = { stroke: CPAL.line, 'stroke-width': 5, 'stroke-linejoin': 'round', '
 // The gender-neutral 'you' figure (neither clearly woman nor man): hoodie, jeans, simple eyes, variants A/B/C for the head.
 function Person(parent, o = {}) {
   // local coordinates: feet on y=0, head top near y=-860; facing the viewer
-  const v = o.v || 'A', st = o.st || 'anime';   // st: drawing style option for Kai/Mira: anime | cute | soft
+  const v = o.v || 'A', st = o.st || ((o.v === 'kai' || o.v === 'mira') ? 'simple' : 'anime');   // st: drawing style option for Kai/Mira: anime | cute | soft
   const PALS = { kai: { skin: '#e8b48f', skinSh: '#d39a74', hair: '#1d2440', hairHi: '#36406a', hood: '#2f8f8a', hoodSh: '#24706c', hoodHi: '#3aa8a2' },
                  mira: { skin: '#f9dcc6', skinSh: '#ebbfa2', hair: '#1f2446', hairHi: '#3a4170', hood: '#f08a3a', hoodSh: '#c96a22', hoodHi: '#ffa65a' } };
   const C = { ...CPAL, ...(PALS[v] || {}), ...(o.pal || {}) };   // look variant: A beanie, B short tousled hair, C hood up (all gender-neutral)
@@ -103,16 +103,16 @@ function Person(parent, o = {}) {
     const cp = E('clipPath', { id: cid }, eg); E('path', { d: white }, cp);
     const clip = G(eg, { 'clip-path': `url(#${cid})` }), iris = G(clip);
     E('ellipse', { cx: sx * 57, cy: -750, rx: 19, ry: 27, fill: IR[0] }, iris);
-    E('ellipse', { cx: sx * 57, cy: -774, rx: 24, ry: 13, fill: IR[1] }, iris);                 // lid shadow on the iris
-    E('ellipse', { cx: sx * 57, cy: -737, rx: 12, ry: 8, fill: IR[2], opacity: .8 }, iris);       // light bounce at the bottom
+    if (st !== 'simple') { E('ellipse', { cx: sx * 57, cy: -774, rx: 24, ry: 13, fill: IR[1] }, iris);   // lid shadow on the iris
+      E('ellipse', { cx: sx * 57, cy: -737, rx: 12, ry: 8, fill: IR[2], opacity: .8 }, iris); }   // light bounce
     E('ellipse', { cx: sx * 57, cy: -752, rx: 8, ry: 13, fill: IR[1] }, iris);                   // pupil
     E('ellipse', { cx: sx * 50, cy: -764, rx: 7, ry: 9, fill: '#ffffff', transform: `rotate(${sx * -20} ${sx * 50} -764)` }, iris);
-    E('circle', { cx: sx * 63, cy: -740, r: 3.2, fill: '#ffffff' }, iris);
+    if (st !== 'simple') E('circle', { cx: sx * 63, cy: -740, r: 3.2, fill: '#ffffff' }, iris);
     const t = band;   // tapered lash band, thicker towards the outer corner, with a small flick
     E('path', { d: `M${sx * 26},-744 C${sx * 32},-${786 + 4 * t} ${sx * 80},-${794 + 6 * t} ${sx * 94},-${760 + 4 * t} L${sx * (98 + 4 * t)},-${752 + 2 * t} C${sx * 92},-754 ${sx * 88},-756 ${sx * 86},-758 C${sx * 78},-784 ${sx * 38},-780 ${sx * 30},-746 Z`, fill: '#1a1420' }, eg);
     if (v === 'mira') E('path', { d: `M${sx * 88},-776 L${sx * 102},-784 L${sx * 92},-768 Z`, fill: '#1a1420' }, eg);
-    E('path', { d: `M${sx * 66},-726 C${sx * 76},-728 ${sx * 82},-732 ${sx * 85},-740`, stroke: '#1a1420', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round', opacity: .8 }, eg);
-    E('path', { d: `M${sx * 34},-792 C${sx * 50},-800 ${sx * 66},-800 ${sx * 78},-794`, stroke: FL, 'stroke-width': 2.5, fill: 'none', opacity: .35, 'stroke-linecap': 'round' }, eg);   // lid crease
+    if (st !== 'simple') E('path', { d: `M${sx * 66},-726 C${sx * 76},-728 ${sx * 82},-732 ${sx * 85},-740`, stroke: '#1a1420', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round', opacity: .8 }, eg);
+    if (st !== 'simple') E('path', { d: `M${sx * 34},-792 C${sx * 50},-800 ${sx * 66},-800 ${sx * 78},-794`, stroke: FL, 'stroke-width': 2.5, fill: 'none', opacity: .35, 'stroke-linecap': 'round' }, eg);   // lid crease
     eyes.push({ g: eg, iris, cx: sx * 57, cy: -754 });
   }
   const brows = [-1, 1].map(sx => E('path', { d: `M${sx * 30},-804 C${sx * 46},-822 ${sx * 70},-824 ${sx * 88},-812 C${sx * 70},-816 ${sx * 48},-814 ${sx * 32},-800 Z`, fill: C.hair }, head));
@@ -170,7 +170,7 @@ function Person(parent, o = {}) {
   const aR = arm(armBack, -1), aL = arm(armFront, 1);
   const k = { root, body, head, eyes, brows, mouths, legL, legR, aR, aL, sweat, x: o.x || 0, y: o.y || 0, s: o.s || 1 };
   gsap.set(root, { x: k.x, y: k.y, scale: k.s, transformOrigin: '0px 0px' });
-  gsap.set(head, { svgOrigin: '0 -650', scale: (v === 'kai' || v === 'mira') ? { anime: 0.86, cute: 1.02, soft: 0.9 }[st] : 1 }); gsap.set(body, { svgOrigin: '0 0' });
+  gsap.set(head, { svgOrigin: '0 -650', scale: (v === 'kai' || v === 'mira') ? { anime: 0.86, cute: 1.02, soft: 0.9, simple: 0.9 }[st] : 1 }); gsap.set(body, { svgOrigin: '0 0' });
   gsap.set(legL, { svgOrigin: '-50 -400' }); gsap.set(legR, { svgOrigin: '50 -400' });
   for (const e of eyes) gsap.set(e.g, { svgOrigin: `${e.cx} ${e.cy}` });
   for (const m in mouths) gsap.set(mouths[m], { opacity: m === 'smile' ? 1 : 0 });

@@ -1,4 +1,4 @@
-# Mindsphere Video-Stil v1 (freigegeben von Manuell am 25.11.2026)
+# Mindsphere Video-Stil v1 (ERSETZT durch video_stil_v2.md)
 
 Dieses Regelwerk gilt für jedes Video. Es legt nur Qualität, Stimme, Figuren und Stil fest. Welten, Bewegungen, Übergänge und Text ändern sich in jedem Video passend zum Thema.
 

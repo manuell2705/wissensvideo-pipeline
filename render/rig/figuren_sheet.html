@@ -20,5 +20,5 @@ lay.forEach(([k, d]) => tl.fromTo(L[k], { x: d * .4 }, { x: -d * .4, duration: 8
 L.clouds.forEach((c, i) => tl.fromTo(c, { x: 0 }, { x: 60 + i * 20, duration: 8, ease: 'none' }, 0));
 L.leaves.forEach((l, i) => tl.to(l, { rotation: '+=4', duration: 1.8 + i * .2, yoyo: true, repeat: 4, ease: 'sine.inOut' }, 0));
 L.motes.forEach((m, i) => tl.to(m, { y: -40 - (i % 5) * 15, opacity: 0.15, duration: 3 + (i % 4), yoyo: true, repeat: 2, ease: 'sine.inOut' }, (i % 7) * .3));
-window.seek = t => { tl.seek(t, false); }; window.DURATION = 8; tl.seek(0);
+window.seek = t => { tl.seek(t, false); drawRigs(); }; window.DURATION = 8; tl.seek(0);
 </script></body></html>

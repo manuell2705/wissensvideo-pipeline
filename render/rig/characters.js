@@ -4,6 +4,25 @@
 const NS = 'http://www.w3.org/2000/svg';
 const E = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
 const G = (parent, attrs = {}) => E('g', attrs, parent);
+// Rigs redraw their limbs after every seek: pages call drawRigs() inside window.seek.
+const RIGS = []; function drawRigs() { for (const f of RIGS) f(); }
+const rot = (x, y, d) => { const r = d * Math.PI / 180, c = Math.cos(r), s = Math.sin(r); return [x * c - y * s, x * s + y * c]; };
+// Smooth limb: ONE continuous stroked path through shoulder, elbow and wrist with round joins, so there are no
+// visible seams between upper arm and forearm. up/fore/hand are plain objects whose 'rotation' GSAP animates.
+function Limb(S, E0, W0, parts) {
+  const up = { rotation: 0 }, fore = { rotation: 0 }, hand = { rotation: 0 };
+  const draw = () => {
+    const a = up.rotation, b = fore.rotation, h = hand.rotation;
+    const v1 = rot(E0[0] - S[0], E0[1] - S[1], a), El = [S[0] + v1[0], S[1] + v1[1]];
+    const v2 = rot(W0[0] - E0[0], W0[1] - E0[1], a + b), W = [El[0] + v2[0], El[1] + v2[1]];
+    const d = `M${S[0]},${S[1]} L${El[0]},${El[1]} L${W[0]},${W[1]}`;
+    parts.outline.setAttribute('d', d); parts.fill.setAttribute('d', d);
+    if (parts.cuff) parts.cuff.setAttribute('d', `M${El[0] + v2[0] * .8},${El[1] + v2[1] * .8} L${W[0]},${W[1]}`);
+    parts.hand.setAttribute('transform', `translate(${W[0]},${W[1]}) rotate(${a + b + h}) translate(${-W0[0]},${-W0[1]})`);
+  };
+  RIGS.push(draw); draw();
+  return { up, fore, hand, draw };
+}
 
 const CPAL = { skin: '#f7d6bd', skinSh: '#e9b99c', hair: '#3a2a2e', hairHi: '#5c4448', hood: '#2f7a72', hoodSh: '#245f59', hoodHi: '#3d958b',
             jeans: '#2b3a5c', jeansSh: '#22304c', shoe: '#f2f5f7', sole: '#9fb3c8', line: '#14203a', iris: '#2a3150', blush: '#f29c9c', white: '#ffffff' };
@@ -29,6 +48,7 @@ function Person(parent, o = {}) {
   const armBack = G(body);                    // viewer-left arm (Kai's right)
   const torso = G(body);
   E('path', { d: 'M-118,-640 C-150,-560 -138,-460 -120,-370 L120,-370 C138,-460 150,-560 118,-640 C70,-672 -70,-672 -118,-640 Z', fill: C.hood, ...ST }, torso);
+  E('path', { d: 'M-116,-636 C-146,-560 -134,-460 -118,-374 L-74,-374 C-90,-460 -100,-560 -80,-652 Z', fill: C.hoodSh, opacity: .5 }, torso);   // cel shadow
   E('path', { d: 'M-120,-370 L120,-370 L116,-342 C40,-330 -40,-330 -116,-342 Z', fill: C.hoodSh, ...ST }, torso);   // hem
   E('path', { d: 'M-70,-470 L70,-470 L82,-392 L-82,-392 Z', fill: C.hoodSh, ...ST }, torso);                         // pocket
   E('path', { d: 'M-80,-656 C-60,-610 60,-610 80,-656 C60,-690 -60,-690 -80,-656 Z', fill: C.hoodHi, ...ST }, torso);  // hood collar
@@ -48,20 +68,27 @@ function Person(parent, o = {}) {
   if (v === 'C') E('path', { d: 'M-156,-760 C-166,-884 -70,-936 0,-936 C70,-936 166,-884 156,-760 C154,-690 132,-646 100,-626 L-100,-626 C-132,-646 -154,-690 -156,-760 Z', fill: C.hoodSh, ...ST }, head);   // hood back
   if (v !== 'C') { E('ellipse', { cx: -100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head);   // ears
     E('ellipse', { cx: 100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head); }
-  E('path', { d: 'M-100,-800 C-104,-720 -86,-660 -40,-636 C-16,-626 16,-626 40,-636 C86,-660 104,-720 100,-800 C80,-860 -80,-860 -100,-800 Z', fill: C.skin, ...ST }, head);
+  E('path', { d: 'M-100,-800 C-104,-736 -92,-694 -56,-662 C-30,-640 -10,-628 0,-628 C10,-628 30,-640 56,-662 C92,-694 104,-736 100,-800 C80,-860 -80,-860 -100,-800 Z', fill: C.skin, ...ST }, head);
+  if (v === 'kai' || v === 'mira') E('path', { d: 'M-98,-806 C-60,-786 60,-786 98,-806 L96,-778 C60,-764 -60,-764 -96,-778 Z', fill: C.skinSh, opacity: .55 }, head);   // hair shadow on the forehead
   E('ellipse', { cx: -56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .22 }, head);
   E('ellipse', { cx: 56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .22 }, head);
   E('path', { d: 'M-4,-722 C0,-716 6,-716 8,-720', stroke: C.skinSh, 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, head);
-  const eyes = [];
+  const eyes = [], gid = 'ir' + Math.floor(Math.random() * 1e6);
+  const IR = { kai: ['#2b1a14', '#a8714a'], mira: ['#241a33', '#8a62b0'] }[v] || ['#1d2440', '#4f86b8'];
+  const ig = E('linearGradient', { id: gid, x1: 0, y1: 0, x2: 0, y2: 1 }, E('defs', {}, head));
+  E('stop', { offset: 0, 'stop-color': IR[0] }, ig); E('stop', { offset: .55, 'stop-color': IR[0] }, ig); E('stop', { offset: 1, 'stop-color': IR[1] }, ig);
+  const lid = v === 'mira' ? 9 : v === 'kai' ? 7 : 5;
   for (const sx of [-1, 1]) {
     const eg = G(head);
     E('path', { d: `M${sx * 26},-762 C${sx * 30},-790 ${sx * 76},-792 ${sx * 80},-762 C${sx * 80},-728 ${sx * 30},-724 ${sx * 26},-756 Z`, fill: C.white, ...ST, 'stroke-width': 4 }, eg);
     const iris = G(eg);
-    E('ellipse', { cx: sx * 53, cy: -756, rx: 17, ry: 22, fill: C.iris }, iris);
+    E('ellipse', { cx: sx * 53, cy: -756, rx: 18, ry: 24, fill: `url(#${gid})` }, iris);
     E('ellipse', { cx: sx * 53, cy: -752, rx: 9, ry: 12, fill: '#11152a' }, iris);
-    E('circle', { cx: sx * 47, cy: -764, r: 6, fill: C.white }, iris);
-    E('circle', { cx: sx * 59, cy: -746, r: 3, fill: C.white }, iris);
-    E('path', { d: `M${sx * 22},-768 C${sx * 36},-798 ${sx * 74},-798 ${sx * 86},-770`, stroke: C.line, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, eg);  // upper lid (thin, no lashes)
+    E('circle', { cx: sx * 46, cy: -766, r: 8, fill: C.white }, iris);
+    E('circle', { cx: sx * 60, cy: -745, r: 4, fill: C.white }, iris);
+    E('path', { d: `M${sx * 22},-768 C${sx * 36},-798 ${sx * 74},-798 ${sx * 86},-770`, stroke: C.line, 'stroke-width': lid, fill: 'none', 'stroke-linecap': 'round' }, eg);  // upper lid
+    if (v === 'mira') E('path', { d: `M${sx * 84},-770 L${sx * 96},-782`, stroke: C.line, 'stroke-width': 6, 'stroke-linecap': 'round' }, eg);   // lash flick
+    E('path', { d: `M${sx * 36},-728 C${sx * 48},-722 ${sx * 62},-722 ${sx * 72},-728`, stroke: C.line, 'stroke-width': 3, fill: 'none', opacity: .5, 'stroke-linecap': 'round' }, eg);
     eyes.push({ g: eg, iris, cx: sx * 53, cy: -758 });
   }
   const brows = [-1, 1].map(sx => E('path', { d: `M${sx * 28},-806 C${sx * 44},-816 ${sx * 66},-816 ${sx * 80},-808`, stroke: C.hair, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, head));
@@ -96,12 +123,15 @@ function Person(parent, o = {}) {
     E('path', { d: 'M-120,-700 C-128,-860 -64,-904 0,-904 C64,-904 128,-860 120,-700', stroke: C.hoodHi, 'stroke-width': 24, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
   }
   const sweat = E('path', { d: 'M96,-820 C86,-800 88,-786 98,-784 C108,-786 110,-800 96,-820 Z', fill: '#8fd8ff', stroke: '#2a6ea0', 'stroke-width': 3, opacity: 0 }, head);
-  // arms: upper arm (shoulder pivot) > forearm (elbow pivot) > hand
+  // arms: one smooth sleeve path (no seams), hand with fingers at the wrist
   const arm = (g, sx) => {
-    const up = G(g), fore = G(up), hand = G(fore);
-    E('path', { d: `M${sx * 92},-640 C${sx * 132},-628 ${sx * 150},-590 ${sx * 150},-540 L${sx * 146},-490 L${sx * 104},-494 L${sx * 104},-560 Z`, fill: C.hood, ...ST }, up);
-    E('path', { d: `M${sx * 104},-500 L${sx * 148},-496 L${sx * 146},-400 L${sx * 110},-400 Z`, fill: C.hood, ...ST }, fore);
-    E('path', { d: `M${sx * 106},-406 L${sx * 150},-404 L${sx * 148},-388 L${sx * 108},-390 Z`, fill: C.hoodSh, ...ST, 'stroke-width': 4 }, fore);
+    const S = [sx * 112, -612], E0 = [sx * 126, -496], W0 = [sx * 128, -392];
+    const LS = { fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+    const outline = E('path', { ...LS, stroke: C.line, 'stroke-width': 54 }, g);
+    E('circle', { cx: S[0], cy: S[1], r: 31, fill: C.hood }, g);   // hides the seam where the sleeve meets the body
+    const fill = E('path', { ...LS, stroke: C.hood, 'stroke-width': 44 }, g);
+    const cuff = E('path', { fill: 'none', stroke: C.hoodSh, 'stroke-width': 44, 'stroke-linecap': 'butt' }, g);
+    const hand = G(g);
     for (let i = 0; i < 4; i++) { const fx = sx * (118 + i * 8), fy = -340 + (i === 1 || i === 2 ? 6 : 0);   // four fingers
       E('path', { d: `M${fx},-360 L${fx},${fy}`, stroke: C.line, 'stroke-width': 13, 'stroke-linecap': 'round' }, hand);
       E('path', { d: `M${fx},-360 L${fx},${fy}`, stroke: C.skin, 'stroke-width': 6, 'stroke-linecap': 'round' }, hand); }
@@ -110,14 +140,14 @@ function Person(parent, o = {}) {
     E('path', { d: `M${sx * 112},-394 C${sx * 108},-372 ${sx * 112},-356 ${sx * 130},-354 C${sx * 148},-356 ${sx * 152},-372 ${sx * 146},-394 Z`, fill: C.skin, ...ST, 'stroke-width': 4 }, hand);
     const finger = E('path', { d: `M${sx * 128},-350 L${sx * 128},-300`, stroke: C.line, 'stroke-width': 18, 'stroke-linecap': 'round', opacity: 0 }, hand);
     const fingerFill = E('path', { d: `M${sx * 128},-350 L${sx * 128},-300`, stroke: C.skin, 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0 }, hand);
-    return { up, fore, hand, finger: [finger, fingerFill], sh: [sx * 118, -620], el: [sx * 126, -496], wr: [sx * 128, -392] };
+    const L = Limb(S, E0, W0, { outline, fill, cuff, hand });
+    return { up: L.up, fore: L.fore, hand: L.hand, finger: [finger, fingerFill] };
   };
   const aR = arm(armBack, -1), aL = arm(armFront, 1);
   const k = { root, body, head, eyes, brows, mouths, legL, legR, aR, aL, sweat, x: o.x || 0, y: o.y || 0, s: o.s || 1 };
   gsap.set(root, { x: k.x, y: k.y, scale: k.s, transformOrigin: '0px 0px' });
-  gsap.set(head, { svgOrigin: '0 -650' }); gsap.set(body, { svgOrigin: '0 0' });
+  gsap.set(head, { svgOrigin: '0 -650', scale: (v === 'kai' || v === 'mira') ? 0.86 : 1 }); gsap.set(body, { svgOrigin: '0 0' });
   gsap.set(legL, { svgOrigin: '-50 -400' }); gsap.set(legR, { svgOrigin: '50 -400' });
-  for (const a of [aR, aL]) { gsap.set(a.up, { svgOrigin: a.sh.join(' ') }); gsap.set(a.fore, { svgOrigin: a.el.join(' ') }); gsap.set(a.hand, { svgOrigin: a.wr.join(' ') }); }
   for (const e of eyes) gsap.set(e.g, { svgOrigin: `${e.cx} ${e.cy}` });
   for (const m in mouths) gsap.set(mouths[m], { opacity: m === 'smile' ? 1 : 0 });
 
@@ -232,11 +262,10 @@ function OrbiBot(parent, o = {}) {
   const ringBack = E('path', { d: 'M-122,12 C-122,-14 122,-14 122,12', stroke: K.ring, 'stroke-width': 9, fill: 'none', filter: `url(#${id}f)`, opacity: .9 }, bob);
   // arms: upper > fore > hand (open / point / fist / thumb shapes)
   const arm = sx => {
-    const up = G(bob), fore = G(up), hand = G(fore);
-    const Sx = sx * 74, Sy = 18, Ex = sx * 86, Ey = 58, Wx = sx * 90, Wy = 94;
-    const seg = (x1, y1, x2, y2, g) => { E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.line, 'stroke-width': 22, 'stroke-linecap': 'round' }, g);
-      E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.limb, 'stroke-width': 14, 'stroke-linecap': 'round' }, g); };
-    seg(Sx, Sy, Ex, Ey, up); seg(Ex, Ey, Wx, Wy, fore);
+    const Sx = sx * 70, Sy = 14, Ex = sx * 86, Ey = 58, Wx = sx * 90, Wy = 94;
+    const g = G(bob), LS = { fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+    const outline = E('path', { ...LS, stroke: K.line, 'stroke-width': 22 }, g), fill = E('path', { ...LS, stroke: K.limb, 'stroke-width': 14 }, g);
+    const hand = G(g);
     const shapes = {};
     const fing = (g, x1, y1, x2, y2) => { E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.line, 'stroke-width': 11, 'stroke-linecap': 'round' }, g);
       E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.limb, 'stroke-width': 5, 'stroke-linecap': 'round' }, g); };
@@ -246,8 +275,8 @@ function OrbiBot(parent, o = {}) {
     shapes.fist = G(hand); palm(shapes.fist); E('path', { d: `M${Wx - 9},${Wy + 18} L${Wx + 9},${Wy + 18} M${Wx - 9},${Wy + 12} L${Wx + 9},${Wy + 12}`, stroke: K.line, 'stroke-width': 3 }, shapes.fist);
     shapes.thumb = G(hand); palm(shapes.thumb); fing(shapes.thumb, Wx - sx * 6, Wy + 4, Wx - sx * 6, Wy - 16);
     for (const k in shapes) gsap.set(shapes[k], { opacity: k === 'open' ? 1 : 0 });
-    gsap.set(up, { svgOrigin: `${Sx} ${Sy}` }); gsap.set(fore, { svgOrigin: `${Ex} ${Ey}` }); gsap.set(hand, { svgOrigin: `${Wx} ${Wy}` });
-    return { up, fore, hand, shapes, sx };
+    const L = Limb([Sx, Sy], [Ex, Ey], [Wx, Wy], { outline, fill, hand });
+    return { up: L.up, fore: L.fore, hand: L.hand, shapes, sx };
   };
   const aL = arm(-1), aR = arm(1);
   // sphere

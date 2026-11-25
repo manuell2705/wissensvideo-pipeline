@@ -15,7 +15,7 @@
 <script>
 const svg = document.getElementById('svg'), stage = document.getElementById('stage');
 const tl = gsap.timeline({ paused: true });
-window.seek = t => { tl.seek(t, false); };
+window.seek = t => { tl.seek(t, false); drawRigs(); };
 const defs = E('defs', {}, svg);
 const lg = E('linearGradient', { id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
 E('stop', { offset: 0, 'stop-color': '#0a1b3d' }, lg); E('stop', { offset: .65, 'stop-color': '#123f66' }, lg); E('stop', { offset: 1, 'stop-color': '#16575f' }, lg);

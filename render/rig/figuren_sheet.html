@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden;background:#000}svg{display:block}</style></head>
+<body><svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script src="../vendor/gsap.min.js"></script><script src="characters.js"></script><script src="world.js"></script><script>
+const svg = document.getElementById('svg'); const tl = gsap.timeline({ paused: true });
+const L = World(svg, { seed: 5 });
+const sh = (x, rx) => E('ellipse', { cx: x, cy: 1032, rx, ry: 13, fill: '#0b4a30', opacity: .45 }, L.stage);
+sh(430, 95); sh(1490, 95); sh(960, 75); E('ellipse', { cx: 960, cy: 1034, rx: 1, ry: 1, opacity: 0 }, L.stage);
+const kai = Person(G(L.stage, { transform: 'translate(430,1030) scale(0.46)' }), { v: 'kai' });
+const mira = Person(G(L.stage, { transform: 'translate(1490,1030) scale(0.44)' }), { v: 'mira' });
+const orbi = OrbiBot(L.stage, { x: 960, y: 845, s: 1.2 });
+kai.idle(tl, 0, 8); mira.idle(tl, 0, 8); orbi.idle(tl, 0, 8);
+orbi.pose(tl, 0.8, 'wave'); orbi.face(tl, 0.8, 'happy');
+orbi.pose(tl, 2.8, 'point'); orbi.face(tl, 2.8, 'normal'); orbi.look(tl, 2.8, 10, 0);
+orbi.pose(tl, 4.4, 'think'); orbi.face(tl, 4.4, 'think'); orbi.look(tl, 4.4, -6, -6);
+orbi.pose(tl, 5.8, 'thumbs'); orbi.face(tl, 5.8, 'happy'); orbi.look(tl, 5.8, 0, 0); orbi.spin(tl, 6.0);
+kai.pose(tl, 1.4, 'open'); kai.face(tl, 1.4, 'grin'); kai.pose(tl, 3.6, 'point'); kai.look(tl, 3.6, 8, 0); kai.pose(tl, 6.2, 'thumbs');
+mira.pose(tl, 1.0, 'pointUp'); mira.face(tl, 1.0, 'grin'); mira.pose(tl, 3.2, 'chest'); mira.face(tl, 4.6, 'o'); mira.pose(tl, 5.4, 'open'); mira.face(tl, 5.6, 'grin');
+const lay = [['sky', 10], ['far', 25], ['towers', 40], ['hills', 60], ['mid', 90], ['lake', 110], ['stage', 120], ['near', 170], ['fg', 240], ['fx', 60]];
+lay.forEach(([k, d]) => tl.fromTo(L[k], { x: d * .4 }, { x: -d * .4, duration: 8, ease: 'sine.inOut' }, 0));
+L.clouds.forEach((c, i) => tl.fromTo(c, { x: 0 }, { x: 60 + i * 20, duration: 8, ease: 'none' }, 0));
+L.leaves.forEach((l, i) => tl.to(l, { rotation: '+=4', duration: 1.8 + i * .2, yoyo: true, repeat: 4, ease: 'sine.inOut' }, 0));
+L.motes.forEach((m, i) => tl.to(m, { y: -40 - (i % 5) * 15, opacity: 0.15, duration: 3 + (i % 4), yoyo: true, repeat: 2, ease: 'sine.inOut' }, (i % 7) * .3));
+window.seek = t => { tl.seek(t, false); }; window.DURATION = 8; tl.seek(0);
+</script></body></html>

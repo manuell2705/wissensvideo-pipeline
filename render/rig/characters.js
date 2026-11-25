@@ -5,14 +5,17 @@ const NS = 'http://www.w3.org/2000/svg';
 const E = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
 const G = (parent, attrs = {}) => E('g', attrs, parent);
 
-const C = { skin: '#f7d6bd', skinSh: '#e9b99c', hair: '#3a2a2e', hairHi: '#5c4448', hood: '#2f7a72', hoodSh: '#245f59', hoodHi: '#3d958b',
+const CPAL = { skin: '#f7d6bd', skinSh: '#e9b99c', hair: '#3a2a2e', hairHi: '#5c4448', hood: '#2f7a72', hoodSh: '#245f59', hoodHi: '#3d958b',
             jeans: '#2b3a5c', jeansSh: '#22304c', shoe: '#f2f5f7', sole: '#9fb3c8', line: '#14203a', iris: '#2a3150', blush: '#f29c9c', white: '#ffffff' };
-const ST = { stroke: C.line, 'stroke-width': 5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+const ST = { stroke: CPAL.line, 'stroke-width': 5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
 
 // The gender-neutral 'you' figure (neither clearly woman nor man): hoodie, jeans, simple eyes, variants A/B/C for the head.
 function Person(parent, o = {}) {
   // local coordinates: feet on y=0, head top near y=-860; facing the viewer
-  const v = o.v || 'A';   // look variant: A beanie, B short tousled hair, C hood up (all gender-neutral)
+  const v = o.v || 'A';
+  const PALS = { kai: { skin: '#e8b48f', skinSh: '#d39a74', hair: '#1d2440', hairHi: '#36406a', hood: '#2f8f8a', hoodSh: '#24706c', hoodHi: '#3aa8a2' },
+                 mira: { skin: '#f9dcc6', skinSh: '#ebbfa2', hair: '#1f2446', hairHi: '#3a4170', hood: '#f08a3a', hoodSh: '#c96a22', hoodHi: '#ffa65a' } };
+  const C = { ...CPAL, ...(PALS[v] || {}), ...(o.pal || {}) };   // look variant: A beanie, B short tousled hair, C hood up (all gender-neutral)
   const root = G(parent, { class: 'kai' });
   const body = G(root);                       // whole body (bob / lean)
   const legL = G(body), legR = G(body);
@@ -29,11 +32,19 @@ function Person(parent, o = {}) {
   E('path', { d: 'M-120,-370 L120,-370 L116,-342 C40,-330 -40,-330 -116,-342 Z', fill: C.hoodSh, ...ST }, torso);   // hem
   E('path', { d: 'M-70,-470 L70,-470 L82,-392 L-82,-392 Z', fill: C.hoodSh, ...ST }, torso);                         // pocket
   E('path', { d: 'M-80,-656 C-60,-610 60,-610 80,-656 C60,-690 -60,-690 -80,-656 Z', fill: C.hoodHi, ...ST }, torso);  // hood collar
-  E('path', { d: 'M-24,-628 L-30,-540 M24,-628 L30,-540', stroke: '#eef2f5', 'stroke-width': 5, fill: 'none' }, torso); // strings
-  E('circle', { cx: -30, cy: -536, r: 6, fill: '#eef2f5' }, torso); E('circle', { cx: 30, cy: -536, r: 6, fill: '#eef2f5' }, torso);
+  if (v === 'mira') {   // open zip jacket over a cream shirt with a dark-green collar
+    E('path', { d: 'M-40,-648 L40,-648 L32,-372 L-32,-372 Z', fill: '#f6e6c8', ...ST, 'stroke-width': 4 }, torso);
+    E('path', { d: 'M-34,-640 L-36,-374 M34,-640 L36,-374', stroke: '#b45a1c', 'stroke-width': 4, 'stroke-dasharray': '6 5', fill: 'none' }, torso);
+    E('path', { d: 'M-50,-660 L50,-660 L28,-612 L0,-598 L-28,-612 Z', fill: '#2f5d4a', ...ST, 'stroke-width': 4 }, torso);
+  } else {
+    E('path', { d: 'M-24,-628 L-30,-540 M24,-628 L30,-540', stroke: '#eef2f5', 'stroke-width': 5, fill: 'none' }, torso); // strings
+    E('circle', { cx: -30, cy: -536, r: 6, fill: '#eef2f5' }, torso); E('circle', { cx: 30, cy: -536, r: 6, fill: '#eef2f5' }, torso);
+  }
   const armFront = G(body);                   // viewer-right arm (Kai's left), used for pointing
   const neck = E('path', { d: 'M-24,-700 L-22,-650 C-10,-640 10,-640 22,-650 L24,-700 Z', fill: C.skinSh, ...ST }, body);
   const head = G(body);                       // pivot at the neck
+  if (v === 'mira') { E('path', { d: 'M30,-888 C120,-936 196,-884 186,-800 C180,-740 204,-690 172,-628 C150,-690 122,-736 112,-800 C106,-840 80,-860 30,-858 Z', fill: C.hair, ...ST }, head);
+    E('path', { d: 'M120,-880 C160,-860 170,-800 166,-740', stroke: C.hairHi, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, head); }
   if (v === 'C') E('path', { d: 'M-156,-760 C-166,-884 -70,-936 0,-936 C70,-936 166,-884 156,-760 C154,-690 132,-646 100,-626 L-100,-626 C-132,-646 -154,-690 -156,-760 Z', fill: C.hoodSh, ...ST }, head);   // hood back
   if (v !== 'C') { E('ellipse', { cx: -100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head);   // ears
     E('ellipse', { cx: 100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head); }
@@ -72,6 +83,13 @@ function Person(parent, o = {}) {
     E('path', { d: 'M-108,-770 C-124,-862 -62,-912 0,-910 C66,-910 124,-862 108,-770 C102,-792 94,-802 82,-808 C70,-790 52,-798 42,-814 C28,-796 8,-800 -4,-816 C-18,-798 -40,-800 -52,-814 C-64,-798 -84,-796 -96,-808 C-102,-796 -106,-784 -108,-770 Z', fill: C.hair, ...ST }, hairFront);
     E('path', { d: 'M-40,-880 C-20,-896 20,-898 46,-884', stroke: C.hairHi, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
     E('path', { d: 'M-20,-912 C-14,-936 4,-944 18,-940 C8,-932 4,-922 6,-910', fill: C.hair, ...ST, 'stroke-width': 4 }, hairFront);   // cowlick
+  } else if (v === 'kai') {   // short, messy, spiky dark hair
+    E('path', { d: 'M-112,-770 C-130,-820 -122,-860 -98,-880 L-122,-902 C-82,-910 -62,-930 -30,-934 L-42,-958 C0,-942 30,-950 52,-940 L62,-962 C82,-932 112,-920 126,-890 L148,-896 C132,-860 124,-820 112,-776 C104,-792 96,-800 86,-806 L92,-776 C76,-796 60,-802 44,-814 L46,-786 C30,-800 10,-806 -6,-818 L-12,-790 C-26,-800 -46,-804 -60,-814 L-66,-786 C-78,-796 -94,-798 -104,-808 Z', fill: C.hair, ...ST }, hairFront);
+    E('path', { d: 'M-50,-880 C-30,-900 10,-906 40,-896', stroke: C.hairHi, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
+  } else if (v === 'mira') {   // fringe with side locks (ponytail is behind the head)
+    E('path', { d: 'M-110,-700 C-124,-800 -110,-880 -20,-906 C60,-914 120,-870 112,-780 C110,-740 108,-716 104,-700 C96,-740 94,-770 88,-790 C70,-796 60,-800 50,-812 C36,-798 10,-800 -4,-816 C-20,-800 -44,-800 -58,-812 C-72,-800 -86,-794 -94,-786 C-98,-760 -100,-730 -110,-700 Z', fill: C.hair, ...ST }, hairFront);
+    E('path', { d: 'M-40,-880 C-10,-896 30,-896 60,-882', stroke: C.hairHi, 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
+    E('circle', { cx: 64, cy: -896, r: 12, fill: '#3b6fd6', ...ST, 'stroke-width': 4 }, hairFront);
   } else {   // hood up, small fringe
     E('path', { d: 'M-92,-796 C-74,-852 74,-852 92,-796 C64,-812 34,-806 0,-818 C-34,-806 -64,-812 -92,-796 Z', fill: C.hair, ...ST, 'stroke-width': 4 }, hairFront);
     E('path', { d: 'M-120,-700 C-128,-860 -64,-904 0,-904 C64,-904 128,-860 120,-700', stroke: C.line, 'stroke-width': 34, fill: 'none', 'stroke-linecap': 'round' }, hairFront);
@@ -84,9 +102,14 @@ function Person(parent, o = {}) {
     E('path', { d: `M${sx * 92},-640 C${sx * 132},-628 ${sx * 150},-590 ${sx * 150},-540 L${sx * 146},-490 L${sx * 104},-494 L${sx * 104},-560 Z`, fill: C.hood, ...ST }, up);
     E('path', { d: `M${sx * 104},-500 L${sx * 148},-496 L${sx * 146},-400 L${sx * 110},-400 Z`, fill: C.hood, ...ST }, fore);
     E('path', { d: `M${sx * 106},-406 L${sx * 150},-404 L${sx * 148},-388 L${sx * 108},-390 Z`, fill: C.hoodSh, ...ST, 'stroke-width': 4 }, fore);
-    E('path', { d: `M${sx * 112},-392 C${sx * 104},-360 ${sx * 112},-338 ${sx * 130},-336 C${sx * 150},-338 ${sx * 154},-362 ${sx * 146},-392 Z`, fill: C.skin, ...ST, 'stroke-width': 4 }, hand);
-    const finger = E('path', { d: `M${sx * 128},-342 L${sx * 128},-300`, stroke: C.line, 'stroke-width': 18, 'stroke-linecap': 'round', opacity: 0 }, hand);
-    const fingerFill = E('path', { d: `M${sx * 128},-342 L${sx * 128},-300`, stroke: C.skin, 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0 }, hand);
+    for (let i = 0; i < 4; i++) { const fx = sx * (118 + i * 8), fy = -340 + (i === 1 || i === 2 ? 6 : 0);   // four fingers
+      E('path', { d: `M${fx},-360 L${fx},${fy}`, stroke: C.line, 'stroke-width': 13, 'stroke-linecap': 'round' }, hand);
+      E('path', { d: `M${fx},-360 L${fx},${fy}`, stroke: C.skin, 'stroke-width': 6, 'stroke-linecap': 'round' }, hand); }
+    E('path', { d: `M${sx * 114},-376 L${sx * 104},-360`, stroke: C.line, 'stroke-width': 13, 'stroke-linecap': 'round' }, hand);   // thumb
+    E('path', { d: `M${sx * 114},-376 L${sx * 104},-360`, stroke: C.skin, 'stroke-width': 6, 'stroke-linecap': 'round' }, hand);
+    E('path', { d: `M${sx * 112},-394 C${sx * 108},-372 ${sx * 112},-356 ${sx * 130},-354 C${sx * 148},-356 ${sx * 152},-372 ${sx * 146},-394 Z`, fill: C.skin, ...ST, 'stroke-width': 4 }, hand);
+    const finger = E('path', { d: `M${sx * 128},-350 L${sx * 128},-300`, stroke: C.line, 'stroke-width': 18, 'stroke-linecap': 'round', opacity: 0 }, hand);
+    const fingerFill = E('path', { d: `M${sx * 128},-350 L${sx * 128},-300`, stroke: C.skin, 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0 }, hand);
     return { up, fore, hand, finger: [finger, fingerFill], sh: [sx * 118, -620], el: [sx * 126, -496], wr: [sx * 128, -392] };
   };
   const aR = arm(armBack, -1), aL = arm(armFront, 1);
@@ -185,4 +208,108 @@ function Orbi(parent, o = {}) {
     tl.to(alarm, { opacity: 0, duration: 0.1 }, t + d); tl.to(eyes, { opacity: 1, duration: 0.1 }, t + d); };
   r.look = (tl, t, dx) => tl.to(eyes, { x: dx, duration: 0.25 }, t);
   return r;
+}
+
+// Orbi as a full puppet: glass sphere head-body, dark visor with glowing green eyes, green orbit ring,
+// two arms with hands and fingers, two short legs with round feet, a small water drop below.
+// Gender-neutral main figure for "you" videos. Local coords: sphere centre (0,0), radius 80, feet near y=150.
+function OrbiBot(parent, o = {}) {
+  const K = { line: '#1d3a4a', glass1: '#f4ffff', glass2: '#bfe9f0', glass3: '#7fc3d2', visor: '#14232c', eye: '#5dffb0', ring: '#6dff9a', limb: '#dff4f7', limbSh: '#a9d6df', boot: '#2f8f8a' };
+  const S = { stroke: K.line, 'stroke-width': 4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
+  const id = 'ob' + Math.floor(Math.random() * 1e6);
+  const root = G(parent), bob = G(root), defs = E('defs', {}, root);
+  const rg = E('radialGradient', { id: id + 'g', cx: '35%', cy: '30%', r: '75%' }, defs);
+  E('stop', { offset: '0%', 'stop-color': K.glass1 }, rg); E('stop', { offset: '60%', 'stop-color': K.glass2 }, rg); E('stop', { offset: '100%', 'stop-color': K.glass3 }, rg);
+  const gl = E('filter', { id: id + 'f', x: '-50%', y: '-50%', width: '200%', height: '200%' }, defs); E('feGaussianBlur', { stdDeviation: 4, result: 'b' }, gl);
+  const fm = E('feMerge', {}, gl); E('feMergeNode', { in: 'b' }, fm); E('feMergeNode', { in: 'SourceGraphic' }, fm);
+  // legs (behind the sphere)
+  const leg = sx => { const g = G(bob); E('path', { d: `M${sx * 26},60 L${sx * 30},118`, stroke: K.line, 'stroke-width': 20, 'stroke-linecap': 'round' }, g);
+    E('path', { d: `M${sx * 26},60 L${sx * 30},118`, stroke: K.limb, 'stroke-width': 12, 'stroke-linecap': 'round' }, g);
+    E('path', { d: `M${sx * 30 - 22},140 C${sx * 30 - 24},116 ${sx * 30 + 24},112 ${sx * 30 + 26 + sx * 8},134 C${sx * 30 + 26},146 ${sx * 30 - 20},148 ${sx * 30 - 22},140 Z`, fill: K.boot, ...S }, g);
+    gsap.set(g, { svgOrigin: `${sx * 26} 60` }); return g; };
+  const legL = leg(-1), legR = leg(1);
+  // ring back half
+  const ringBack = E('path', { d: 'M-122,12 C-122,-14 122,-14 122,12', stroke: K.ring, 'stroke-width': 9, fill: 'none', filter: `url(#${id}f)`, opacity: .9 }, bob);
+  // arms: upper > fore > hand (open / point / fist / thumb shapes)
+  const arm = sx => {
+    const up = G(bob), fore = G(up), hand = G(fore);
+    const Sx = sx * 74, Sy = 18, Ex = sx * 86, Ey = 58, Wx = sx * 90, Wy = 94;
+    const seg = (x1, y1, x2, y2, g) => { E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.line, 'stroke-width': 22, 'stroke-linecap': 'round' }, g);
+      E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.limb, 'stroke-width': 14, 'stroke-linecap': 'round' }, g); };
+    seg(Sx, Sy, Ex, Ey, up); seg(Ex, Ey, Wx, Wy, fore);
+    const shapes = {};
+    const fing = (g, x1, y1, x2, y2) => { E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.line, 'stroke-width': 11, 'stroke-linecap': 'round' }, g);
+      E('path', { d: `M${x1},${y1} L${x2},${y2}`, stroke: K.limb, 'stroke-width': 5, 'stroke-linecap': 'round' }, g); };
+    const palm = g => E('circle', { cx: Wx, cy: Wy + 12, r: 14, fill: K.limb, ...S }, g);
+    shapes.open = G(hand); [-12, -4, 4, 12].forEach((dx, i) => fing(shapes.open, Wx + dx * .6, Wy + 18, Wx + dx * 1.3, Wy + 38 - (i === 0 || i === 3 ? 4 : 0))); fing(shapes.open, Wx - sx * 10, Wy + 10, Wx - sx * 24, Wy + 18); palm(shapes.open);
+    shapes.point = G(hand); fing(shapes.point, Wx, Wy + 18, Wx, Wy + 46); palm(shapes.point); E('path', { d: `M${Wx - 10},${Wy + 20} L${Wx + 10},${Wy + 20}`, stroke: K.line, 'stroke-width': 3 }, shapes.point);
+    shapes.fist = G(hand); palm(shapes.fist); E('path', { d: `M${Wx - 9},${Wy + 18} L${Wx + 9},${Wy + 18} M${Wx - 9},${Wy + 12} L${Wx + 9},${Wy + 12}`, stroke: K.line, 'stroke-width': 3 }, shapes.fist);
+    shapes.thumb = G(hand); palm(shapes.thumb); fing(shapes.thumb, Wx - sx * 6, Wy + 4, Wx - sx * 6, Wy - 16);
+    for (const k in shapes) gsap.set(shapes[k], { opacity: k === 'open' ? 1 : 0 });
+    gsap.set(up, { svgOrigin: `${Sx} ${Sy}` }); gsap.set(fore, { svgOrigin: `${Ex} ${Ey}` }); gsap.set(hand, { svgOrigin: `${Wx} ${Wy}` });
+    return { up, fore, hand, shapes, sx };
+  };
+  const aL = arm(-1), aR = arm(1);
+  // sphere
+  const sphere = G(bob);
+  E('circle', { cx: 0, cy: 0, r: 80, fill: `url(#${id}g)`, ...S }, sphere);
+  E('path', { d: 'M-60,40 C-40,70 40,72 64,40', stroke: '#ffffff', 'stroke-width': 4, fill: 'none', opacity: .6 }, sphere);
+  E('ellipse', { cx: -34, cy: -48, rx: 18, ry: 9, fill: '#ffffff', opacity: .85, transform: 'rotate(-30 -34 -48)' }, sphere);
+  for (const sx of [-1, 1]) E('path', { d: `M${sx * 70},-34 C${sx * 92},-30 ${sx * 92},6 ${sx * 70},10 Z`, fill: '#cfd8dc', ...S }, sphere);   // ear caps
+  const head = G(bob);   // visor turns as the 'head'
+  E('rect', { x: -54, y: -40, width: 108, height: 64, rx: 30, fill: K.visor, ...S }, head);
+  E('path', { d: 'M-40,-30 C-20,-38 10,-38 24,-34', stroke: '#ffffff', 'stroke-width': 4, opacity: .25, fill: 'none', 'stroke-linecap': 'round' }, head);
+  const face = G(head, { filter: `url(#${id}f)` });
+  const F = {
+    normal: G(face), happy: G(face), wow: G(face), think: G(face),
+  };
+  for (const sx of [-1, 1]) {
+    E('ellipse', { cx: sx * 22, cy: -10, rx: 9, ry: 12, fill: K.eye }, F.normal);
+    E('path', { d: `M${sx * 22 - 10},-6 C${sx * 22 - 6},-18 ${sx * 22 + 6},-18 ${sx * 22 + 10},-6`, stroke: K.eye, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, F.happy);
+    E('circle', { cx: sx * 22, cy: -10, r: 13, fill: K.eye }, F.wow);
+  }
+  E('ellipse', { cx: -22, cy: -10, rx: 9, ry: 12, fill: K.eye }, F.think); E('path', { d: 'M12,-8 L32,-12', stroke: K.eye, 'stroke-width': 5, 'stroke-linecap': 'round' }, F.think);
+  const mouth = E('path', { d: 'M-8,10 C-4,14 4,14 8,10', stroke: K.eye, 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, face);
+  for (const k in F) gsap.set(F[k], { opacity: k === 'normal' ? 1 : 0 });
+  // ring front half + water drop
+  const ringFront = E('path', { d: 'M-122,12 C-122,38 122,38 122,12', stroke: K.ring, 'stroke-width': 9, fill: 'none', filter: `url(#${id}f)` }, bob);
+  const drop = E('path', { d: 'M0,84 C-6,96 -6,104 0,106 C6,104 6,96 0,84 Z', fill: '#9fe8ff', stroke: '#4aaed0', 'stroke-width': 2 }, root);
+  const b = { root, bob, head, F, aL, aR, legL, legR, drop, ringFront, ringBack };
+  const ox = o.x || 0, oy = o.y || 0, os = o.s || 1;
+  gsap.set(root, { attr: { transform: `translate(${ox},${oy}) scale(${os})` } });
+  // ---------- motion ----------
+  b.idle = (tl, t0, dur) => {
+    tl.fromTo(bob, { y: -6 }, { y: 6, duration: 1.4, yoyo: true, repeat: Math.max(1, Math.floor(dur / 1.4)), ease: 'sine.inOut' }, t0);
+    tl.fromTo([legL, legR], { rotation: -6 }, { rotation: 6, duration: 1.7, yoyo: true, repeat: Math.max(1, Math.floor(dur / 1.7)), ease: 'sine.inOut' }, t0);
+    tl.fromTo([ringFront, ringBack], { opacity: .75 }, { opacity: 1, duration: 1.1, yoyo: true, repeat: Math.max(1, Math.floor(dur / 1.1)), ease: 'sine.inOut' }, t0);
+    for (let t = t0 + 1.1; t < t0 + dur; t += 2.7 + ((t * 7) % 1.3)) b.blink(tl, t);
+    for (let t = t0 + 0.5; t < t0 + dur; t += 2.2) tl.fromTo(drop, { y: 0, opacity: 0 }, { keyframes: [{ opacity: 1, y: 6, duration: .4 }, { y: 60, opacity: 0, duration: .6, ease: 'power2.in' }], immediateRender: false }, t);
+  };
+  b.blink = (tl, t) => tl.to(face, { scaleY: .1, svgOrigin: '0 -10', duration: .07, yoyo: true, repeat: 1 }, t);
+  b.face = (tl, t, k) => { for (const n in F) tl.to(F[n], { opacity: n === k ? 1 : 0, duration: .12 }, t); };
+  b.look = (tl, t, dx, dy = 0) => tl.to(head, { x: dx, y: dy, duration: .35, ease: 'power2.inOut' }, t);
+  b.hand = (tl, t, a, k) => { for (const n in a.shapes) tl.to(a.shapes[n], { opacity: n === k ? 1 : 0, duration: .08 }, t); };
+  // angles: up/fore = how far the arm swings OUTWARD (mirrored automatically for the left arm)
+  const setArm = (tl, t, a, up, fore, hand = 'open', d = .55) => { const t0 = t - d * .7;
+    tl.to(a.up, { rotation: -a.sx * up, duration: d, ease: 'power3.inOut' }, t0);
+    tl.to(a.fore, { rotation: -a.sx * fore, duration: d, ease: 'back.out(1.2)' }, t0 + .07);
+    b.hand(tl, t0 + d * .5, a, hand); };
+  b.pose = (tl, t, name) => {
+    const P = {
+      rest:    () => { setArm(tl, t, aL, 12, 8); setArm(tl, t, aR, 12, 8); },
+      wave:    () => { setArm(tl, t, aR, 150, 20); setArm(tl, t, aL, 12, 8); tl.to(aR.fore, { rotation: -40, duration: .22, yoyo: true, repeat: 5, ease: 'sine.inOut' }, t); },
+      point:   () => { setArm(tl, t, aR, 96, 0, 'point'); setArm(tl, t, aL, 12, 8); },
+      pointUp: () => { setArm(tl, t, aR, 168, 0, 'point'); setArm(tl, t, aL, 12, 8); },
+      thumbs:  () => { setArm(tl, t, aR, 40, 100, 'thumb'); setArm(tl, t, aL, 12, 8); },
+      open:    () => { setArm(tl, t, aL, 75, -20); setArm(tl, t, aR, 75, -20); },
+      think:   () => { setArm(tl, t, aR, 30, 135, 'fist'); setArm(tl, t, aL, 12, 8); },
+      shrug:   () => { setArm(tl, t, aL, 55, -75); setArm(tl, t, aR, 55, -75); tl.to(bob, { y: -14, duration: .25, yoyo: true, repeat: 1 }, t); },
+      count:   () => { setArm(tl, t, aL, 70, 60, 'point'); setArm(tl, t, aR, 70, 60, 'open'); },
+    };
+    (P[name] || P.rest)();
+    tl.to(sphere, { rotation: { point: 4, pointUp: -3, think: -4 }[name] || 0, svgOrigin: '0 0', duration: .7, ease: 'sine.inOut' }, t - .4);
+  };
+  b.fly = (tl, t, x, y, d = 1) => tl.to(root, { attr: { transform: `translate(${x},${y}) scale(${os})` }, duration: d, ease: 'power2.inOut' }, t);
+  b.spin = (tl, t) => { tl.to([ringFront, ringBack], { scaleX: -1, svgOrigin: '0 12', duration: .3, yoyo: true, repeat: 1, ease: 'sine.inOut' }, t); };
+  return b;
 }

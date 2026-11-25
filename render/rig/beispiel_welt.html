@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden;background:#000}svg{display:block}</style></head>
+<body><svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script src="../vendor/gsap.min.js"></script><script src="characters.js"></script><script src="world.js"></script><script>
+const svg = document.getElementById('svg'); const tl = gsap.timeline({ paused: true });
+const L = World(svg);
+E('ellipse', { cx: 760, cy: 1032, rx: 90, ry: 13, fill: '#0b4a30', opacity: .45 }, L.stage);
+const you = Person(G(L.stage, { transform: 'translate(760,1030) scale(0.4)' }), { x: 0, y: 0, s: 1, v: 'A' });
+you.idle(tl, 0, 8); you.pose(tl, 1.2, 'pointUp'); you.face(tl, 1.2, 'grin'); you.look(tl, 1.2, 4, -6);
+// parallax camera: nearer layers move more
+const lay = [['sky', 10], ['far', 25], ['towers', 40], ['hills', 60], ['mid', 90], ['lake', 110], ['stage', 120], ['near', 170], ['fg', 240], ['fx', 60]];
+lay.forEach(([k, d]) => tl.fromTo(L[k], { x: d * .5 }, { x: -d * .5, duration: 8, ease: 'sine.inOut' }, 0));
+L.clouds.forEach((c, i) => tl.fromTo(c, { x: 0 }, { x: 60 + i * 20, duration: 8, ease: 'none' }, 0));
+L.trees.forEach((t, i) => { gsap.set(t, { svgOrigin: `${[140, 420, 1560, 1820, 1320][i]} ${[860, 800, 820, 880, 790][i]}` }); tl.fromTo(t, { rotation: -1 }, { rotation: 1.2, duration: 2 + i * .3, yoyo: true, repeat: 4, ease: 'sine.inOut' }, 0); });
+L.leaves.forEach((l, i) => tl.to(l, { rotation: '+=4', duration: 1.8 + i * .2, yoyo: true, repeat: 4, ease: 'sine.inOut' }, 0));
+L.ripples.forEach((p, i) => tl.fromTo(p, { opacity: 0, scaleX: .6, svgOrigin: `${740 + i * 150} 915` }, { opacity: .8, scaleX: 1.3, duration: 1.4, yoyo: true, repeat: 5, ease: 'sine.inOut' }, i * .4));
+L.motes.forEach((m, i) => tl.to(m, { y: -40 - (i % 5) * 15, opacity: 0.15, duration: 3 + (i % 4), yoyo: true, repeat: 2, ease: 'sine.inOut' }, (i % 7) * .3));
+window.seek = t => { tl.seek(t, false); }; window.DURATION = 8; tl.seek(0);
+</script></body></html>

@@ -7,6 +7,15 @@ Stand: 25.11.2026. Grundlage ist v5. Neu sind diese Punkte:
 
 Die Fakten und Quellen sind dieselben wie in v4 und v5. Der Lineal-Test ist ein klassischer Reaktionstest. Bei etwa 0,2 Sekunden Reaktionszeit fällt ein Lineal rund 20 cm (Fallformel). Szenen mit "a/b" sind neu. Dazu kommt das neue Kapitel "The fantasy round" (Szenen 101–108). Quellen: Stetson, Fiesta & Eagleman 2007, PLoS ONE (Fall vom Turm, eigener Fall wurde 36 % länger geschätzt); Jordan et al. 2010, Journal of Vision (Tetrachromatie, Testperson cDa29).
 
+### Hook (NEU 25.11. abends, ersetzt 1–5 als Einstieg; Szenen 201–204)
+Stil wie die deutschen Vorlagen: Gefühl und "gerade jetzt" zuerst, dann eine Riesenzahl greifbar machen, dann die große Frage.
+201. Right now, as you watch this, your brain is doing something quietly ridiculous.
+202. Light. Sound. The smell of the room. The chair pressing into your back. About a billion bits of information, every single second. [Folien-Wechsel in die Sinnes-Welt]
+203. And it sorts all of it on roughly twenty watts. Less than a dim light bulb. [zurück in die Welt]
+204. Which raises a slightly irresponsible question. What would happen if it stopped holding back?
+Quelle 202: Zheng & Meister, "The unbearable slowness of being: Why do we live at 10 bits/s?", Neuron 113(2), 2025 (Sinne ca. 10^9 bit/s, Denken ca. 10 bit/s).
+Danach Titel, dann Szenen 1–5 (leicht gekürzt, weil 2 und 3 schon vorkommen).
+
 ### Hook
 1. Your brain is the most complex thing we know of in the universe. And most of the time, it runs in power-saving mode.
 2. Eighty-six billion neurons, and only a small share of them fire at any moment. All on about twenty watts. Roughly the power of a dim light bulb.

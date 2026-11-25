@@ -1,0 +1,52 @@
+name: Voice samples v3 (young voices)
+on: { workflow_dispatch: {} }
+permissions:
+  contents: write
+jobs:
+  kokoro:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: |
+          sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+          pip install -q torch==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -q kokoro soundfile
+      - run: python render/voice_samples_v3.py samples kokoro
+      - uses: actions/upload-artifact@v4
+        with: { name: kk, path: samples/*.mp3 }
+  cloudflare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: python render/voice_samples_v3.py samples cloudflare
+      - uses: actions/upload-artifact@v4
+        with: { name: cf, path: samples/*.mp3 }
+  chatterbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: |
+          sudo apt-get update -q && sudo apt-get install -y -q espeak-ng ffmpeg
+          pip install -q torch==2.6.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cpu
+          pip install -q chatterbox-tts kokoro soundfile
+      - run: python render/voice_samples_v3.py samples chatterbox
+      - uses: actions/upload-artifact@v4
+        with: { name: cb, path: samples/*.mp3 }
+  release:
+    needs: [kokoro, cloudflare, chatterbox]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { path: s, merge-multiple: true }
+      - env: { GH_TOKEN: '${{ github.token }}' }
+        run: ls s && gh release create "voice-samples-v3-${{ github.run_number }}" s/*.mp3 -R ${{ github.repository }} --title "Voice samples v3" --notes "Young voices for the v5 hook"

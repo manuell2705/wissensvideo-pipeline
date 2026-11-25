@@ -383,6 +383,8 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
                   {'img': shots[0]['img'], 'shots': shots, 'energy': energy, 'labels': label_times(s)})
     data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND', 'MINDSPHERE')}
     (rdir / 'data.js').write_text('window.VIDEO = ' + json.dumps(data) + ';')
+    (outdir / f'timeline_{name}.json').write_text(json.dumps(data))   # for the 5-second feedback table
+    if os.environ.get('DATA_ONLY'): return None
     shutil.copy(HERE / 'template.html', rdir / 'index.html')
     (rdir / 'render.js').write_text(RENDER_JS)
     nf = int(math.ceil(total * fps))
@@ -459,6 +461,7 @@ def main():
         wav = build_audio(scenes, out, total, 'long')
         log(f'render long {total:.1f}s')
         vid = render(scenes, total, out, 'long', 1920, 1080, fps, workers=workers)
+        if vid is None: log('data only'); return
         if os.environ.get('SHARD'):
             shutil.copy(vid, out / f"shard_{int(os.environ['SHARD'].split('/')[0]):02d}.mp4"); log('shard done'); return
         mux(vid, wav, out / 'video.mp4', music)

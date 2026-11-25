@@ -62,4 +62,4 @@ jobs:
         run: python render/make_video.py --script ${{ inputs.job_dir }}/script.json --out out
       - name: Publish
         env: { GH_TOKEN: '${{ github.token }}' }
-        run: gh release create "video-${{ github.run_id }}" out/video.mp4 out/metadata.json --title "video ${{ inputs.job_dir }} ${{ inputs.scene_ids }}" --notes "split render ${{ github.run_id }}"
+        run: gh release create "video-${{ github.run_id }}" out/video.mp4 out/metadata.json out/timeline_long.json --title "video ${{ inputs.job_dir }} ${{ inputs.scene_ids }}" --notes "split render ${{ github.run_id }}"

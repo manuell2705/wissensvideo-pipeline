@@ -1,0 +1,10 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;background:#bfeee8}svg{display:block}</style></head>
+<body><svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script src="../vendor/gsap.min.js"></script><script src="characters.js"></script><script>
+const svg=document.getElementById('svg');const tl=gsap.timeline({paused:true});
+const kai=Person(G(svg,{transform:'translate(420,1780) scale(1.6)'}),{v:'kai'});
+const orbi=OrbiBot(svg,{x:960,y:520,s:2.2});
+const mira=Person(G(svg,{transform:'translate(1500,1780) scale(1.6)'}),{v:'mira'});
+kai.face(tl,0.1,'smile'); mira.face(tl,0.1,'grin'); orbi.face(tl,0.1,'happy'); orbi.pose(tl,0.6,'wave');
+window.seek=t=>{tl.seek(t,false);drawRigs();}; window.DURATION=2; window.seek(1);
+</script></body></html>

@@ -5,7 +5,14 @@ const NS = 'http://www.w3.org/2000/svg';
 const E = (tag, attrs = {}, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
 const G = (parent, attrs = {}) => E('g', attrs, parent);
 // Rigs redraw their limbs after every seek: pages call drawRigs() inside window.seek.
-const RIGS = []; function drawRigs() { for (const f of RIGS) f(); }
+const RIGS = []; let BOIL_N = 0; const BOILS = [];
+function drawRigs() { for (const f of RIGS) f(); BOIL_N++; if (BOIL_N % 6 === 0) for (const t of BOILS) t.setAttribute('seed', 1 + (BOIL_N / 6) % 5); }
+function boil(el, scale = 5, freq = 0.015) {   // SVG filter that roughens outlines like a hand-drawn pencil line
+  const id = 'boil' + Math.floor(Math.random() * 1e7), f = E('filter', { id, x: '-10%', y: '-10%', width: '120%', height: '120%' }, E('defs', {}, el));
+  const tb = E('feTurbulence', { type: 'fractalNoise', baseFrequency: freq, numOctaves: 2, seed: 1, result: 'n' }, f);
+  E('feDisplacementMap', { in: 'SourceGraphic', in2: 'n', scale, xChannelSelector: 'R', yChannelSelector: 'G' }, f);
+  BOILS.push(tb); el.setAttribute('filter', `url(#${id})`);
+}
 const rot = (x, y, d) => { const r = d * Math.PI / 180, c = Math.cos(r), s = Math.sin(r); return [x * c - y * s, x * s + y * c]; };
 // Smooth limb: ONE continuous stroked path through shoulder, elbow and wrist with round joins, so there are no
 // visible seams between upper arm and forearm. up/fore/hand are plain objects whose 'rotation' GSAP animates.
@@ -36,7 +43,7 @@ function Person(parent, o = {}) {
                  mira: { skin: '#f9dcc6', skinSh: '#ebbfa2', hair: '#1f2446', hairHi: '#3a4170', hood: '#f08a3a', hoodSh: '#c96a22', hoodHi: '#ffa65a' } };
   const C = { ...CPAL, ...(PALS[v] || {}), ...(o.pal || {}) };   // look variant: A beanie, B short tousled hair, C hood up (all gender-neutral)
   const root = G(parent, { class: 'kai' });
-  const body = G(root);                       // whole body (bob / lean)
+  const body = G(root); boil(body);                       // whole body (bob / lean)
   const legL = G(body), legR = G(body);
   const leg = (g, sx) => {
     E('path', { d: `M${sx * 18},-400 C${sx * 20},-260 ${sx * 30},-140 ${sx * 34},-50 L${sx * 96},-50 C${sx * 96},-150 ${sx * 92},-280 ${sx * 88},-400 Z`, fill: C.jeans, ...ST }, g);
@@ -70,28 +77,34 @@ function Person(parent, o = {}) {
     E('ellipse', { cx: 100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head); }
   E('path', { d: 'M-100,-800 C-104,-736 -92,-694 -56,-662 C-30,-640 -10,-628 0,-628 C10,-628 30,-640 56,-662 C92,-694 104,-736 100,-800 C80,-860 -80,-860 -100,-800 Z', fill: C.skin, ...ST }, head);
   if (v === 'kai' || v === 'mira') E('path', { d: 'M-98,-806 C-60,-786 60,-786 98,-806 L96,-778 C60,-764 -60,-764 -96,-778 Z', fill: C.skinSh, opacity: .55 }, head);   // hair shadow on the forehead
-  E('ellipse', { cx: -56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .22 }, head);
-  E('ellipse', { cx: 56, cy: -712, rx: 18, ry: 9, fill: C.blush, opacity: .22 }, head);
-  E('path', { d: 'M-4,-722 C0,-716 6,-716 8,-720', stroke: C.skinSh, 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, head);
-  const eyes = [], gid = 'ir' + Math.floor(Math.random() * 1e6);
-  const IR = { kai: ['#2b1a14', '#a8714a'], mira: ['#241a33', '#8a62b0'] }[v] || ['#1d2440', '#4f86b8'];
-  const ig = E('linearGradient', { id: gid, x1: 0, y1: 0, x2: 0, y2: 1 }, E('defs', {}, head));
-  E('stop', { offset: 0, 'stop-color': IR[0] }, ig); E('stop', { offset: .55, 'stop-color': IR[0] }, ig); E('stop', { offset: 1, 'stop-color': IR[1] }, ig);
-  const lid = v === 'mira' ? 9 : v === 'kai' ? 7 : 5;
+  // ---- hand-drawn anime face: hatch blush, tiny nose tick, lid bands, iris tucked under the lid ----
+  const FL = '#3a2320';   // warm face line colour (colour-hold like in anime cels)
+  for (const sx of [-1, 1]) for (let i = 0; i < 3; i++)
+    E('path', { d: `M${sx * (44 + i * 10)},-704 L${sx * (50 + i * 10)},-716`, stroke: '#e8857a', 'stroke-width': 3.5, 'stroke-linecap': 'round', opacity: .7 }, head);
+  E('path', { d: 'M5,-724 L1,-712', stroke: FL, 'stroke-width': 3, 'stroke-linecap': 'round', opacity: .55 }, head);
+  const eyes = [], uid = Math.floor(Math.random() * 1e6);
+  const IR = { kai: ['#6b4030', '#3a2018', '#c08a5a'], mira: ['#5b3c86', '#2c1a46', '#a785d0'] }[v] || ['#3c6a9c', '#1c2f4a', '#7fb0dc'];
+  const band = v === 'mira' ? 1.25 : v === 'kai' ? 1.0 : 0.75;   // lash-band thickness
   for (const sx of [-1, 1]) {
-    const eg = G(head);
-    E('path', { d: `M${sx * 26},-762 C${sx * 30},-790 ${sx * 76},-792 ${sx * 80},-762 C${sx * 80},-728 ${sx * 30},-724 ${sx * 26},-756 Z`, fill: C.white, ...ST, 'stroke-width': 4 }, eg);
-    const iris = G(eg);
-    E('ellipse', { cx: sx * 53, cy: -756, rx: 18, ry: 24, fill: `url(#${gid})` }, iris);
-    E('ellipse', { cx: sx * 53, cy: -752, rx: 9, ry: 12, fill: '#11152a' }, iris);
-    E('circle', { cx: sx * 46, cy: -766, r: 8, fill: C.white }, iris);
-    E('circle', { cx: sx * 60, cy: -745, r: 4, fill: C.white }, iris);
-    E('path', { d: `M${sx * 22},-768 C${sx * 36},-798 ${sx * 74},-798 ${sx * 86},-770`, stroke: C.line, 'stroke-width': lid, fill: 'none', 'stroke-linecap': 'round' }, eg);  // upper lid
-    if (v === 'mira') E('path', { d: `M${sx * 84},-770 L${sx * 96},-782`, stroke: C.line, 'stroke-width': 6, 'stroke-linecap': 'round' }, eg);   // lash flick
-    E('path', { d: `M${sx * 36},-728 C${sx * 48},-722 ${sx * 62},-722 ${sx * 72},-728`, stroke: C.line, 'stroke-width': 3, fill: 'none', opacity: .5, 'stroke-linecap': 'round' }, eg);
-    eyes.push({ g: eg, iris, cx: sx * 53, cy: -758 });
+    const eg = G(head), cid = `ec${uid}${sx > 0 ? 'r' : 'l'}`;
+    const white = `M${sx * 30},-748 C${sx * 36},-784 ${sx * 76},-790 ${sx * 86},-758 C${sx * 82},-730 ${sx * 44},-720 ${sx * 30},-748 Z`;
+    E('path', { d: white, fill: '#fffdf8' }, eg);
+    const cp = E('clipPath', { id: cid }, eg); E('path', { d: white }, cp);
+    const clip = G(eg, { 'clip-path': `url(#${cid})` }), iris = G(clip);
+    E('ellipse', { cx: sx * 57, cy: -750, rx: 19, ry: 27, fill: IR[0] }, iris);
+    E('ellipse', { cx: sx * 57, cy: -774, rx: 24, ry: 13, fill: IR[1] }, iris);                 // lid shadow on the iris
+    E('ellipse', { cx: sx * 57, cy: -737, rx: 12, ry: 8, fill: IR[2], opacity: .8 }, iris);       // light bounce at the bottom
+    E('ellipse', { cx: sx * 57, cy: -752, rx: 8, ry: 13, fill: IR[1] }, iris);                   // pupil
+    E('ellipse', { cx: sx * 50, cy: -764, rx: 7, ry: 9, fill: '#ffffff', transform: `rotate(${sx * -20} ${sx * 50} -764)` }, iris);
+    E('circle', { cx: sx * 63, cy: -740, r: 3.2, fill: '#ffffff' }, iris);
+    const t = band;   // tapered lash band, thicker towards the outer corner, with a small flick
+    E('path', { d: `M${sx * 26},-744 C${sx * 32},-${786 + 4 * t} ${sx * 80},-${794 + 6 * t} ${sx * 94},-${760 + 4 * t} L${sx * (98 + 4 * t)},-${752 + 2 * t} C${sx * 92},-754 ${sx * 88},-756 ${sx * 86},-758 C${sx * 78},-784 ${sx * 38},-780 ${sx * 30},-746 Z`, fill: '#1a1420' }, eg);
+    if (v === 'mira') E('path', { d: `M${sx * 88},-776 L${sx * 102},-784 L${sx * 92},-768 Z`, fill: '#1a1420' }, eg);
+    E('path', { d: `M${sx * 66},-726 C${sx * 76},-728 ${sx * 82},-732 ${sx * 85},-740`, stroke: '#1a1420', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round', opacity: .8 }, eg);
+    E('path', { d: `M${sx * 34},-792 C${sx * 50},-800 ${sx * 66},-800 ${sx * 78},-794`, stroke: FL, 'stroke-width': 2.5, fill: 'none', opacity: .35, 'stroke-linecap': 'round' }, eg);   // lid crease
+    eyes.push({ g: eg, iris, cx: sx * 57, cy: -754 });
   }
-  const brows = [-1, 1].map(sx => E('path', { d: `M${sx * 28},-806 C${sx * 44},-816 ${sx * 66},-816 ${sx * 80},-808`, stroke: C.hair, 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, head));
+  const brows = [-1, 1].map(sx => E('path', { d: `M${sx * 30},-804 C${sx * 46},-822 ${sx * 70},-824 ${sx * 88},-812 C${sx * 70},-816 ${sx * 48},-814 ${sx * 32},-800 Z`, fill: C.hair }, head));
   // mouth shapes (only one visible at a time)
   const mouths = {
     smile: E('path', { d: 'M-18,-690 C-8,-680 8,-680 18,-690', stroke: C.line, 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, head),
@@ -128,7 +141,7 @@ function Person(parent, o = {}) {
     const S = [sx * 112, -612], E0 = [sx * 126, -496], W0 = [sx * 128, -392];
     const LS = { fill: 'none', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
     const outline = E('path', { ...LS, stroke: C.line, 'stroke-width': 54 }, g);
-    E('circle', { cx: S[0], cy: S[1], r: 31, fill: C.hood }, g);   // hides the seam where the sleeve meets the body
+    E('circle', { cx: S[0], cy: S[1], r: 21, fill: C.hood }, g);   // hides the seam where the sleeve meets the body
     const fill = E('path', { ...LS, stroke: C.hood, 'stroke-width': 44 }, g);
     const cuff = E('path', { fill: 'none', stroke: C.hoodSh, 'stroke-width': 44, 'stroke-linecap': 'butt' }, g);
     const hand = G(g);
@@ -247,9 +260,9 @@ function OrbiBot(parent, o = {}) {
   const K = { line: '#1d3a4a', glass1: '#f4ffff', glass2: '#bfe9f0', glass3: '#7fc3d2', visor: '#14232c', eye: '#5dffb0', ring: '#6dff9a', limb: '#dff4f7', limbSh: '#a9d6df', boot: '#2f8f8a' };
   const S = { stroke: K.line, 'stroke-width': 4, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' };
   const id = 'ob' + Math.floor(Math.random() * 1e6);
-  const root = G(parent), bob = G(root), defs = E('defs', {}, root);
+  const root = G(parent), bob = G(root), defs = E('defs', {}, root); boil(bob, 4);
   const rg = E('radialGradient', { id: id + 'g', cx: '35%', cy: '30%', r: '75%' }, defs);
-  E('stop', { offset: '0%', 'stop-color': K.glass1 }, rg); E('stop', { offset: '60%', 'stop-color': K.glass2 }, rg); E('stop', { offset: '100%', 'stop-color': K.glass3 }, rg);
+  E('stop', { offset: '0%', 'stop-color': '#f4ffff' }, rg); E('stop', { offset: '58%', 'stop-color': '#e2f7fa' }, rg); E('stop', { offset: '58%', 'stop-color': '#b6e1ea' }, rg); E('stop', { offset: '100%', 'stop-color': '#a3d5e0' }, rg);
   const gl = E('filter', { id: id + 'f', x: '-50%', y: '-50%', width: '200%', height: '200%' }, defs); E('feGaussianBlur', { stdDeviation: 4, result: 'b' }, gl);
   const fm = E('feMerge', {}, gl); E('feMergeNode', { in: 'b' }, fm); E('feMergeNode', { in: 'SourceGraphic' }, fm);
   // legs (behind the sphere)

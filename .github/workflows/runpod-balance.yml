@@ -13,6 +13,6 @@ jobs:
           import json
           m = json.load(open('r.json'))['data']['myself']; e = m.get('email') or ''
           print('balance_usd', m['clientBalance']); print('spend_per_hr', m['currentSpendPerHr'])
-          print('account', (e[:3] + '***@' + e.split('@')[-1]) if '@' in e else '?')
+          print('account', (e[:8] + '***@' + e.split('@')[-1]) if '@' in e else '?')
           print('pods_now', m.get('pods'))
           PY

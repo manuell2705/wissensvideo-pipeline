@@ -27,10 +27,13 @@ jobs:
           TAG="gpu-${{ github.run_id }}"; echo "TAG=$TAG" >> $GITHUB_ENV
           python3 render/gpu/start_pod.py
       - name: Wait for result
-        env: { GH_TOKEN: '${{ github.token }}' }
+        env: { GH_TOKEN: '${{ github.token }}', RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}' }
         run: |
           for i in $(seq 1 $(( ${{ inputs.max_minutes }} * 2 ))); do
             if gh release view "$TAG" -R ${{ github.repository }} --json assets --jq '.assets[].name' 2>/dev/null | grep -q zz_DONE; then echo "result ready"; gh release view "$TAG" -R ${{ github.repository }}; exit 0; fi
+            # pod vanished (bad host / never started)? stop waiting instead of idling until the time limit
+            g=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $RUNPOD_API_KEY" "https://api.runpod.io/v2/pods/$POD")
+            if [ "$g" = "404" ] && [ $i -gt 2 ]; then echo "::error::pod $POD is gone without a result"; exit 1; fi
             sleep 30
           done
           echo "time limit reached"; exit 1

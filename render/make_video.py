@@ -379,7 +379,7 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
             for it in g.get('items', []): it['t'] = word_time(s, it.get('at', ''), 0.4) if it.get('at') else g['t']
             if g.get('at2'): g['t2'] = word_time(s, g['at2'], 0.6)
             gfx.append(g)
-        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'gfx': gfx} |
+        vs.append({k: s[k] for k in ('id', 'kind', 'onscreen', 'start', 'dur')} | {'transition': s.get('transition')} | {'gfx': gfx} |
                   {'img': shots[0]['img'], 'shots': shots, 'energy': energy, 'labels': label_times(s)})
     data = {'width': w, 'height': h, 'total': total, 'scenes': vs, 'captions': captions, 'brand': os.environ.get('BRAND', 'MINDSPHERE')}
     (rdir / 'data.js').write_text('window.VIDEO = ' + json.dumps(data) + ';')

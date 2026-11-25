@@ -8,7 +8,7 @@
 const svg = document.getElementById('svg'), tl = gsap.timeline({ paused: true });
 // line offsets (seconds); title sting sits between line 5 and line 11
 const ORDER = ['601', '602', '603', '604', '605', '606', '607', '608', '609', '610', '611', '612', '613', '614', '615', '616', '617', '618'], OFF = {}; let acc = 0.4;
-for (const id of ORDER) { if (id === 'T') { OFF.T = acc - .1; acc += 2.8; continue; } OFF[id] = acc; acc += LDUR[id] + (['602', '604', '605', '607', '608', '609', '613', '615', '616'].includes(id) ? 0.55 : 0.35); }
+for (const id of ORDER) { if (id === 'T') { OFF.T = acc - .1; acc += 2.8; continue; } OFF[id] = acc; acc += ({'609': 2.0}[id] || 0) + LDUR[id] + (['602', '604', '605', '607', '608', '609', '613', '615', '616'].includes(id) ? 0.55 : 0.35); }
 let END = acc + 0.6;
 const W = (id, word, n = 0) => { const L = WORDS[id]; let k = -1; for (let i = 0; i < L.length; i++) if (L[i][0].toLowerCase().replace(/[^a-z0-9-]/g, '').startsWith(word.toLowerCase())) { if (n-- === 0) { k = i; break; } } if (k < 0) throw new Error('word ' + id + ' ' + word); return OFF[id] + L[k][1]; };
 const SFX = []; const sfx = (name, t, vol = 1) => SFX.push([name, +t.toFixed(3), vol]);

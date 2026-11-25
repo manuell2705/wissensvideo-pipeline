@@ -38,7 +38,7 @@ const ST = { stroke: CPAL.line, 'stroke-width': 5, 'stroke-linejoin': 'round', '
 // The gender-neutral 'you' figure (neither clearly woman nor man): hoodie, jeans, simple eyes, variants A/B/C for the head.
 function Person(parent, o = {}) {
   // local coordinates: feet on y=0, head top near y=-860; facing the viewer
-  const v = o.v || 'A';
+  const v = o.v || 'A', st = o.st || 'anime';   // st: drawing style option for Kai/Mira: anime | cute | soft
   const PALS = { kai: { skin: '#e8b48f', skinSh: '#d39a74', hair: '#1d2440', hairHi: '#36406a', hood: '#2f8f8a', hoodSh: '#24706c', hoodHi: '#3aa8a2' },
                  mira: { skin: '#f9dcc6', skinSh: '#ebbfa2', hair: '#1f2446', hairHi: '#3a4170', hood: '#f08a3a', hoodSh: '#c96a22', hoodHi: '#ffa65a' } };
   const C = { ...CPAL, ...(PALS[v] || {}), ...(o.pal || {}) };   // look variant: A beanie, B short tousled hair, C hood up (all gender-neutral)
@@ -75,7 +75,8 @@ function Person(parent, o = {}) {
   if (v === 'C') E('path', { d: 'M-156,-760 C-166,-884 -70,-936 0,-936 C70,-936 166,-884 156,-760 C154,-690 132,-646 100,-626 L-100,-626 C-132,-646 -154,-690 -156,-760 Z', fill: C.hoodSh, ...ST }, head);   // hood back
   if (v !== 'C') { E('ellipse', { cx: -100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head);   // ears
     E('ellipse', { cx: 100, cy: -740, rx: 20, ry: 28, fill: C.skin, ...ST }, head); }
-  E('path', { d: 'M-100,-800 C-104,-736 -92,-694 -56,-662 C-30,-640 -10,-628 0,-628 C10,-628 30,-640 56,-662 C92,-694 104,-736 100,-800 C80,-860 -80,-860 -100,-800 Z', fill: C.skin, ...ST }, head);
+  E('path', { d: st === 'anime' ? 'M-100,-800 C-104,-736 -92,-694 -56,-662 C-30,-640 -10,-628 0,-628 C10,-628 30,-640 56,-662 C92,-694 104,-736 100,-800 C80,-860 -80,-860 -100,-800 Z'
+                         : 'M-100,-800 C-106,-724 -84,-656 -36,-634 C-14,-626 14,-626 36,-634 C84,-656 106,-724 100,-800 C80,-860 -80,-860 -100,-800 Z', fill: C.skin, ...ST }, head);
   if (v === 'kai' || v === 'mira') E('path', { d: 'M-98,-806 C-60,-786 60,-786 98,-806 L96,-778 C60,-764 -60,-764 -96,-778 Z', fill: C.skinSh, opacity: .55 }, head);   // hair shadow on the forehead
   // ---- hand-drawn anime face: hatch blush, tiny nose tick, lid bands, iris tucked under the lid ----
   const FL = '#3a2320';   // warm face line colour (colour-hold like in anime cels)
@@ -86,7 +87,17 @@ function Person(parent, o = {}) {
   const IR = { kai: ['#6b4030', '#3a2018', '#c08a5a'], mira: ['#5b3c86', '#2c1a46', '#a785d0'] }[v] || ['#3c6a9c', '#1c2f4a', '#7fb0dc'];
   const band = v === 'mira' ? 1.25 : v === 'kai' ? 1.0 : 0.75;   // lash-band thickness
   for (const sx of [-1, 1]) {
-    const eg = G(head), cid = `ec${uid}${sx > 0 ? 'r' : 'l'}`;
+    if (st === 'soft') {   // soft style: simple dark bean eyes with one highlight and a thin lid line
+      const eg = G(head), iris = G(eg);
+      E('ellipse', { cx: sx * 54, cy: -752, rx: 15, ry: 21, fill: '#1e1a26' }, iris);
+      E('ellipse', { cx: sx * 49, cy: -762, rx: 5.5, ry: 7, fill: '#ffffff' }, iris);
+      E('circle', { cx: sx * 59, cy: -742, r: 2.5, fill: '#ffffff', opacity: .8 }, iris);
+      E('path', { d: `M${sx * 34},-780 C${sx * 46},-790 ${sx * 64},-790 ${sx * 76},-782`, stroke: '#1e1a26', 'stroke-width': v === 'mira' ? 5 : 4, fill: 'none', 'stroke-linecap': 'round' }, eg);
+      if (v === 'mira') E('path', { d: `M${sx * 76},-782 L${sx * 86},-788`, stroke: '#1e1a26', 'stroke-width': 4, 'stroke-linecap': 'round' }, eg);
+      eyes.push({ g: eg, iris, cx: sx * 54, cy: -752 }); continue;
+    }
+    const egOuter = G(head, st === 'cute' ? { transform: `translate(${sx * 57},-754) scale(1.22) translate(${-sx * 57},754)` } : {});
+    const eg = G(egOuter), cid = `ec${uid}${sx > 0 ? 'r' : 'l'}`;
     const white = `M${sx * 30},-748 C${sx * 36},-784 ${sx * 76},-790 ${sx * 86},-758 C${sx * 82},-730 ${sx * 44},-720 ${sx * 30},-748 Z`;
     E('path', { d: white, fill: '#fffdf8' }, eg);
     const cp = E('clipPath', { id: cid }, eg); E('path', { d: white }, cp);
@@ -159,7 +170,7 @@ function Person(parent, o = {}) {
   const aR = arm(armBack, -1), aL = arm(armFront, 1);
   const k = { root, body, head, eyes, brows, mouths, legL, legR, aR, aL, sweat, x: o.x || 0, y: o.y || 0, s: o.s || 1 };
   gsap.set(root, { x: k.x, y: k.y, scale: k.s, transformOrigin: '0px 0px' });
-  gsap.set(head, { svgOrigin: '0 -650', scale: (v === 'kai' || v === 'mira') ? 0.86 : 1 }); gsap.set(body, { svgOrigin: '0 0' });
+  gsap.set(head, { svgOrigin: '0 -650', scale: (v === 'kai' || v === 'mira') ? { anime: 0.86, cute: 1.02, soft: 0.9 }[st] : 1 }); gsap.set(body, { svgOrigin: '0 0' });
   gsap.set(legL, { svgOrigin: '-50 -400' }); gsap.set(legR, { svgOrigin: '50 -400' });
   for (const e of eyes) gsap.set(e.g, { svgOrigin: `${e.cx} ${e.cy}` });
   for (const m in mouths) gsap.set(mouths[m], { opacity: m === 'smile' ? 1 : 0 });

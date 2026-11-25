@@ -1,6 +1,12 @@
 #!/bin/bash
 # Runs inside the RunPod pod. Always deletes its own pod at the end, success or not.
-cleanup() { echo "terminating pod $RUNPOD_POD_ID"; curl -s -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" "https://api.runpod.io/v2/pods/$RUNPOD_POD_ID"; }
+exec > >(tee /tmp/pod.log) 2>&1   # full log (setup included) so a failed pod still tells us why
+cleanup() {
+  if [ -d /w/render ] && [ ! -f /w/gpu_out/zz_DONE.txt ]; then   # died early: ship the log before the pod goes away
+    mkdir -p /w/gpu_out; cp /tmp/pod.log /w/gpu_out/pod_log.txt; echo failed > /w/gpu_out/zz_DONE.txt
+    (cd /w && timeout 120 python3 render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out final)
+  fi
+  echo "terminating pod $RUNPOD_POD_ID"; curl -s -X DELETE -H "Authorization: Bearer $RUNPOD_API_KEY" "https://api.runpod.io/v2/pods/$RUNPOD_POD_ID"; }
 trap cleanup EXIT
 set -x
 export DEBIAN_FRONTEND=noninteractive
@@ -19,5 +25,6 @@ mkdir -p /w/gpu_out
   [ "${u:-0}" -gt 10 ] && seen=1 && idle=0; [ "$seen" = 1 ] && [ "${u:-0}" -eq 0 ] && idle=$((idle+1));
   if [ "$idle" -ge 12 ]; then echo "IDLE WATCHDOG: GPU idle 12 min, stopping" | tee -a /w/gpu_out/log.txt; pkill -f "bash -c $TASK_CMD" ; pkill -f python; break; fi; done ) &
 timeout -k 30 "${MAX_MIN:-60}m" bash -c "$TASK_CMD" 2>&1 | tee /w/gpu_out/log.txt   # hard stop: a hung task can never keep a paid pod alive
+cp /tmp/pod.log /w/gpu_out/pod_log.txt
 echo done > /w/gpu_out/zz_DONE.txt
 python render/gpu/upload_release.py "$RESULT_TAG" /w/gpu_out final

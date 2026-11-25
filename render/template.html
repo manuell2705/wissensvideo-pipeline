@@ -122,7 +122,7 @@ V.scenes.forEach((s, i) => {
   // scene transitions like the reference videos: dive INTO the old picture and land in the new one, or zoom OUT so the
   // old picture becomes a small part of the new one. Alternates with a soft crossfade so it never gets repetitive.
   const prevEl = i > 0 ? stage.children[i - 1] : null;
-  const tr = i === 0 ? 'cut' : (s.transition || ['dive', 'out', 'dive', 'fade'][i % 4]);
+  const tr = i === 0 ? 'cut' : (s.transition || ['dive', 'gta', 'out', 'dive', 'gta', 'fade'][i % 6]);
   const fxp = 35 + ((i * 29) % 30), fyp = 35 + ((i * 17) % 25);   // focal point of the zoom
   el.style.transformOrigin = `${fxp}% ${fyp}%`;
   if (tr === 'gta' && prevEl) {
@@ -178,33 +178,45 @@ V.scenes.forEach((s, i) => {
       tl.fromTo(pr, { f: 1 }, { f: sh.video.n, duration: vlen / rate, ease: 'none', onUpdate: setF, immediateRender: false }, st);
       tl.call(setF, null, st); setF();
     }
-    // camera per shot: Ken Burns with varied direction (+ a slight 3D drift so it never feels like a slideshow)
-    const dir = (i + k) % 4;
-    const fromS = [1.02, 1.14, 1.05, 1.12][dir], toS = [1.14, 1.02, 1.16, 1.04][dir];
-    const fx = [-2, 2, 0, -1.5][dir], tx = [2, -2, 0, 1.5][dir], fy = [0, 0, -2, 1.5][dir], ty = [0, 0, 2, -1.5][dir];
-    const cz = sh.crop ? sh.crop.z : 1;
-    if (sh.crop) b.style.transformOrigin = `${sh.crop.x}% ${sh.crop.y}%`;   // detail shot: calm push into one part of the picture
-    tl.fromTo(b, { scale: fromS * cz, xPercent: fx, yPercent: fy, rotation: (dir - 1.5) * 0.25 },
-                 { scale: toS * cz, xPercent: tx, yPercent: ty, rotation: -(dir - 1.5) * 0.25, duration: sd + XF + 0.3, ease: 'sine.inOut' }, st - XF / 2);
+    // camera per shot: never a static slide. Modes rotate: REVEAL (start close on one detail, pull back to show the rest while it is
+    // being said), PUSH (slow endless-zoom into the key detail), PAN (glide left/right across the scene), RISE (drift up with depth).
+    const cz = sh.crop ? sh.crop.z : 1, fo = sh.focus || { x: 50, y: 50 };
+    const mode = sh.crop ? 'crop' : ['reveal', 'push', 'pan', 'rise'][(i * 2 + k) % 4];
+    b.style.transformOrigin = sh.crop ? `${sh.crop.x}% ${sh.crop.y}%` : `${fo.x}% ${fo.y}%`;
+    const kb = { duration: sd + XF + 0.3, ease: 'sine.inOut' }, side = (i + k) % 2 ? 1 : -1;
+    if (mode === 'reveal') tl.fromTo(b, { scale: 1.6, xPercent: 0, yPercent: 0 }, { scale: 1.05, ...kb, ease: 'power2.inOut' }, st - XF / 2);
+    else if (mode === 'push') tl.fromTo(b, { scale: 1.03 }, { scale: 1.34, ...kb, ease: 'sine.in' }, st - XF / 2);
+    else if (mode === 'pan') { b.style.transformOrigin = '50% 50%'; tl.fromTo(b, { scale: 1.18, xPercent: -6 * side }, { scale: 1.2, xPercent: 6 * side, ...kb }, st - XF / 2); }
+    else if (mode === 'rise') { b.style.transformOrigin = '50% 50%'; tl.fromTo(b, { scale: 1.12, yPercent: 4, rotation: -0.4 * side }, { scale: 1.2, yPercent: -4, rotation: 0.4 * side, ...kb }, st - XF / 2); }
+    else tl.fromTo(b, { scale: 1.02 * cz }, { scale: 1.12 * cz, ...kb }, st - XF / 2);
     if (k > 0) {
-      // cut styles between shots of one scene: flash cut, whip pan, ink bloom, zoom punch
-      const kind = (i * 3 + k) % 4;
-      if (kind === 0) {
-        tl.set(wrap, { opacity: 0 }, 0); tl.set(wrap, { opacity: 1 }, st);
-        const f = document.createElement('div'); f.className = 'flash'; wrap.appendChild(f);
-        tl.fromTo(f, { opacity: 0.9 }, { opacity: 0, duration: 0.35, ease: 'power2.out' }, st);
-      } else if (kind === 1) {
-        const prev = shotsBox.children[k - 1];
-        tl.fromTo(wrap, { xPercent: 100, filter: 'blur(14px)' }, { xPercent: 0, filter: 'blur(0px)', duration: 0.32, ease: 'power3.out' }, st - 0.12);
-        tl.to(prev, { xPercent: -40, filter: 'blur(14px)', duration: 0.32, ease: 'power3.in' }, st - 0.2);
-        tl.set(wrap, { xPercent: 100 }, 0);
-      } else if (kind === 2) {
-        const cx = 30 + ((i * 37 + k * 23) % 40), cy = 35 + ((i * 17) % 30);
-        tl.fromTo(wrap, { clipPath: `circle(0% at ${cx}% ${cy}%)` }, { clipPath: `circle(150% at ${cx}% ${cy}%)`, duration: 0.75, ease: 'power2.inOut' }, st - 0.35);
-      } else {
-        tl.set(wrap, { opacity: 0 }, 0);
-        tl.fromTo(wrap, { opacity: 0, scale: 1.35 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'expo.out' }, st - 0.1);
+      // sentence-to-sentence transitions like a flowing presentation: endless dive, zoom-out card, slide push, game-style switch
+      const prev = shotsBox.children[k - 1], pf = (shots[k - 1].focus || { x: 50, y: 50 });
+      const kind = ['dive', 'slide', 'out', 'gta', 'slideUp', 'dive', 'out', 'slide'][(i * 3 + k) % 8];
+      const T = kind === 'gta' ? 1.3 : 0.9, a = st - T / 2, NI = { immediateRender: false };
+      tl.set(wrap, { opacity: 0 }, 0); tl.set(wrap, { opacity: 1 }, a);
+      if (kind === 'dive') {   // fly into the most interesting point of the old picture, the new one opens up from there
+        tl.set(prev, { transformOrigin: `${pf.x}% ${pf.y}%` }, a);
+        tl.fromTo(prev, { scale: 1 }, { scale: 5.5, duration: T, ease: 'power2.in', ...NI }, a);
+        tl.fromTo(wrap, { scale: 0.25, clipPath: `circle(6% at ${pf.x}% ${pf.y}%)`, transformOrigin: `${pf.x}% ${pf.y}%` },
+                        { scale: 1, clipPath: `circle(120% at ${pf.x}% ${pf.y}%)`, duration: T, ease: 'power2.inOut' }, a + T * 0.15);
+      } else if (kind === 'out') {   // the old picture shrinks into a card while the camera pulls back into the new one
+        tl.set(prev, { zIndex: 2, transformOrigin: '50% 50%' }, a);
+        tl.fromTo(prev, { scale: 1, borderRadius: '0px' }, { scale: 0.22, borderRadius: '28px', duration: T, ease: 'power3.inOut', ...NI }, a);
+        tl.fromTo(prev, { opacity: 1 }, { opacity: 0, duration: 0.25, ...NI }, a + T * 0.8);
+        tl.fromTo(wrap, { scale: 2.4 }, { scale: 1, duration: T, ease: 'power3.inOut' }, a);
+        tl.set(prev, { zIndex: 0 }, a + T + 0.05);
+      } else if (kind === 'slide' || kind === 'slideUp') {   // modern slide push: both pictures travel together with a depth dip
+        const ax = kind === 'slide' ? 'xPercent' : 'yPercent', dirn = kind === 'slide' ? side : 1;
+        tl.fromTo(prev, { [ax]: 0, scale: 1 }, { [ax]: -108 * dirn, scale: 0.86, duration: T, ease: 'power3.inOut', ...NI }, a);
+        tl.fromTo(wrap, { [ax]: 108 * dirn, scale: 0.86 }, { [ax]: 0, scale: 1, duration: T, ease: 'power3.inOut' }, a);
+      } else {   // game-style switch: zoom far out, glide sideways, drop into the next picture
+        tl.set(prev, { transformOrigin: '50% 50%' }, a);
+        tl.fromTo(prev, { scale: 1, xPercent: 0, filter: 'blur(0px)' }, { scale: 0.3, xPercent: -70 * side, filter: 'blur(3px)', duration: T * 0.55, ease: 'power3.in', ...NI }, a);
+        tl.fromTo(wrap, { xPercent: 70 * side }, { xPercent: 0, duration: T * 0.5, ease: 'power2.inOut' }, a + T * 0.3);
+        tl.fromTo(wrap, { scale: 0.3, filter: 'blur(3px)' }, { scale: 1, filter: 'blur(0px)', duration: T * 0.4, ease: 'power3.out' }, a + T * 0.62);
       }
+      tl.set(prev, { opacity: 0 }, a + T + 0.05);
     }
     if (sh.line) {
       // 'being drawn': glowing line art sketches itself in, then colour blooms through it

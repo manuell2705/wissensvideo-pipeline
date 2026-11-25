@@ -351,6 +351,9 @@ def render(scenes, total, outdir, name, w, h, fps, captions=None, workers=4):
             sh = {'t': round(t, 3), 'd': round(d, 3), 'img': None, 'line': None, 'crop': crops[k] if k < len(crops) else None}
             if f:
                 sh['img'] = f"img_{s['id']:03d}_{k}.jpg"; shutil.copy(f, rdir / sh['img'])
+                if not sh['crop']:   # most interesting point: the camera starts there (show a part first) or flies into it
+                    try: sh['focus'] = detail_points(f, 1)[0]
+                    except Exception: sh['focus'] = None
                 # 'being drawn' reveal on chapter openings and every 4th scene (first shot only)
                 if k == 0 and s['kind'] == 'image' and (s['chapter'] != prev_ch or i % 4 == 1) and os.environ.get('SKETCH', '1') == '1':
                     sh['line'] = f"line_{s['id']:03d}.jpg"

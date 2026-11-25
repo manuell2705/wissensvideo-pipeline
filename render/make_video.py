@@ -458,6 +458,10 @@ def main():
     if os.environ.get('LIMIT_SCENES'): scenes = scenes[:int(os.environ['LIMIT_SCENES'])]; script['scenes'] = scenes
     music = os.environ.get('MUSIC') or (str(HERE.parent / 'assets' / 'music.mp3'))
     log('voice'); make_voice(scenes, out, os.environ.get('VOICE', 'bm_george'), float(os.environ.get('SPEED', 1.0)))
+    ov = Path(a.script).parent / 'img_override'   # hand-picked replacements committed with the job (win over GPU releases)
+    if ov.is_dir():
+        (out / 'img').mkdir(parents=True, exist_ok=True)
+        for f in ov.glob('*.jpg'): shutil.copy(f, out / 'img' / f.name)
     log('images'); make_images(scenes, out)
     if only in ('all', 'long'):
         total = build_timeline(scenes)

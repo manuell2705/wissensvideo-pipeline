@@ -6,9 +6,13 @@ jobs:
     steps:
       - env: { RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}' }
         run: |
-          # prints only balance, spend rate and a masked e-mail (repo is public)
+          # prints only balance, spend rate, pods and a masked e-mail (repo is public)
           curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $RUNPOD_API_KEY" https://api.runpod.io/graphql \
-            -d '{"query":"query { myself { clientBalance currentSpendPerHr email pods { id name desiredStatus costPerHr } } }"}' | python3 -c "
-          import sys,json; m=json.load(sys.stdin)['data']['myself']; e=m.get('email') or ''
+            -d '{"query":"query { myself { clientBalance currentSpendPerHr email pods { id name desiredStatus costPerHr } } }"}' > r.json
+          python3 - <<'PY'
+          import json
+          m = json.load(open('r.json'))['data']['myself']; e = m.get('email') or ''
           print('balance_usd', m['clientBalance']); print('spend_per_hr', m['currentSpendPerHr'])
-          print('account', e[:3]+'***@'+e.split('@')[-1] if '@' in e else '?'); print("pods_now", m.get("pods"))"
+          print('account', (e[:3] + '***@' + e.split('@')[-1]) if '@' in e else '?')
+          print('pods_now', m.get('pods'))
+          PY

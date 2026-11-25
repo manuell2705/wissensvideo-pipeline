@@ -1,0 +1,287 @@
+{
+ "scenes": [
+  {
+   "id": 1,
+   "shots": [
+    "close-up profile of a young person with short brown hair and a teal jacket at night, a big power switch beside their head being flipped on, warm light flooding through the inside of their head"
+   ],
+   "image_prompt": "close-up profile of a young person with short brown hair and a teal jacket at night, a big power switch beside their head being flipped on, warm light flooding through the inside of their head"
+  },
+  {
+   "id": 2,
+   "shots": [
+    "a young person with short brown hair and a teal jacket at a desk in front of a chalkboard full of complex equations, the final answer lighting up, pencil moving in a blur",
+    "an exam hall, a young person with short brown hair and a teal jacket has already solved a tricky wooden logic puzzle while every other student is still reading the paper"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket at a desk in front of a chalkboard full of complex equations, the final answer lighting up, pencil moving in a blur"
+  },
+  {
+   "id": 3,
+   "shots": [
+    "a young person with short brown hair and a teal jacket standing small but confident in a huge dark arena, facing the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) across the floor, dramatic rim light"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket standing small but confident in a huge dark arena, facing the AI titan (a towering figure of dark glass panels with glowing amber circuit lines and calm amber eyes) across the floor, dramatic rim light"
+  },
+  {
+   "id": 4,
+   "shots": [
+    "a young person with short brown hair and a teal jacket looking at a big open blueprint of the human brain on a workbench, small drawings of an eye, a book, a lightning bolt and a muscle around it",
+    "the same person seen as a gentle x-ray illustration, heart, lungs and muscles visible, a soft amber warning glow around the head"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket looking at a big open blueprint of the human brain on a workbench, small drawings of an eye, a book, a lightning bolt and a muscle around it"
+  },
+  {
+   "id": 6,
+   "shots": [
+    "a clear illustration of a human brain where only one small slice is lit, the rest dark grey",
+    "a wall of screens: a cinema poster, a street billboard and a phone video, each showing a brain with only a small part lit"
+   ],
+   "image_prompt": "a clear illustration of a human brain where only one small slice is lit, the rest dark grey"
+  },
+  {
+   "id": 7,
+   "shots": [
+    "a warm sepia lecture hall around 1900, an old bearded professor at a chalkboard speaking to students in old-fashioned clothes",
+    "the professor drawing the outline of a head on the chalkboard with only a small part of it shaded in, students taking notes",
+    "old newspapers flying through the decades, a vague cloud of light on them shrinking into one hard stamped mark"
+   ],
+   "image_prompt": "a warm sepia lecture hall around 1900, an old bearded professor at a chalkboard speaking to students in old-fashioned clothes"
+  },
+  {
+   "id": 8,
+   "shots": [
+    "a young person with short brown hair and a teal jacket lying calmly in a modern brain scanner in a bright clean hospital room",
+    "a doctor's monitor showing colourful brain scans across one day, morning to night, a different region lit in each, together covering the whole brain"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket lying calmly in a modern brain scanner in a bright clean hospital room"
+  },
+  {
+   "id": 9,
+   "shots": [
+    "a human brain illustration with only a few small regions softly lit at once, the rest resting in blue shade",
+    "microscopic view of a dark neuron network where only a handful of neurons sparkle with small electric pulses"
+   ],
+   "image_prompt": "a human brain illustration with only a few small regions softly lit at once, the rest resting in blue shade"
+  },
+  {
+   "id": 10,
+   "shots": [
+    "a young person with short brown hair and a teal jacket standing next to a simple body outline where the brain is highlighted as a small part of the body",
+    "a lunch plate in front of a young person with short brown hair and a teal jacket, one fifth of the food turning into a stream of warm light flowing up into their head",
+    "a young person with short brown hair and a teal jacket with their head glowing far too bright, a power gauge on the wall pushed into the red, cables sparking"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket standing next to a simple body outline where the brain is highlighted as a small part of the body"
+  },
+  {
+   "id": 11,
+   "shots": [
+    "a magical board game unfolding on a wooden table at night, dice, cards and a small brain figure on the start field",
+    "six puzzle pieces laid out in a row on the table, each with a simple drawing: eye, book, lightning, muscle, sprout, star, a magnifying glass beside them"
+   ],
+   "image_prompt": "a magical board game unfolding on a wooden table at night, dice, cards and a small brain figure on the start field"
+  },
+  {
+   "id": 12,
+   "shots": [
+    "extreme close-up of an anime eye, the iris reflecting a colourful busy street"
+   ],
+   "image_prompt": "extreme close-up of an anime eye, the iris reflecting a colourful busy street"
+  },
+  {
+   "id": 13,
+   "shots": [
+    "a young person with short brown hair and a teal jacket on a busy city street corner, streams of light flowing from the scene into their eyes, ears and fingertips",
+    "inside a nerve pathway: countless tiny light pulses racing along fibres toward the brain like rush hour traffic"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket on a busy city street corner, streams of light flowing from the scene into their eyes, ears and fingertips"
+  },
+  {
+   "id": 14,
+   "shots": [
+    "a huge waterfall of light pouring into a funnel, only a thin trickle coming out at the bottom",
+    "a researcher in a quiet lab looking at a monitor that shows one thin calm line of data",
+    "a small glass cup slowly filling drop by drop with that trickle of light, a young person with short brown hair and a teal jacket watching it thoughtfully"
+   ],
+   "image_prompt": "a huge waterfall of light pouring into a funnel, only a thin trickle coming out at the bottom"
+  },
+  {
+   "id": 15,
+   "shots": [
+    "a young person with short brown hair and a teal jacket on a busy square opening their arms, sounds, lights and movement rushing at them all at once",
+    "close-up collage: a dripping tap, a flickering neon lamp, a sock on an ankle with tiny itch sparkles, all bright at the same time"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket on a busy square opening their arms, sounds, lights and movement rushing at them all at once"
+  },
+  {
+   "id": 16,
+   "shots": [
+    "a young person with short brown hair and a teal jacket in a crowded train station covering their ears, eyes squeezed shut, a chaotic swirl of sound waves and flashes around them",
+    "a noisy party in grey tones, a young person with short brown hair and a teal jacket turning their head as one clear golden sound wave reaches them through the crowd"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket in a crowded train station covering their ears, eyes squeezed shut, a chaotic swirl of sound waves and flashes around them"
+  },
+  {
+   "id": 17,
+   "shots": [
+    "a young woman listening with closed eyes, the music around her turning into flowing coloured ribbons",
+    "hands playing a piano, every key sending up a different colour",
+    "a girl standing in a dark room, small glowing tokens arranged in a curved path in the air around her, each in its own fixed place"
+   ],
+   "image_prompt": "a young woman listening with closed eyes, the music around her turning into flowing coloured ribbons"
+  },
+  {
+   "id": 18,
+   "shots": [
+    "a messy torrent of light pouring into a fine golden filter and coming out below as one clear bright stream"
+   ],
+   "image_prompt": "a messy torrent of light pouring into a fine golden filter and coming out below as one clear bright stream"
+  },
+  {
+   "id": 19,
+   "shots": [
+    "an old photo album lying open, photographs gently floating up out of it in warm light"
+   ],
+   "image_prompt": "an old photo album lying open, photographs gently floating up out of it in warm light"
+  },
+  {
+   "id": 20,
+   "shots": [
+    "a young woman sitting on her bed surrounded by hundreds of floating photographs of her own life",
+    "a long wall calendar stretching over many years, every single day square holding a tiny glowing scene",
+    "close-up of her eyes, countless little days reflected in them"
+   ],
+   "image_prompt": "a young woman sitting on her bed surrounded by hundreds of floating photographs of her own life"
+  },
+  {
+   "id": 21,
+   "shots": [
+    "two friends at a cafe table, one pointing at an old calendar page from years ago and asking a question",
+    "a vivid memory scene framed in soft light: a rainy street, a person with an umbrella, every detail sharp"
+   ],
+   "image_prompt": "two friends at a cafe table, one pointing at an old calendar page from years ago and asking a question"
+  },
+  {
+   "id": 22,
+   "shots": [
+    "a researcher's desk with a small stack of case files and a world map with only a few pins",
+    "a person lying awake in bed at night, warm golden memories around them and one sharp stormy memory just as bright"
+   ],
+   "image_prompt": "a researcher's desk with a small stack of case files and a world map with only a few pins"
+  },
+  {
+   "id": 23,
+   "shots": [
+    "a 1920s newspaper office, a man in a vintage suit reciting from memory while a scientist reads long lists of numbers from paper",
+    "the same man years later, still reciting, the scientist amazed holding the old yellowed list",
+    "the man at a cafe table while a friend talks, the friend's words bursting into a chaos of images around him he cannot sort"
+   ],
+   "image_prompt": "a 1920s newspaper office, a man in a vintage suit reciting from memory while a scientist reads long lists of numbers from paper"
+  },
+  {
+   "id": 24,
+   "shots": [
+    "an old filing cabinet with its drawer pulled open, completely empty and dusty",
+    "a storyteller by a campfire building a small scene out of pieces of light from the fire, listeners around"
+   ],
+   "image_prompt": "an old filing cabinet with its drawer pulled open, completely empty and dusty"
+  },
+  {
+   "id": 25,
+   "shots": [
+    "a tidy room, a small broom sweeping dull grey specks of light away while a few bright golden memories stay on a shelf"
+   ],
+   "image_prompt": "a tidy room, a small broom sweeping dull grey specks of light away while a few bright golden memories stay on a shelf"
+  },
+  {
+   "id": 26,
+   "shots": [
+    "a sprinter crouched at the starting blocks in a night stadium, light streaks around"
+   ],
+   "image_prompt": "a sprinter crouched at the starting blocks in a night stadium, light streaks around"
+  },
+  {
+   "id": 27,
+   "shots": [
+    "an arm with a glowing nerve along it, a pulse of light racing from the fingertip toward the shoulder",
+    "a red race car on a straight night track, a beam of nerve light overtaking it right beside"
+   ],
+   "image_prompt": "an arm with a glowing nerve along it, a pulse of light racing from the fingertip toward the shoulder"
+  },
+  {
+   "id": 28,
+   "shots": [
+    "a tennis player watching a ball fly toward them, the moment frozen",
+    "close-up of a hand snapping shut around a ball, motion blur"
+   ],
+   "image_prompt": "a tennis player watching a ball fly toward them, the moment frozen"
+  },
+  {
+   "id": 29,
+   "shots": [
+    "a young person with short brown hair and a teal jacket watching fireworks over a city, the flash already in their eyes, the sound wave still travelling",
+    "a film editing table, frames of one single moment being put together by hand",
+    "a drummer hitting a drum, the sound wave and the flash of light lining up perfectly"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket watching fireworks over a city, the flash already in their eyes, the sound wave still travelling"
+  },
+  {
+   "id": 30,
+   "shots": [
+    "a single neuron firing a rapid storm of bright pulses",
+    "a young person with short brown hair and a teal jacket grinning, catching three falling objects at once with lightning reflexes",
+    "the same person with their head steaming, heat shimmer and an orange-red glow around them"
+   ],
+   "image_prompt": "a single neuron firing a rapid storm of bright pulses"
+  },
+  {
+   "id": 31,
+   "shots": [
+    "a large thermometer next to a brain illustration, a narrow green safe band glowing in the middle",
+    "a young person with short brown hair and a teal jacket in bed with a fever, dizzy swirls around their head, a doctor checking a thermometer"
+   ],
+   "image_prompt": "a large thermometer next to a brain illustration, a narrow green safe band glowing in the middle"
+  },
+  {
+   "id": 32,
+   "shots": [
+    "a huge hall with thousands of desks, every desk lit and working at the same time",
+    "a vast forest of glowing neurons stretching to the horizon",
+    "close-up of countless connections between neurons lighting up all at once"
+   ],
+   "image_prompt": "a huge hall with thousands of desks, every desk lit and working at the same time"
+  },
+  {
+   "id": 33,
+   "shots": [
+    "an athlete silhouette with glowing muscles and skeleton visible, dark background"
+   ],
+   "image_prompt": "an athlete silhouette with glowing muscles and skeleton visible, dark background"
+  },
+  {
+   "id": 34,
+   "shots": [
+    "a weightlifter in a gym, a soft protective shield of light around his arms",
+    "the weightlifter straining, a small gauge on his arm with the needle held back below the maximum",
+    "an x-ray illustration of an arm, tendons and bones glowing warning amber"
+   ],
+   "image_prompt": "a weightlifter in a gym, a soft protective shield of light around his arms"
+  },
+  {
+   "id": 35,
+   "shots": [
+    "a young person with short brown hair and a teal jacket relaxing on a couch reading a book",
+    "gentle x-ray view of the same person: heart beating, lungs breathing, stomach working, each softly glowing",
+    "the same person surrounded by dozens of levers and dials, panicking while trying to work all of them"
+   ],
+   "image_prompt": "a young person with short brown hair and a teal jacket relaxing on a couch reading a book"
+  },
+  {
+   "id": 36,
+   "shots": [
+    "a person lifting the front of a car with sparks and dust to free someone trapped",
+    "close-up of a gauge needle jumping past its usual line, adrenaline glowing through veins"
+   ],
+   "image_prompt": "a person lifting the front of a car with sparks and dust to free someone trapped"
+  }
+ ]
+}

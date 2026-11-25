@@ -19,27 +19,39 @@ def ref_for(s):
     # only the characters that are meant to be in the shot, otherwise the edit model adds both
     if not any(n in s['image_prompt'] for n in ('Kai', 'Mira', 'Orbi')): return None   # topic scene: no characters at all
     return REFS.get(s.get('ref'), sheet)
-from diffusers import QwenImageEditPlusPipeline
-ed = QwenImageEditPlusPipeline.from_pretrained("Qwen/Qwen-Image-Edit-2509", torch_dtype=torch.bfloat16).to('cuda')
 import os
+T2I = os.environ.get('T2I') == '1'   # pure text-to-image (Qwen-Image) for shots without named characters: no reference leaks
+if T2I:
+    from diffusers import QwenImagePipeline
+    ed = QwenImagePipeline.from_pretrained("Qwen/Qwen-Image", torch_dtype=torch.bfloat16).to('cuda')
+else:
+    from diffusers import QwenImageEditPlusPipeline
+    ed = QwenImageEditPlusPipeline.from_pretrained("Qwen/Qwen-Image-Edit-2509", torch_dtype=torch.bfloat16).to('cuda')
 PRE = [int(x) for x in os.environ.get('PREVIEW_IDS', '').split(',') if x]
 order = [s for s in script['scenes'] if s['id'] in PRE] + [s for s in script['scenes'] if s['id'] not in PRE]
 done = 0
 for s in order:
     if done == len([x for x in order if x['id'] in PRE and x.get('image_prompt')]) and PRE and done: upload()   # quick preview first
     if not s.get('image_prompt'): continue
-    if (out / f"scene_{s['id']:03d}_1.jpg").exists(): continue
-    done += 1
-    if done > len(PRE) and done % 10 == 0: upload()
-    p = s['image_prompt'].replace('Kai (', 'Kai from the reference image (').replace('Mira (', 'Mira from the reference image (').replace('Orbi (', 'Orbi from the reference image (')
-    t = time.time()
-    r = ref_for(s)
-    if r is None:   # no character: plain text-to-image through the edit model with a neutral canvas is poor -> use the sheet only for style
-        r = Image.open('render/refs/style_topic.jpg').convert('RGB')   # style reference without people or faces
-        p = p + '. Completely new scene, only keep the art style and colours of the reference image. No people, no characters, no faces on planets, objects or buildings, no text'
-    im = ed(image=[r], prompt=f"{p}. Wide 16:9 cinematic scene, keep faces, hair and outfits exactly as in the reference. {STYLE}", negative_prompt=NEG,
-            num_inference_steps=30, true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10)).images[0]
-    im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(out / f"scene_{s['id']:03d}_1.jpg"); print('still', s['id'], round(time.time() - t), 's', flush=True)
+    for k, prompt in enumerate(s.get('shots') or [s['image_prompt']]):   # several shots per scene: scene_XXX_1.jpg, _2, _3
+        f = out / f"scene_{s['id']:03d}_{k + 1}.jpg"
+        if f.exists(): continue
+        done += 1
+        if done > len(PRE) and done % 10 == 0: upload()
+        p = prompt.replace('Kai (', 'Kai from the reference image (').replace('Mira (', 'Mira from the reference image (').replace('Orbi (', 'Orbi from the reference image (')
+        t = time.time()
+        r = None if T2I else ref_for(dict(s, image_prompt=prompt))
+        if T2I:
+            im = ed(prompt=f"{p}. Wide 16:9 cinematic scene, clear and easy to read composition. {STYLE}", negative_prompt=NEG, num_inference_steps=40,
+                    true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10 + k)).images[0]
+            im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(f); print('still', s['id'], k + 1, round(time.time() - t), 's', flush=True)
+            continue
+        if r is None:   # no named character: face-free style reference, only for look and colours
+            r = Image.open('render/refs/style_topic.jpg').convert('RGB')
+            p = p + '. Completely new scene, only keep the art style and colours of the reference image. No faces on objects or buildings, no text, no letters'
+        im = ed(image=[r], prompt=f"{p}. Wide 16:9 cinematic scene, clear and easy to read composition. {STYLE}", negative_prompt=NEG,
+                num_inference_steps=30, true_cfg_scale=4.0, width=1664, height=928, generator=torch.Generator('cuda').manual_seed(s['id'] * 10 + k)).images[0]
+        im.save(out / '_s.jpg', quality=93); (out / '_s.jpg').replace(f); print('still', s['id'], k + 1, round(time.time() - t), 's', flush=True)
 upload()
 del ed; torch.cuda.empty_cache()
 if not any(x.get('motion') for x in script['scenes']): sys.exit(0)

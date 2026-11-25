@@ -89,10 +89,11 @@ function Person(parent, o = {}) {
   k.idle = (tl, t0, dur) => {   // breathing + small sway + random blinks for the whole shot
     tl.fromTo(body, { scaleY: 1 }, { scaleY: 1.012, duration: 1.6, yoyo: true, repeat: Math.max(1, Math.floor(dur / 1.6)), ease: 'sine.inOut' }, t0);
     tl.fromTo(head, { rotation: -1 }, { rotation: 1.5, duration: 2.4, yoyo: true, repeat: Math.max(1, Math.floor(dur / 2.4)), ease: 'sine.inOut' }, t0);
+    tl.fromTo(body, { x: -3 }, { x: 3, duration: 3.1, yoyo: true, repeat: Math.max(1, Math.floor(dur / 3.1)), ease: 'sine.inOut' }, t0);   // weight shift
     for (let t = t0 + 1.2; t < t0 + dur; t += 2.6 + ((t * 7) % 1.7)) k.blink(tl, t);
   };
   k.blink = (tl, t) => { for (const e of eyes) tl.to(e.g, { scaleY: 0.08, duration: 0.07, yoyo: true, repeat: 1, ease: 'power1.in' }, t); };
-  k.face = (tl, t, m) => { for (const n in mouths) tl.to(mouths[n], { opacity: n === m ? 1 : 0, duration: 0.08 }, t);
+  k.face = (tl, t, m) => { for (const n in mouths) tl.to(mouths[n], { opacity: n === m ? 1 : 0, duration: 0.15 }, t);
     const up = m === 'o' ? -10 : m === 'worry' ? 6 : 0;
     brows.forEach((b, i) => tl.to(b, { y: up, rotation: m === 'worry' ? (i ? 12 : -12) : 0, svgOrigin: i ? '54 -810' : '-54 -810', duration: 0.2 }, t)); };
   k.look = (tl, t, dx, dy = 0) => { for (const e of eyes) tl.to(e.iris, { x: dx, y: dy, duration: 0.25, ease: 'power2.out' }, t); };
@@ -107,25 +108,36 @@ function Person(parent, o = {}) {
       tl.to(aR.up, { rotation: -10 * s, duration: 0.2, yoyo: true, repeat: 1 }, ts); tl.to(aL.up, { rotation: 10 * s, duration: 0.2, yoyo: true, repeat: 1 }, ts);
     }
   };
-  const setArm = (tl, t, a, u, f, h = 0, d = 0.35, finger = false) => {
-    tl.to(a.up, { rotation: u, duration: d, ease: 'back.out(1.4)' }, t); tl.to(a.fore, { rotation: f, duration: d, ease: 'back.out(1.4)' }, t);
-    tl.to(a.hand, { rotation: h, duration: d }, t); tl.to(a.finger, { opacity: finger ? 1 : 0, duration: 0.1 }, t + d * 0.4);
+  // fluid arm move: upper arm leads, forearm and hand follow a moment later (follow-through); the gesture LANDS at t
+  const setArm = (tl, t, a, u, f, h = 0, d = 0.6, finger = false) => {
+    const t0 = t - d * 0.7;
+    tl.to(a.up, { rotation: u, duration: d, ease: 'power3.inOut' }, t0);
+    tl.to(a.fore, { rotation: f, duration: d, ease: 'back.out(1.15)' }, t0 + 0.07);
+    tl.to(a.hand, { rotation: h, duration: d * 0.9, ease: 'sine.inOut' }, t0 + 0.12);
+    tl.to(a.finger, { opacity: finger ? 1 : 0, duration: 0.12 }, t0 + d * 0.5);
+  };
+  // small emphasis on a stressed word: head dips, body bobs, like a person explaining
+  k.beat = (tl, t, s = 1) => {
+    tl.to(head, { y: 6 * s, rotation: 2 * s, duration: 0.14, yoyo: true, repeat: 1, ease: 'sine.inOut' }, t - 0.08);
+    tl.to(body, { y: -4 * s, duration: 0.14, yoyo: true, repeat: 1, ease: 'sine.inOut' }, t - 0.08);
   };
   k.pose = (tl, t, name) => {
     const P = {
       rest:   () => { setArm(tl, t, aR, 0, 0); setArm(tl, t, aL, 0, 0); },
-      point:  () => { setArm(tl, t, aL, -96, -6, -6, 0.4, true); setArm(tl, t, aR, 0, 0); },                // points to the right (panel)
-      pointUp:() => { setArm(tl, t, aR, 160, 10, 0, 0.4, true); setArm(tl, t, aL, 0, 0); },                   // "here's the truth" finger up
+      point:  () => { setArm(tl, t, aL, -96, -6, -6, 0.6, true); setArm(tl, t, aR, 0, 0); },                // points to the right (panel)
+      pointUp:() => { setArm(tl, t, aR, 160, 10, 0, 0.6, true); setArm(tl, t, aL, 0, 0); },                   // "here's the truth" finger up
       open:   () => { setArm(tl, t, aR, 60, -30, 0); setArm(tl, t, aL, -60, 30, 0); },                         // arms open wide
-      wag:    () => { setArm(tl, t, aR, 150, 20, 0, 0.3, true); tl.to(aR.fore, { rotation: 36, duration: 0.18, yoyo: true, repeat: 3 }, t + 0.35); },
-      pinch:  () => { setArm(tl, t, aL, -150, -40, 0, 0.35, true); setArm(tl, t, aR, 0, 0); },
-      thumbs: () => { setArm(tl, t, aR, 30, 120, 0, 0.35, true); setArm(tl, t, aL, 0, 0); tl.to(head, { rotation: 6, duration: 0.2, yoyo: true, repeat: 1 }, t + 0.2); },
+      wag:    () => { setArm(tl, t, aR, 150, 20, 0, 0.55, true); setArm(tl, t, aL, 0, 0); tl.to(aR.fore, { rotation: 34, duration: 0.2, yoyo: true, repeat: 3, ease: "sine.inOut" }, t + 0.05); },
+      pinch:  () => { setArm(tl, t, aL, -150, -40, 0, 0.6, true); setArm(tl, t, aR, 0, 0); },
+      thumbs: () => { setArm(tl, t, aR, 30, 120, 0, 0.6, true); setArm(tl, t, aL, 0, 0); tl.to(head, { rotation: 6, duration: 0.2, yoyo: true, repeat: 1 }, t + 0.2); },
       chest:  () => { setArm(tl, t, aR, 30, -95, 0); setArm(tl, t, aL, -30, 95, 0); },
       shrug:  () => { setArm(tl, t, aR, 40, -70, 0); setArm(tl, t, aL, -40, 70, 0); tl.to(body, { y: -8, duration: 0.25, yoyo: true, repeat: 1 }, t); },
-      nod:    () => { tl.to(head, { rotation: 0, y: 8, duration: 0.15, yoyo: true, repeat: 3 }, t); },
-      shake:  () => { tl.to(head, { x: 8, duration: 0.1, yoyo: true, repeat: 5 }, t); },
+      nod:    () => { tl.to(head, { y: 9, duration: 0.2, yoyo: true, repeat: 3, ease: 'sine.inOut' }, t); },
+      shake:  () => { tl.to(head, { x: 7, duration: 0.16, yoyo: true, repeat: 5, ease: 'sine.inOut' }, t); },
     };
     (P[name] || P.rest)();
+    if (name !== 'nod' && name !== 'shake') { const lean = { point: 2.5, pinch: 2, pointUp: -1, shrug: 0, open: 0 }[name] || 0;   // whole body leans into the gesture
+    tl.to(body, { rotation: lean, duration: 0.8, ease: 'sine.inOut' }, t - 0.5); }
   };
   k.sweatDrop = (tl, t) => { tl.fromTo(sweat, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.3 }, t); tl.to(sweat, { y: 30, opacity: 0, duration: 1.2, ease: 'power1.in' }, t + 1.2); };
   return k;

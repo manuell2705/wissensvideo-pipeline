@@ -4,7 +4,7 @@
   html, body { margin: 0; background: #0b1d3f; overflow: hidden; }
   #stage { position: relative; width: 1920px; height: 1080px; font-family: Fredoka, Inter, sans-serif; }
   svg { position: absolute; inset: 0; }
-  .chip { position: absolute; left: 1400px; white-space: nowrap; bottom: 90px; padding: 18px 34px; border-radius: 999px; font-size: 44px; font-weight: 700; color: #fff;
+  .chip { position: absolute; left: 1390px; white-space: nowrap; bottom: 90px; padding: 18px 34px; border-radius: 999px; font-size: 40px; font-weight: 700; color: #fff;
           background: rgba(10, 30, 60, .55); border: 2px solid rgba(140, 230, 220, .55); backdrop-filter: blur(8px); opacity: 0; letter-spacing: .5px;
           box-shadow: 0 10px 40px rgba(0, 0, 0, .35); }
   .chip b { color: #ffb547; }
@@ -97,63 +97,122 @@ const bolt = E('path', { d: 'M1420,600 L1380,700 L1420,700 L1390,790', stroke: '
 // ---------- the 'you' figure ----------
 const you = Person(cam, { x: -260, y: 990, s: 0.95 });
 
-// ---------- chips (one short keyword at a time) ----------
-const chip = (t0, t1, html) => { const d = document.createElement('div'); d.className = 'chip'; d.innerHTML = html; stage.appendChild(d); gsap.set(d, { xPercent: -50 });
-  tl.fromTo(d, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .35, ease: 'back.out(1.6)', immediateRender: false }, t0); tl.to(d, { opacity: 0, y: -20, duration: .3 }, t1); };
+// ---------- George's word timings (from the voice track) ----------
+const WORDS = {"8": [["Here's", 0.0], ["the", 0.28], ["truth.", 0.44], ["You", 1.84], ["already", 2.12], ["use", 2.6], ["all", 3.26], ["of", 3.64], ["it.", 3.8], ["Brain", 5.14], ["scans", 5.14], ["show", 5.5], ["that", 6.22], ["over", 6.82], ["a", 7.1], ["single", 7.3], ["day,", 7.56], ["practically", 8.62], ["every", 8.94], ["region", 9.5], ["gets", 9.98], ["busy.", 10.28]], "9": [["just", 0.0], ["not", 0.24], ["all", 0.64], ["at", 1.14], ["the", 1.54], ["same", 1.72], ["time.", 2.0], ["At", 3.16], ["any", 3.28], ["moment,", 3.54], ["only", 4.38], ["a", 4.78], ["small", 5.0], ["fraction", 5.36], ["of", 5.9], ["your", 6.08], ["neurons", 6.24], ["is", 6.74], ["firing,", 7.06], ["and", 7.9], ["that's", 8.22], ["on", 8.88], ["purpose.", 9.3]], "10": [["Your", 0.0], ["brain", 0.4], ["is", 0.82], ["about", 1.08], ["2", 1.36], ["%", 1.74], ["of", 2.14], ["your", 2.42], ["body", 2.56], ["weight,", 2.9], ["yet", 3.72], ["it", 4.04], ["uses", 4.66], ["around", 5.1], ["20", 5.52], ["%", 6.12], ["of", 6.4], ["your", 7.0], ["energy.", 7.24], ["Turning", 8.12], ["everything", 8.52], ["on", 9.4], ["would", 9.74], ["need", 10.34], ["far", 10.7], ["more", 11.12], ["power", 11.46], ["than", 11.96], ["your", 12.5], ["body", 12.72], ["can", 13.12], ["deliver.", 13.4]]};
+const OFF = { 8: 0.5, 9: 11.82, 10: 22.36 }, END = 37.2;
+const W = (s, i) => OFF[s] + WORDS[s][i][1];          // absolute time of word i in scene s
+const o8 = OFF[8], o9 = OFF[9], o10 = OFF[10];
 
-// ---------- timeline synced to George's words ----------
-const o8 = 0.5, o9 = 11.82, o10 = 22.36, END = 37.2;
+// board content groups slide like presentation pages (out left, in from right)
+const brainBox = G(board); brainBox.appendChild(brain); brainBox.appendChild(day);
+const slide = (from, to, t) => {
+  tl.to(from, { x: -160, opacity: 0, duration: 0.6, ease: 'power3.in' }, t);
+  tl.fromTo(to, { x: 160, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out', immediateRender: false }, t + 0.35);
+};
+
+// ---------- captions: the narrated words appear exactly when George says them ----------
+const cap = (s, a, b, hi, tEnd) => {
+  const d = document.createElement('div'); d.className = 'chip'; stage.appendChild(d); gsap.set(d, { xPercent: -50 });
+  const spans = [];
+  for (let i = a; i <= b; i++) {
+    const w = WORDS[s][i][0].replace(/[.,]/g, '');
+    if (w === '%') { spans[spans.length - 1].textContent += '%'; continue; }
+    const sp = document.createElement(hi.includes(i) ? 'b' : 'span'); sp.textContent = w; sp.style.display = 'inline-block'; sp.style.opacity = 0;
+    if (spans.length) d.appendChild(document.createTextNode(' '));
+    d.appendChild(sp); spans.push(sp);
+    tl.fromTo(sp, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out', immediateRender: false }, W(s, i) - 0.04);
+  }
+  tl.fromTo(d, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out', immediateRender: false }, W(s, a) - 0.08);
+  tl.to(d, { opacity: 0, y: -16, duration: 0.3, ease: 'power2.in' }, tEnd);
+};
+
+E('path', { d: 'M1185,318 C1170,300 1190,282 1205,290 C1222,280 1236,300 1226,316 C1232,334 1206,342 1200,332 C1188,340 1172,330 1185,318 Z', fill: '#ff8fb1', stroke: '#fff', 'stroke-width': 3 }, nrg);   // the brain the energy flows to
+// brain-scan sweep line
+const scan = E('rect', { x: 1080, y: 300, width: 10, height: 480, rx: 5, fill: '#bff3f0', opacity: 0, filter: 'url(#glow)' }, brainBox);
+// neuron signals travel along the connections
+const nb = nodes.map((a, i) => nodes.map((b, j) => j).filter(j => j !== i && Math.hypot(a[0] - nodes[j][0], a[1] - nodes[j][1]) < 175));
+const sig = [0, 1, 2].map(() => E('circle', { r: 11, fill: '#ffe08a', opacity: 0, filter: 'url(#glow)' }, neur));
+const pulse = (k, i, j, t) => {
+  tl.fromTo(sig[k], { attr: { cx: nodes[i][0], cy: nodes[i][1] }, opacity: 1 }, { attr: { cx: nodes[j][0], cy: nodes[j][1] }, duration: 0.42, ease: 'sine.inOut', immediateRender: false }, t);
+  tl.fromTo(nd[j], { attr: { fill: '#2f5f7a', r: 13 } }, { attr: { fill: '#ffd36b', r: 18 }, duration: 0.15, yoyo: true, repeat: 1, immediateRender: false }, t + 0.38);
+};
+
+// ---------- the timeline ----------
 you.idle(tl, 0, END);
-tl.to(board, { opacity: 1, duration: .6 }, 0.3);
-you.walkIn(tl, 0.2, -260, 560, 1.6);
-you.pose(tl, o8 + 0.0, 'pointUp'); you.look(tl, o8, 0, -4);
-you.pose(tl, o8 + 1.9, 'open'); you.face(tl, o8 + 1.9, 'grin');
-tl.to(Object.values(lit), { opacity: .95, duration: .25, stagger: .03 }, o8 + 3.2);   // "ALL of it"
-tl.to(Object.values(lit), { opacity: 0, duration: .5 }, o8 + 4.6);
-chip(o8 + 2.4, o8 + 4.9, 'You use <b>all</b> of it');
-you.pose(tl, o8 + 5.1, 'point'); you.face(tl, o8 + 5.1, 'smile'); you.look(tl, o8 + 5.1, 8, 0);
-tl.to(day, { opacity: 1, duration: .4 }, o8 + 5.6);
-tl.to(dayP, { p: 1, duration: 3.0, ease: 'none', onUpdate: placeSun }, o8 + 6.6);
-['frontal', 'parietal', 'occipital', 'temporal', 'cereb'].forEach((k, i) => tl.to(lit[k], { opacity: .9, duration: .3 }, o8 + 8.6 + i * .38));
-you.face(tl, o8 + 9.2, 'grin');
-tl.to(day, { opacity: 0, duration: .4 }, o8 + 10.2);
-// scene 9: not all at once, only a few neurons
-you.pose(tl, o9 + 0.1, 'wag'); you.pose(tl, o9 + 0.4, 'shake'); you.face(tl, o9 + 0.2, 'smile'); you.look(tl, o9, 0, 0);
-tl.to(Object.values(lit), { opacity: 0, duration: .3 }, o9 + 0.6);
-['frontal', 'occipital', 'temporal'].forEach((k, i) => { tl.to(lit[k], { opacity: .9, duration: .2 }, o9 + 1.0 + i * .6); tl.to(lit[k], { opacity: 0, duration: .2 }, o9 + 1.5 + i * .6); });
-chip(o9 + 0.6, o9 + 2.9, 'Not <b>all at once</b>');
-tl.to(brain, { opacity: 0, duration: .4 }, o9 + 3.0);
-tl.to(neur, { opacity: 1, duration: .5 }, o9 + 3.2);
-tl.to(cam, { scale: 1.12, x: -150, y: -60, duration: 1.4, ease: 'power2.inOut' }, o9 + 3.0);
-you.pose(tl, o9 + 4.4, 'pinch'); you.face(tl, o9 + 4.4, 'o'); you.look(tl, o9 + 4.4, 8, -3);
-sparks.forEach((s, i) => { for (let t = o9 + 4.6 + i * .35; t < o9 + 9.6; t += 1.05) tl.fromTo(s, { opacity: 0, attr: { r: 12 } }, { opacity: 1, attr: { r: 26 }, duration: .25, yoyo: true, repeat: 1, immediateRender: false }, t); });
-chip(o9 + 5.0, o9 + 7.6, 'Only a <b>small fraction</b> fires');
-you.pose(tl, o9 + 8.1, 'thumbs'); you.face(tl, o9 + 8.1, 'grin');
-tl.fromTo(check, { opacity: 0, scale: .6, svgOrigin: '1660 755' }, { opacity: 1, scale: 1, duration: .35, ease: 'back.out(2)', immediateRender: false }, o9 + 8.9);
-// scene 10: weight and energy
-tl.to(cam, { scale: 1, x: 0, y: 0, duration: 1.2, ease: 'power2.inOut' }, o10 - 0.4);
-tl.to([neur, check], { opacity: 0, duration: .4 }, o10 - 0.3);
-tl.to(wgt, { opacity: 1, duration: .5 }, o10 + 0.2);
-you.pose(tl, o10 + 0.3, 'chest'); you.face(tl, o10 + 0.3, 'smile'); you.look(tl, o10 + 0.3, 0, 4);
-const c2 = { v: 0 }; tl.to(c2, { v: 2, duration: .6, ease: 'power1.out', onUpdate: () => { pct2.textContent = Math.round(c2.v) + '%'; } }, o10 + 1.3);
-tl.to(wgt, { opacity: 0, duration: .4 }, o10 + 3.5);
-tl.to(nrg, { opacity: 1, duration: .4 }, o10 + 3.7);
-tl.to(miniBrain, { opacity: 1 }, o10 + 3.7);
-E('path', { d: 'M1185,318 C1170,300 1190,282 1205,290 C1222,280 1236,300 1226,316 C1232,334 1206,342 1200,332 C1188,340 1172,330 1185,318 Z', fill: '#ff8fb1', stroke: '#fff', 'stroke-width': 3, transform: 'translate(0,0) scale(1)' }, nrg);
-you.pose(tl, o10 + 4.4, 'point'); you.look(tl, o10 + 4.4, 8, 0);
-tl.to(cells[0], { attr: { fill: '#ffb547' }, duration: .3 }, o10 + 5.3);
-tl.fromTo(flow, { opacity: 0, strokeDashoffset: 0 }, { opacity: 1, strokeDashoffset: -136, duration: 2.0, ease: 'none', immediateRender: false }, o10 + 5.4);
-tl.to(pct20, { opacity: 1, duration: .3 }, o10 + 5.5);
-you.face(tl, o10 + 5.6, 'o');
-chip(o10 + 5.8, o10 + 8.0, '<b>20%</b> of your energy');
-tl.to(flow, { opacity: 0, duration: .3 }, o10 + 7.8);
-tl.to(pct20, { opacity: 0, duration: .3 }, o10 + 8.0);
-tl.to(cells, { attr: { fill: '#ffb547' }, duration: .25, stagger: .12 }, o10 + 8.5);
-tl.to(cells, { attr: { fill: '#ff5a5a' }, duration: .25, stagger: .1 }, o10 + 10.6);
-tl.to(cells, { opacity: .25, duration: .15, yoyo: true, repeat: 9 }, o10 + 11.4);
-tl.fromTo(bolt, { opacity: 0 }, { opacity: 1, duration: .08, yoyo: true, repeat: 7, immediateRender: false }, o10 + 11.2);
-you.face(tl, o10 + 10.8, 'worry'); you.pose(tl, o10 + 11.0, 'shrug'); you.sweatDrop(tl, o10 + 11.3);
-chip(o10 + 11.0, o10 + 14.2, 'More power than your body <b>can deliver</b>');
+tl.to(board, { opacity: 1, duration: 0.8, ease: 'sine.out' }, 0.2);
+tl.fromTo(cam, { scale: 1, x: 0, y: 0 }, { scale: 1.04, x: -30, y: -18, duration: W(9, 7) - 0.6, ease: 'sine.inOut' }, 0);   // slow drift, never fully still
+you.walkIn(tl, 0, -260, 560, 1.2);
+
+// scene 8 -- "Here's the truth. You already use all of it."
+you.pose(tl, W(8, 2) + 0.45, 'pointUp'); you.look(tl, W(8, 2), 0, -4); you.beat(tl, W(8, 2) + 0.45);
+you.pose(tl, W(8, 6), 'open'); you.face(tl, W(8, 6) - 0.1, 'grin'); you.beat(tl, W(8, 6), 1.3);
+tl.to(Object.values(lit), { opacity: .95, duration: .3, stagger: .06, ease: 'power2.out' }, W(8, 6) - 0.05);
+cap(8, 3, 8, [6], W(8, 9) - 0.25);
+// "Brain scans show that over a single day ..."
+tl.to(Object.values(lit), { opacity: 0, duration: .5 }, W(8, 9) - 0.4);
+you.pose(tl, W(8, 9), 'point'); you.face(tl, W(8, 9), 'smile'); you.look(tl, W(8, 9), 8, 0);
+tl.fromTo(scan, { opacity: 0, x: 0 }, { opacity: .9, duration: .2, immediateRender: false }, W(8, 9));
+tl.to(scan, { x: 620, duration: 1.1, ease: 'sine.inOut' }, W(8, 9));
+tl.to(scan, { opacity: 0, duration: .25 }, W(8, 9) + 1.0);
+tl.to(day, { opacity: 1, duration: .5 }, W(8, 13) - 0.3);
+tl.to(dayP, { p: 1, duration: W(8, 16) + 0.6 - W(8, 15), ease: 'sine.inOut', onUpdate: placeSun }, W(8, 15));
+// "... practically every region gets busy."
+['frontal', 'parietal', 'occipital', 'temporal', 'cereb'].forEach((k, i) => tl.to(lit[k], { opacity: .9, duration: .3, ease: 'power2.out' }, W(8, 17 + i)));
+you.beat(tl, W(8, 18)); you.face(tl, W(8, 21), 'grin'); you.pose(tl, W(8, 21), 'nod');
+tl.to(day, { opacity: 0, duration: .5 }, W(8, 21) + 0.3);
+cap(8, 17, 21, [18, 19], o9 - 0.15);
+
+// scene 9 -- "just not all at the same time."
+you.pose(tl, W(9, 1), 'wag'); you.face(tl, W(9, 1), 'smile'); you.look(tl, W(9, 1), 0, 0);
+tl.to(Object.values(lit), { opacity: 0, duration: .35 }, W(9, 1));
+['frontal', 'occipital', 'temporal'].forEach((k, i) => { tl.to(lit[k], { opacity: .9, duration: .2 }, W(9, 4 + i)); tl.to(lit[k], { opacity: 0, duration: .25 }, W(9, 4 + i) + 0.35); });
+you.pose(tl, W(9, 5), 'shake');
+cap(9, 0, 6, [5, 6], W(9, 7) - 0.2);
+// "At any moment, only a small fraction of your neurons is firing ..."
+slide(brainBox, neur, W(9, 7) - 0.5);
+tl.to(cam, { scale: 1.08, x: -100, y: -50, duration: 1.4, ease: 'power2.inOut' }, W(9, 7) - 0.5);
+you.pose(tl, W(9, 8), 'point'); you.look(tl, W(9, 8), 8, -2);
+you.pose(tl, W(9, 12), 'pinch'); you.face(tl, W(9, 12), 'o'); you.look(tl, W(9, 12), 8, -3); you.beat(tl, W(9, 13));
+const chains = [[3, 9, 10, 16, 15, 21], [13, 14, 20, 26, 27], [7, 8, 2, 1]];
+let ti = W(9, 10);
+for (let step = 0; ti < W(9, 21); step++, ti += 0.33) { const k = step % 3, c = chains[k], n = Math.floor(step / 3) % (c.length - 1); pulse(k, c[n], c[n + 1], ti); }
+tl.to(sig, { opacity: 0, duration: .3 }, W(9, 21));
+you.beat(tl, W(9, 18));
+cap(9, 10, 13, [12, 13], W(9, 19));
+// "... and that's on purpose."
+you.pose(tl, W(9, 22), 'thumbs'); you.face(tl, W(9, 22) - 0.1, 'grin');
+tl.fromTo(check, { opacity: 0, scale: .4, svgOrigin: '1660 755' }, { opacity: 1, scale: 1, duration: .45, ease: 'back.out(2.2)', immediateRender: false }, W(9, 22));
+cap(9, 20, 22, [22], o10 - 0.35);
+
+// scene 10 -- "Your brain is about 2% of your body weight,"
+tl.to(cam, { scale: 1.03, x: -20, y: -10, duration: 1.3, ease: 'power2.inOut' }, o10 - 0.7);
+tl.to(check, { opacity: 0, duration: .3 }, o10 - 0.6);
+slide(neur, wgt, o10 - 0.6);
+you.pose(tl, W(10, 1), 'chest'); you.face(tl, W(10, 1), 'smile'); you.look(tl, W(10, 1), 0, 4);
+tl.fromTo(miniBrain, { scale: 1, svgOrigin: '1203 312' }, { scale: 1.5, duration: .25, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false }, W(10, 1));
+const c2 = { v: 0 }; tl.to(c2, { v: 2, duration: W(10, 5) + 0.2 - W(10, 4), ease: 'power1.out', onUpdate: () => { pct2.textContent = Math.round(c2.v) + '%'; } }, W(10, 4));
+you.beat(tl, W(10, 4), 1.2); you.look(tl, W(10, 4), 8, 0);
+cap(10, 4, 9, [4, 5], W(10, 10) - 0.15);
+// "yet it uses around 20% of your energy."
+slide(wgt, nrg, W(10, 10) - 0.35);
+you.pose(tl, W(10, 12), 'point'); you.look(tl, W(10, 12), 8, 0);
+const c20 = { v: 0 }; pct20.textContent = '0%';
+tl.to(pct20, { opacity: 1, duration: .3 }, W(10, 14) - 0.1);
+tl.to(c20, { v: 20, duration: W(10, 15) + 0.3 - W(10, 14), ease: 'power1.out', onUpdate: () => { pct20.textContent = Math.round(c20.v) + '%'; } }, W(10, 14));
+tl.to(cells[0], { attr: { fill: '#ffb547' }, duration: .3 }, W(10, 14));
+tl.fromTo(flow, { opacity: 0, strokeDashoffset: 0 }, { opacity: 1, strokeDashoffset: -170, duration: W(10, 19) - W(10, 14), ease: 'none', immediateRender: false }, W(10, 14));
+you.face(tl, W(10, 14), 'o'); you.beat(tl, W(10, 14), 1.2); you.pose(tl, W(10, 18), 'nod');
+cap(10, 14, 18, [14, 15], W(10, 19) - 0.15);
+// "Turning everything on would need far more power than your body can deliver."
+tl.to([flow, pct20], { opacity: 0, duration: .3 }, W(10, 19) - 0.1);
+tl.to(cam, { scale: 1.1, x: -150, y: -110, duration: 1.6, ease: 'power2.inOut' }, W(10, 19));
+you.pose(tl, W(10, 20), 'open'); you.face(tl, W(10, 20), 'grin');
+tl.to(cells, { attr: { fill: '#ffb547' }, duration: .25, stagger: (W(10, 21) - W(10, 19)) / 5 }, W(10, 19));
+tl.to(cells, { attr: { fill: '#ff5a5a' }, duration: .25, stagger: .08 }, W(10, 24));
+tl.fromTo(bolt, { opacity: 0 }, { opacity: 1, duration: .08, yoyo: true, repeat: 9, immediateRender: false }, W(10, 26));
+tl.to(cells, { opacity: .3, duration: .16, yoyo: true, repeat: 9, ease: 'sine.inOut' }, W(10, 26));
+you.face(tl, W(10, 27), 'worry'); you.pose(tl, W(10, 30), 'shrug'); you.sweatDrop(tl, W(10, 31));
+cap(10, 24, 31, [26, 30, 31], END - 0.35);
 tl.to(svg, { opacity: 1, duration: .01 }, END);
 window.DURATION = END;
 tl.seek(0);

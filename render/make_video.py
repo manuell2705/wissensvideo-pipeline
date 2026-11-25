@@ -417,7 +417,7 @@ def mux(video, voice_wav, out, music=None):
     cmd = ['ffmpeg', '-y', '-loglevel', 'error', '-i', str(video), '-i', str(voice_wav)]
     if music and Path(music).exists():
         cmd += ['-stream_loop', '-1', '-i', str(music), '-filter_complex',
-                '[2:a]volume=0.12[m];[1:a][m]amix=inputs=2:duration=first:dropout_transition=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]',
+                f'[2:a]volume={os.environ.get("MUSIC_VOL", "0.1")}[m];[1:a][m]amix=inputs=2:duration=first:dropout_transition=0,loudnorm=I=-14:TP=-1.5:LRA=11[a]',
                 '-map', '0:v', '-map', '[a]']
     else:
         cmd += ['-filter_complex', '[1:a]loudnorm=I=-14:TP=-1.5:LRA=11[a]', '-map', '0:v', '-map', '[a]']

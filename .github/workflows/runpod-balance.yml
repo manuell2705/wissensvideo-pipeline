@@ -1,0 +1,14 @@
+name: RunPod balance check
+on: workflow_dispatch
+jobs:
+  balance:
+    runs-on: ubuntu-latest
+    steps:
+      - env: { RUNPOD_API_KEY: '${{ secrets.RUNPOD_API_KEY }}' }
+        run: |
+          # prints only balance, spend rate and a masked e-mail (repo is public)
+          curl -s -H "Content-Type: application/json" -H "Authorization: Bearer $RUNPOD_API_KEY" https://api.runpod.io/graphql \
+            -d '{"query":"query { myself { clientBalance currentSpendPerHr email pods { id desiredStatus } } }"}' | python3 -c "
+          import sys,json; m=json.load(sys.stdin)['data']['myself']; e=m.get('email') or ''
+          print('balance_usd', m['clientBalance']); print('spend_per_hr', m['currentSpendPerHr'])
+          print('account', e[:3]+'***@'+e.split('@')[-1] if '@' in e else '?'); print('pods_now', len(m.get('pods') or []))"

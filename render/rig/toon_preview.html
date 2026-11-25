@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;overflow:hidden;background:#000}svg{display:block}</style></head>
+<body><svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script src="../vendor/gsap.min.js"></script><script src="characters.js"></script><script src="cartoon.js"></script><script src="world.js"></script><script>
+const svg = document.getElementById('svg'); const tl = gsap.timeline({ paused: true });
+const MODE = new URLSearchParams(location.search).get('m') || 'welt';
+let kai, mira, orbi;
+if (MODE === 'nah') {
+  const bg = E('rect', { width: 1920, height: 1080, fill: '#d9f1fb' }, svg);
+  E('ellipse', { cx: 960, cy: 1120, rx: 1100, ry: 260, fill: '#8fd18a' }, svg);
+  kai = Toon(G(svg, { transform: 'translate(560,1460) scale(1.5)' }), { v: 'kai' });
+  mira = Toon(G(svg, { transform: 'translate(1360,1460) scale(1.45)' }), { v: 'mira' });
+} else {
+  const L = World(svg, { seed: 5 });
+  const sh = (x, rx) => E('ellipse', { cx: x, cy: 1032, rx, ry: 13, fill: '#0b4a30', opacity: .45 }, L.stage);
+  sh(430, 80); sh(1490, 80); sh(960, 75);
+  kai = Toon(G(L.stage, { transform: 'translate(430,1030) scale(0.66)' }), { v: 'kai' });
+  mira = Toon(G(L.stage, { transform: 'translate(1490,1030) scale(0.64)' }), { v: 'mira' });
+  orbi = OrbiBot(L.stage, { x: 960, y: 845, s: 1.2 });
+  orbi.idle(tl, 0, 8); orbi.pose(tl, 0.8, 'wave'); orbi.face(tl, 0.8, 'happy'); orbi.pose(tl, 4.4, 'think'); orbi.face(tl, 4.4, 'think');
+  L.clouds.forEach((c, i) => tl.fromTo(c, { x: 0 }, { x: 60 + i * 20, duration: 8, ease: 'none' }, 0));
+}
+kai.idle(tl, 0, 8); mira.idle(tl, 0, 8);
+kai.pose(tl, 1.2, 'wave'); kai.face(tl, 1.2, 'grin'); kai.pose(tl, 3.6, 'point'); kai.look(tl, 3.6, 8, 0); kai.pose(tl, 6.2, 'thumbs');
+mira.pose(tl, 1.0, 'pointUp'); mira.face(tl, 1.0, 'smile'); mira.pose(tl, 3.2, 'think'); mira.face(tl, 4.6, 'o'); mira.pose(tl, 5.4, 'open'); mira.face(tl, 5.6, 'grin');
+window.seek = t => { tl.seek(t, false); drawRigs(); }; window.DURATION = 8; tl.seek(0);
+</script></body></html>

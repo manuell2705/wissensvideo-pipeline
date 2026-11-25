@@ -1,0 +1,160 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: #0b1d3f; overflow: hidden; }
+  #stage { position: relative; width: 1920px; height: 1080px; font-family: Fredoka, Inter, sans-serif; }
+  svg { position: absolute; inset: 0; }
+  .chip { position: absolute; left: 1400px; white-space: nowrap; bottom: 90px; padding: 18px 34px; border-radius: 999px; font-size: 44px; font-weight: 700; color: #fff;
+          background: rgba(10, 30, 60, .55); border: 2px solid rgba(140, 230, 220, .55); backdrop-filter: blur(8px); opacity: 0; letter-spacing: .5px;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, .35); }
+  .chip b { color: #ffb547; }
+</style></head>
+<body><div id="stage"><svg id="svg" viewBox="0 0 1920 1080"></svg></div>
+<script src="../vendor/gsap.min.js"></script>
+<script src="characters.js"></script>
+<script>
+const svg = document.getElementById('svg'), stage = document.getElementById('stage');
+const tl = gsap.timeline({ paused: true });
+window.seek = t => { tl.seek(t, false); };
+const defs = E('defs', {}, svg);
+const lg = E('linearGradient', { id: 'sky', x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+E('stop', { offset: 0, 'stop-color': '#0a1b3d' }, lg); E('stop', { offset: .65, 'stop-color': '#123f66' }, lg); E('stop', { offset: 1, 'stop-color': '#16575f' }, lg);
+const glow = E('filter', { id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%' }, defs);
+E('feGaussianBlur', { stdDeviation: 10, result: 'b' }, glow); const fm = E('feMerge', {}, glow); E('feMergeNode', { in: 'b' }, fm); E('feMergeNode', { in: 'SourceGraphic' }, fm);
+
+// ---------- calm vector world ----------
+E('rect', { width: 1920, height: 1080, fill: 'url(#sky)' }, svg);
+const stars = G(svg); for (let i = 0; i < 60; i++) E('circle', { cx: (i * 397) % 1920, cy: (i * 151) % 560, r: 1 + (i % 3), fill: '#cfe9ff', opacity: .25 + (i % 5) * .1 }, stars);
+const cam = G(svg);   // camera group: everything that zooms together
+E('path', { d: 'M0,760 C300,690 600,720 900,700 C1250,676 1600,720 1920,690 L1920,1080 L0,1080 Z', fill: '#134a55' }, cam);
+E('path', { d: 'M0,840 C400,800 800,830 1200,812 C1500,800 1750,820 1920,808 L1920,1080 L0,1080 Z', fill: '#185e5e' }, cam);
+E('ellipse', { cx: 560, cy: 995, rx: 210, ry: 26, fill: '#0b2c33', opacity: .55 }, cam);   // contact shadow
+// glass board
+const board = G(cam, { opacity: 0 });
+E('rect', { x: 980, y: 140, width: 840, height: 720, rx: 44, fill: 'rgba(200,245,255,.07)', stroke: 'rgba(140,230,220,.55)', 'stroke-width': 3 }, board);
+E('rect', { x: 1000, y: 160, width: 800, height: 40, rx: 20, fill: 'rgba(255,255,255,.06)' }, board);
+
+// ---------- brain diagram (side view) ----------
+const brain = G(board, { transform: 'translate(1100,300)' });
+const outline = 'M110,300 C70,270 60,200 90,150 C120,80 200,40 300,40 C400,35 500,70 545,150 C575,205 565,270 520,300 C490,320 450,325 420,318 C380,330 330,335 290,330 C230,340 160,335 110,300 Z';
+const cp = E('clipPath', { id: 'bclip' }, defs); E('path', { d: outline }, cp);
+E('path', { d: 'M380,318 C390,360 392,400 398,450 L432,450 C426,400 424,360 424,318 Z', fill: '#2a4a68', stroke: '#9fdfe0', 'stroke-width': 4 }, brain);   // stem
+const cereb = G(brain); E('ellipse', { cx: 458, cy: 330, rx: 74, ry: 42, fill: '#2a4a68', stroke: '#9fdfe0', 'stroke-width': 4 }, cereb);
+for (let i = 0; i < 4; i++) E('path', { d: `M${400 + i * 6},${314 + i * 10} C430,${306 + i * 10} 490,${306 + i * 10} 526,${316 + i * 10}`, stroke: 'rgba(255,255,255,.3)', 'stroke-width': 3, fill: 'none' }, cereb);
+const cerebLit = E('ellipse', { cx: 458, cy: 330, rx: 74, ry: 42, fill: '#ff8fb1', opacity: 0, filter: 'url(#glow)' }, brain);
+const regionsG = G(brain, { 'clip-path': 'url(#bclip)' });
+E('path', { d: outline, fill: '#22415f' }, regionsG);
+const R = {
+  frontal:   ['M0,0 L270,0 C255,120 240,200 230,260 L0,360 Z', '#3fe0d0'],
+  parietal:  ['M270,0 L470,0 C455,90 430,150 400,190 C330,180 280,178 240,205 C250,130 260,70 270,0 Z', '#ffb547'],
+  occipital: ['M470,0 L640,0 L640,360 L470,320 C458,250 432,205 400,190 C430,150 455,90 470,0 Z', '#7ee081'],
+  temporal:  ['M230,260 C240,205 280,178 400,190 C432,205 458,250 470,320 L470,380 L160,380 Z', '#8fa8ff'],
+};
+const lit = {};
+for (const k in R) { E('path', { d: R[k][0], fill: 'none', stroke: 'rgba(160,220,230,.35)', 'stroke-width': 3 }, regionsG);
+  lit[k] = E('path', { d: R[k][0], fill: R[k][1], opacity: 0 }, regionsG); }
+for (const d of ['M130,200 C160,170 190,190 210,160', 'M150,260 C190,240 220,270 250,240', 'M300,90 C330,110 360,80 390,100', 'M420,120 C440,150 470,130 500,160',
+                 'M320,250 C350,230 380,260 420,240', 'M110,150 C140,130 160,110 200,110', 'M480,220 C500,240 520,220 540,240'])
+  E('path', { d, stroke: 'rgba(255,255,255,.28)', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, regionsG);
+E('path', { d: outline, fill: 'none', stroke: '#bff3f0', 'stroke-width': 6 }, brain);
+lit.cereb = cerebLit;
+
+// day arc: the sun travels across and turns into the moon ("over a single day")
+const day = G(board, { opacity: 0 });
+E('path', { d: 'M1110,300 C1200,170 1600,170 1690,300', stroke: 'rgba(255,255,255,.35)', 'stroke-width': 4, fill: 'none', 'stroke-dasharray': '10 12' }, day);
+const sun = E('circle', { cx: 1110, cy: 300, r: 26, fill: '#ffd36b', filter: 'url(#glow)' }, day);
+const dayP = { p: 0 };
+const placeSun = () => { const p = dayP.p, x = 1110 + 580 * p, y = 300 - 4 * 130 * p * (1 - p) * 1.0 - 0;
+  sun.setAttribute('cx', x); sun.setAttribute('cy', y); sun.setAttribute('fill', p < .5 ? '#ffd36b' : '#dfe9ff'); };
+
+// neurons: only a few fire at any moment
+const neur = G(board, { opacity: 0 });
+const nodes = []; let sd = 7; const rnd = () => (sd = (sd * 9301 + 49297) % 233280) / 233280;
+for (let r = 0; r < 5; r++) for (let c = 0; c < 6; c++) nodes.push([1070 + c * 130 + (rnd() - .5) * 80, 230 + r * 125 + (rnd() - .5) * 70]);
+for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) { const [a, b] = [nodes[i], nodes[j]];
+  if (Math.hypot(a[0] - b[0], a[1] - b[1]) < 175) E('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: 'rgba(150,220,230,.28)', 'stroke-width': 3 }, neur); }
+const nd = nodes.map(([x, y]) => E('circle', { cx: x, cy: y, r: 13, fill: '#2f5f7a', stroke: '#9fdfe0', 'stroke-width': 3 }, neur));
+const sparks = [3, 11, 22].map(i => E('circle', { cx: nodes[i][0], cy: nodes[i][1], r: 15, fill: '#ffe08a', opacity: 0, filter: 'url(#glow)' }, neur));
+const check = E('path', { d: 'M1600,760 L1640,800 L1720,710', stroke: '#7ee081', 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0, filter: 'url(#glow)' }, board);
+
+// weight + energy
+const T = (p, x, y, s, txt, fill = '#fff', w = 800) => { const e = E('text', { x, y, 'font-size': s, 'font-weight': w, fill, 'text-anchor': 'middle', 'font-family': 'Fredoka, Inter, sans-serif' }, p); e.textContent = txt; return e; };
+const wgt = G(board, { opacity: 0 });
+// friendly body pictogram (no x-ray, no face details)
+E('circle', { cx: 1200, cy: 330, r: 52, fill: '#5fb0b8' }, wgt);
+E('path', { d: 'M1130,560 C1130,440 1160,400 1200,400 C1240,400 1270,440 1270,560 Z', fill: '#5fb0b8' }, wgt);
+E('rect', { x: 1150, y: 560, width: 40, height: 170, rx: 18, fill: '#5fb0b8' }, wgt); E('rect', { x: 1210, y: 560, width: 40, height: 170, rx: 18, fill: '#5fb0b8' }, wgt);
+const miniBrain = E('path', { d: 'M1185,318 C1170,300 1190,282 1205,290 C1222,280 1236,300 1226,316 C1232,334 1206,342 1200,332 C1188,340 1172,330 1185,318 Z', fill: '#ff8fb1', stroke: '#fff', 'stroke-width': 3 }, wgt);
+const pct2 = T(wgt, 1520, 470, 190, '0%', '#ffb547'); T(wgt, 1520, 550, 46, 'of your body weight', '#dff6ff', 600);
+const nrg = G(board, { opacity: 0 });
+E('rect', { x: 1110, y: 640, width: 560, height: 130, rx: 24, fill: 'none', stroke: '#dff6ff', 'stroke-width': 8 }, nrg);
+E('rect', { x: 1676, y: 680, width: 22, height: 50, rx: 6, fill: '#dff6ff' }, nrg);
+const cells = [0, 1, 2, 3, 4].map(i => E('rect', { x: 1126 + i * 108, y: 656, width: 96, height: 98, rx: 14, fill: '#7ee081' }, nrg));
+const pct20 = T(nrg, 1520, 470, 190, '20%', '#ffb547'); gsap.set(pct20, { opacity: 0 });
+const flow = E('path', { d: 'M1180,650 C1180,560 1200,470 1200,350', stroke: '#ffb547', 'stroke-width': 10, fill: 'none', 'stroke-dasharray': '18 16', opacity: 0, filter: 'url(#glow)' }, nrg);
+const bolt = E('path', { d: 'M1420,600 L1380,700 L1420,700 L1390,790', stroke: '#ff5a5a', 'stroke-width': 12, fill: 'none', 'stroke-linejoin': 'round', opacity: 0, filter: 'url(#glow)' }, nrg);
+
+// ---------- the 'you' figure ----------
+const you = Person(cam, { x: -260, y: 990, s: 0.95 });
+
+// ---------- chips (one short keyword at a time) ----------
+const chip = (t0, t1, html) => { const d = document.createElement('div'); d.className = 'chip'; d.innerHTML = html; stage.appendChild(d); gsap.set(d, { xPercent: -50 });
+  tl.fromTo(d, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: .35, ease: 'back.out(1.6)', immediateRender: false }, t0); tl.to(d, { opacity: 0, y: -20, duration: .3 }, t1); };
+
+// ---------- timeline synced to George's words ----------
+const o8 = 0.5, o9 = 11.82, o10 = 22.36, END = 37.2;
+you.idle(tl, 0, END);
+tl.to(board, { opacity: 1, duration: .6 }, 0.3);
+you.walkIn(tl, 0.2, -260, 560, 1.6);
+you.pose(tl, o8 + 0.0, 'pointUp'); you.look(tl, o8, 0, -4);
+you.pose(tl, o8 + 1.9, 'open'); you.face(tl, o8 + 1.9, 'grin');
+tl.to(Object.values(lit), { opacity: .95, duration: .25, stagger: .03 }, o8 + 3.2);   // "ALL of it"
+tl.to(Object.values(lit), { opacity: 0, duration: .5 }, o8 + 4.6);
+chip(o8 + 2.4, o8 + 4.9, 'You use <b>all</b> of it');
+you.pose(tl, o8 + 5.1, 'point'); you.face(tl, o8 + 5.1, 'smile'); you.look(tl, o8 + 5.1, 8, 0);
+tl.to(day, { opacity: 1, duration: .4 }, o8 + 5.6);
+tl.to(dayP, { p: 1, duration: 3.0, ease: 'none', onUpdate: placeSun }, o8 + 6.6);
+['frontal', 'parietal', 'occipital', 'temporal', 'cereb'].forEach((k, i) => tl.to(lit[k], { opacity: .9, duration: .3 }, o8 + 8.6 + i * .38));
+you.face(tl, o8 + 9.2, 'grin');
+tl.to(day, { opacity: 0, duration: .4 }, o8 + 10.2);
+// scene 9: not all at once, only a few neurons
+you.pose(tl, o9 + 0.1, 'wag'); you.pose(tl, o9 + 0.4, 'shake'); you.face(tl, o9 + 0.2, 'smile'); you.look(tl, o9, 0, 0);
+tl.to(Object.values(lit), { opacity: 0, duration: .3 }, o9 + 0.6);
+['frontal', 'occipital', 'temporal'].forEach((k, i) => { tl.to(lit[k], { opacity: .9, duration: .2 }, o9 + 1.0 + i * .6); tl.to(lit[k], { opacity: 0, duration: .2 }, o9 + 1.5 + i * .6); });
+chip(o9 + 0.6, o9 + 2.9, 'Not <b>all at once</b>');
+tl.to(brain, { opacity: 0, duration: .4 }, o9 + 3.0);
+tl.to(neur, { opacity: 1, duration: .5 }, o9 + 3.2);
+tl.to(cam, { scale: 1.12, x: -150, y: -60, duration: 1.4, ease: 'power2.inOut' }, o9 + 3.0);
+you.pose(tl, o9 + 4.4, 'pinch'); you.face(tl, o9 + 4.4, 'o'); you.look(tl, o9 + 4.4, 8, -3);
+sparks.forEach((s, i) => { for (let t = o9 + 4.6 + i * .35; t < o9 + 9.6; t += 1.05) tl.fromTo(s, { opacity: 0, attr: { r: 12 } }, { opacity: 1, attr: { r: 26 }, duration: .25, yoyo: true, repeat: 1, immediateRender: false }, t); });
+chip(o9 + 5.0, o9 + 7.6, 'Only a <b>small fraction</b> fires');
+you.pose(tl, o9 + 8.1, 'thumbs'); you.face(tl, o9 + 8.1, 'grin');
+tl.fromTo(check, { opacity: 0, scale: .6, svgOrigin: '1660 755' }, { opacity: 1, scale: 1, duration: .35, ease: 'back.out(2)', immediateRender: false }, o9 + 8.9);
+// scene 10: weight and energy
+tl.to(cam, { scale: 1, x: 0, y: 0, duration: 1.2, ease: 'power2.inOut' }, o10 - 0.4);
+tl.to([neur, check], { opacity: 0, duration: .4 }, o10 - 0.3);
+tl.to(wgt, { opacity: 1, duration: .5 }, o10 + 0.2);
+you.pose(tl, o10 + 0.3, 'chest'); you.face(tl, o10 + 0.3, 'smile'); you.look(tl, o10 + 0.3, 0, 4);
+const c2 = { v: 0 }; tl.to(c2, { v: 2, duration: .6, ease: 'power1.out', onUpdate: () => { pct2.textContent = Math.round(c2.v) + '%'; } }, o10 + 1.3);
+tl.to(wgt, { opacity: 0, duration: .4 }, o10 + 3.5);
+tl.to(nrg, { opacity: 1, duration: .4 }, o10 + 3.7);
+tl.to(miniBrain, { opacity: 1 }, o10 + 3.7);
+E('path', { d: 'M1185,318 C1170,300 1190,282 1205,290 C1222,280 1236,300 1226,316 C1232,334 1206,342 1200,332 C1188,340 1172,330 1185,318 Z', fill: '#ff8fb1', stroke: '#fff', 'stroke-width': 3, transform: 'translate(0,0) scale(1)' }, nrg);
+you.pose(tl, o10 + 4.4, 'point'); you.look(tl, o10 + 4.4, 8, 0);
+tl.to(cells[0], { attr: { fill: '#ffb547' }, duration: .3 }, o10 + 5.3);
+tl.fromTo(flow, { opacity: 0, strokeDashoffset: 0 }, { opacity: 1, strokeDashoffset: -136, duration: 2.0, ease: 'none', immediateRender: false }, o10 + 5.4);
+tl.to(pct20, { opacity: 1, duration: .3 }, o10 + 5.5);
+you.face(tl, o10 + 5.6, 'o');
+chip(o10 + 5.8, o10 + 8.0, '<b>20%</b> of your energy');
+tl.to(flow, { opacity: 0, duration: .3 }, o10 + 7.8);
+tl.to(pct20, { opacity: 0, duration: .3 }, o10 + 8.0);
+tl.to(cells, { attr: { fill: '#ffb547' }, duration: .25, stagger: .12 }, o10 + 8.5);
+tl.to(cells, { attr: { fill: '#ff5a5a' }, duration: .25, stagger: .1 }, o10 + 10.6);
+tl.to(cells, { opacity: .25, duration: .15, yoyo: true, repeat: 9 }, o10 + 11.4);
+tl.fromTo(bolt, { opacity: 0 }, { opacity: 1, duration: .08, yoyo: true, repeat: 7, immediateRender: false }, o10 + 11.2);
+you.face(tl, o10 + 10.8, 'worry'); you.pose(tl, o10 + 11.0, 'shrug'); you.sweatDrop(tl, o10 + 11.3);
+chip(o10 + 11.0, o10 + 14.2, 'More power than your body <b>can deliver</b>');
+tl.to(svg, { opacity: 1, duration: .01 }, END);
+window.DURATION = END;
+tl.seek(0);
+</script></body></html>

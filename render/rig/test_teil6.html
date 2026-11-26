@@ -1,0 +1,360 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>html,body{margin:0;overflow:hidden;background:#000}svg{display:block}</style></head>
+<body><svg id="svg" width="1920" height="1080" viewBox="0 0 1920 1080"></svg>
+<script src="../vendor/gsap.min.js"></script><script src="characters.js"></script><script src="world.js"></script><script src="cartoon.js"></script><script src="words_teil6.js"></script>
+<script>
+// Real video, PART 6 of 6
+const svg = document.getElementById('svg'), tl = gsap.timeline({ paused: true });
+// line offsets (seconds); title sting sits between line 5 and line 11
+const ORDER = ['801', '802', '803', '804', '805', '806', '807', '808', '809', '810', '811', '812', '813', '814', '815', '816', '817', '818', '819', '820', '821'], OFF = {}; let acc = 0.4;
+for (const id of ORDER) { if (id === 'T') { OFF.T = acc - .1; acc += 2.8; continue; } OFF[id] = acc; acc += LDUR[id] + (['802', '803', '804', '805', '808', '809', '810', '811', '813', '814', '816', '817', '818', '819', '820'].includes(id) ? 0.55 : 0.35); }
+let END = acc + 0.6;
+const W = (id, word, n = 0) => { const L = WORDS[id]; let k = -1; for (let i = 0; i < L.length; i++) if (L[i][0].toLowerCase().replace(/[^a-z0-9-]/g, '').startsWith(word.toLowerCase())) { if (n-- === 0) { k = i; break; } } if (k < 0) throw new Error('word ' + id + ' ' + word); return OFF[id] + L[k][1]; };
+const SFX = []; const sfx = (name, t, vol = 1) => SFX.push([name, +t.toFixed(3), vol]);
+const defs = E('defs', {}, svg);
+const glow = E('filter', { id: 'glow', x: '-50%', y: '-50%', width: '200%', height: '200%' }, defs);
+E('feGaussianBlur', { stdDeviation: 8, result: 'b' }, glow); const gm = E('feMerge', {}, glow); E('feMergeNode', { in: 'b' }, gm); E('feMergeNode', { in: 'SourceGraphic' }, gm);
+const T = (p, x, y, s, txt, fill = '#fff', w = 900, extra = {}) => { const e = E('text', { x, y, 'font-size': s, 'font-weight': w, fill, 'text-anchor': 'middle', 'font-family': 'Fredoka, Inter, sans-serif', ...extra }, p); e.textContent = txt; return e; };
+const pop = (el, t, ox, oy, d = .4) => tl.fromTo(el, { opacity: 0, scale: 0, svgOrigin: `${ox} ${oy}` }, { opacity: 1, scale: 1, duration: d, ease: 'back.out(1.9)', immediateRender: false }, t);
+const out = (el, t, d = .3) => tl.to(el, { opacity: 0, duration: d }, t);
+const screen = G(svg);
+const flash = E('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: '#fff', opacity: 0 }, svg);
+const cut = t => { tl.to(flash, { opacity: .55, duration: .05, yoyo: true, repeat: 1 }, t - .05); };   // hard cut with a tiny white pop
+
+// ---------- reusable: thought lens (round callout growing out of a point, with a connector) ----------
+function Lens(parent, fx, fy, x, y, r, rim = '#9ff3ff') {
+  const g = G(parent, { opacity: 0 });
+  const ln = E('path', { d: `M${fx},${fy} L${x},${y}`, stroke: rim, 'stroke-width': 5, 'stroke-dasharray': '2 12', 'stroke-linecap': 'round' }, g);
+  E('circle', { cx: fx, cy: fy, r: 9, fill: rim }, g);
+  const id = 'lc' + Math.floor(Math.random() * 1e7); const cp = E('clipPath', { id }, defs); E('circle', { cx: x, cy: y, r }, cp);
+  E('circle', { cx: x, cy: y, r: r + 10, fill: '#0e2240', opacity: .35 }, g);
+  E('circle', { cx: x, cy: y, r, fill: '#eafcff' }, g);
+  const inner = G(g, { 'clip-path': `url(#${id})` });
+  E('circle', { cx: x, cy: y, r, fill: 'none', stroke: rim, 'stroke-width': 9 }, g);
+  E('path', { d: `M${x - r * .62},${y - r * .45} A${r * .78},${r * .78} 0 0 1 ${x - r * .05},${y - r * .78}`, stroke: '#fff', 'stroke-width': 8, fill: 'none', opacity: .8, 'stroke-linecap': 'round' }, g);
+  return { g, inner, ln, x, y, r, show(t) { tl.fromTo(g, { opacity: 0 }, { opacity: 1, duration: .1, immediateRender: false }, t); tl.fromTo(ln, { attr: { 'stroke-dashoffset': 200 } }, { attr: { 'stroke-dashoffset': 0 }, duration: .3, immediateRender: false }, t);
+    const body = [...g.children].slice(2); tl.fromTo(body, { scale: 0, svgOrigin: `${x} ${y}` }, { scale: 1, duration: .45, ease: 'back.out(2.2)', immediateRender: false }, t + .05); sfx('pop', t + .05, .5); } };
+}
+// ---------- reusable: side-view brain ----------
+function Brain(parent, tx, ty, s) {
+  const b = G(parent, { transform: `translate(${tx},${ty}) scale(${s})` });
+  const outline = 'M110,300 C70,270 60,200 90,150 C120,80 200,40 300,40 C400,35 500,70 545,150 C575,205 565,270 520,300 C490,320 450,325 420,318 C380,330 330,335 290,330 C230,340 160,335 110,300 Z';
+  const id = 'bc' + Math.floor(Math.random() * 1e7); const cp = E('clipPath', { id }, defs); E('path', { d: outline }, cp);
+  E('path', { d: 'M380,318 C390,360 392,400 398,450 L432,450 C426,400 424,360 424,318 Z', fill: '#e88aa6', stroke: '#7a2d4c', 'stroke-width': 6 }, b);
+  E('ellipse', { cx: 458, cy: 330, rx: 74, ry: 42, fill: '#f2a2bb', stroke: '#7a2d4c', 'stroke-width': 6 }, b);
+  const reg = G(b, { 'clip-path': `url(#${id})` });
+  E('path', { d: outline, fill: '#ffb3c8' }, reg);
+  E('path', { d: 'M0,240 C150,300 400,330 640,250 L640,400 L0,400 Z', fill: '#f28fae', opacity: .7 }, reg);   // cel shadow
+  for (const d of ['M130,200 C160,170 190,190 210,160', 'M150,260 C190,240 220,270 250,240', 'M300,90 C330,110 360,80 390,100', 'M420,120 C440,150 470,130 500,160',
+                   'M320,250 C350,230 380,260 420,240', 'M110,150 C140,130 160,110 200,110', 'M480,220 C500,240 520,220 540,240', 'M240,150 C270,130 290,170 330,150', 'M380,180 C400,200 430,170 460,195'])
+    E('path', { d, stroke: '#c9577e', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, reg);
+  E('path', { d: 'M150,110 C200,70 260,60 300,62', stroke: '#fff', 'stroke-width': 10, fill: 'none', opacity: .6, 'stroke-linecap': 'round' }, reg);
+  const dim = E('path', { d: outline, fill: '#3a2a5a', opacity: 0 }, reg);
+  const hot = E('path', { d: outline, fill: '#ffe08a', opacity: 0, filter: 'url(#glow)' }, b);
+  E('path', { d: outline, fill: 'none', stroke: '#7a2d4c', 'stroke-width': 7, 'stroke-linejoin': 'round' }, b);
+  const at = (x, y) => [tx + x * s, ty + y * s];
+  return { g: b, dim, hot, at };
+}
+// ---------- reusable: detailed light bulb ----------
+function Bulb(parent, cx, cy, s) {
+  const g = G(parent, { transform: `translate(${cx},${cy}) scale(${s}) translate(-325,-450)` });
+  if (!document.getElementById('bGlass')) { const gg = E('radialGradient', { id: 'bGlass', cx: '42%', cy: '38%', r: '70%' }, defs); [[0, '#fffdf2'], [.7, '#fff1bf'], [1, '#f2d886']].forEach(([o, c]) => E('stop', { offset: o, 'stop-color': c }, gg));
+    const m = E('linearGradient', { id: 'bMetal', x1: 0, y1: 0, x2: 1, y2: 0 }, defs); [[0, '#7d8fa6'], [.35, '#e3ecf5'], [.6, '#b4c3d3'], [1, '#6b7d94']].forEach(([o, c]) => E('stop', { offset: o, 'stop-color': c }, m)); }
+  const halo = E('circle', { cx: 325, cy: 425, r: 90, fill: '#ffe08a', opacity: 0, filter: 'url(#glow)' }, g);
+  const rays = G(g, { opacity: 0 });
+  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + (i - 4.5) * .33; E('path', { d: `M${325 + Math.cos(a) * 82},${425 + Math.sin(a) * 82} L${325 + Math.cos(a) * 108},${425 + Math.sin(a) * 108}`, stroke: '#ffcf4a', 'stroke-width': 7, 'stroke-linecap': 'round' }, rays); }
+  E('path', { d: 'M296,478 C252,450 254,372 325,366 C396,372 398,450 354,478 C350,486 349,494 350,500 L300,500 C301,494 300,486 296,478 Z', fill: 'url(#bGlass)', stroke: '#0d1633', 'stroke-width': 5 }, g);
+  E('path', { d: 'M282,402 C286,388 298,380 312,378', stroke: '#fff', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, g);
+  E('path', { d: 'M314,498 L310,440 M336,498 L340,440', stroke: '#8a7a5a', 'stroke-width': 3, fill: 'none' }, g);
+  const fd = 'M310,440 L314,428 L318,440 L322,428 L326,440 L330,428 L334,440 L338,428 L340,440';
+  E('path', { d: fd, stroke: '#c98a3a', 'stroke-width': 3.5, fill: 'none', 'stroke-linejoin': 'round' }, g);
+  const fil = E('path', { d: fd, stroke: '#fff6c0', 'stroke-width': 5, fill: 'none', 'stroke-linejoin': 'round', filter: 'url(#glow)', opacity: 0 }, g);
+  E('path', { d: 'M298,500 L352,500 L348,510 L302,510 Z', fill: '#d9e3ee', stroke: '#0d1633', 'stroke-width': 4, 'stroke-linejoin': 'round' }, g);
+  for (let i = 0; i < 3; i++) E('rect', { x: 300 + i * 1.5, y: 510 + i * 11, width: 50 - i * 3, height: 12, rx: 6, fill: 'url(#bMetal)', stroke: '#0d1633', 'stroke-width': 3.5 }, g);
+  E('path', { d: 'M310,543 L340,543 L334,554 L316,554 Z', fill: '#2b3448', stroke: '#0d1633', 'stroke-width': 3.5, 'stroke-linejoin': 'round' }, g);
+  return { g, halo, rays, fil };
+}
+
+const bgBack = E('rect', { x: 0, y: 0, width: 1920, height: 1080, fill: '#0a1030' }, screen);   // what you see behind the sliding "slides"
+// ---------- reusable: slide switch (presentation-style) ----------
+function frameOf(set) { return E('rect', { x: 6, y: 6, width: 1908, height: 1068, rx: 46, fill: 'none', stroke: '#ffffff', 'stroke-width': 12, opacity: 0 }, set); }
+function slide(from, to, t, dir = 1, fFrom, fTo) {
+  const s = .84;
+  tl.to(from, { scale: s, svgOrigin: '960 540', duration: .28, ease: 'power2.in' }, t);
+  tl.to(fFrom, { opacity: 1, duration: .2 }, t);
+  tl.set(to, { opacity: 1, x: 1920 * dir, scale: s, svgOrigin: '960 540' }, t + .28);
+  tl.set(fTo, { opacity: 1 }, t + .28);
+  tl.to(from, { x: -1920 * dir, duration: .5, ease: 'power3.inOut' }, t + .28);
+  tl.to(to, { x: 0, duration: .5, ease: 'power3.inOut' }, t + .28);
+  tl.to(to, { scale: 1, duration: .3, ease: 'power2.out' }, t + .78);
+  tl.to(fTo, { opacity: 0, duration: .25 }, t + .8);
+  tl.set(from, { opacity: 0, x: 0, scale: 1 }, t + .8); tl.set(fFrom, { opacity: 0 }, t + .8);
+  sfx('whoosh', t + .2, .8);
+}
+
+
+
+const WA = (id, alts, n = 0) => { for (const a of alts) { try { return W(id, a, n); } catch (e) {} } throw new Error('word ' + id + ' ' + alts); };
+const LBL = (p, x, y, txt, col = '#9ff3ff', w = 0, size = 40) => { const g = G(p, { opacity: 0 }); const ww = w || txt.length * size * .62 + 70; E('rect', { x: x - ww / 2 + 5, y: y - size * .95 + 7, width: ww, height: size * 1.7, rx: size * .85, fill: '#000', opacity: .2 }, g); E('rect', { x: x - ww / 2, y: y - size * .95, width: ww, height: size * 1.7, rx: size * .85, fill: '#14243a', stroke: col, 'stroke-width': 5 }, g); T(g, x, y + size * .36, size, txt, '#ffffff', 800); return g; };
+const showLbl = (g, t) => { tl.fromTo(g, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .3, ease: 'back.out(2)', immediateRender: false }, t); sfx('pop', t, .3); };
+const SC = ['#5fe8d0', '#ffcf4a', '#ff8fb1', '#9fb3ff', '#7ee081', '#ffb070'];
+const card = (p, x, y, w, h, fill = '#fff') => { const g = G(p, { opacity: 0 }); E('rect', { x: x - w / 2 + 6, y: y - h / 2 + 8, width: w, height: h, rx: 14, fill: '#000', opacity: .18 }, g); E('rect', { x: x - w / 2, y: y - h / 2, width: w, height: h, rx: 14, fill, stroke: '#1d3a4a', 'stroke-width': 5 }, g); return g; };
+const grad = (id, stops, v = true) => { const g = E('linearGradient', { id, x1: 0, y1: 0, x2: v ? 0 : 1, y2: v ? 1 : 0 }, defs); stops.forEach(([o, c]) => E('stop', { offset: o, 'stop-color': c }, g)); return g; };
+const rgrad = (id, stops) => { const g = E('radialGradient', { id, cx: '50%', cy: '45%', r: '75%' }, defs); stops.forEach(([o, c]) => E('stop', { offset: o, 'stop-color': c }, g)); };
+grad('tTxt', [[0, '#fff3a8'], [.5, '#ffb547'], [1, '#ff6b9a']]);
+const INK = '#1d3a4a';
+const bg = (cam, fill) => E('rect', { x: -200, y: -200, width: 2320, height: 1480, fill }, cam);
+const stars = (cam, n = 50) => { for (let i = 0; i < n; i++) E('circle', { cx: (i * 337) % 1920, cy: (i * 191) % 1080, r: 1.5 + (i % 3), fill: '#cfe6ff', opacity: .45 }, cam); };
+const enter = (from, to, t) => { tl.to(flash, { opacity: .9, duration: .12 }, t - .12); tl.set(from, { opacity: 0 }, t); tl.set(to, { opacity: 1 }, t); tl.to(flash, { opacity: 0, duration: .3 }, t); };
+
+// ============ SET FL: flow, sunset skatepark (801-802) ============
+const setFl = G(screen);
+grad('flSky', [[0, '#ff9a6a'], [.5, '#ffc98a'], [1, '#ffe8c8']]);
+const camFl = G(setFl); bg(camFl, 'url(#flSky)');
+E('circle', { cx: 1500, cy: 520, r: 150, fill: '#fff3c4', opacity: .9 }, camFl);
+E('path', { d: 'M-200,640 C200,600 500,630 900,610 C1300,590 1600,630 2120,600 L2120,1300 L-200,1300 Z', fill: '#e88a6a', opacity: .6 }, camFl);
+E('path', { d: 'M-200,820 L300,820 C500,820 560,600 700,600 L1220,600 C1360,600 1420,820 1620,820 L2120,820 L2120,1300 L-200,1300 Z', fill: '#c6d3e6', stroke: INK, 'stroke-width': 7 }, camFl);
+E('rect', { x: -200, y: 820, width: 2320, height: 400, fill: '#9aa9b8' }, camFl);
+for (let i = 0; i < 5; i++) { const x = 100 + i * 460; const tr = G(camFl, { transform: `translate(${x},640)` }); E('rect', { x: -8, y: -170, width: 16, height: 170, fill: '#5a3a28' }, tr); E('path', { d: 'M0,-170 C-60,-190 -110,-160 -130,-130 M0,-170 C60,-190 110,-160 130,-130 M0,-170 C-30,-220 -80,-230 -110,-220 M0,-170 C30,-220 80,-230 110,-220', stroke: '#3a7a4a', 'stroke-width': 18, fill: 'none', 'stroke-linecap': 'round' }, tr); tl.to(tr, { rotation: 2, svgOrigin: `${x} 640`, duration: 2.5, yoyo: true, repeat: 20, ease: 'sine.inOut' }, i * .3); }
+const orbiFl = OrbiBot(camFl, { x: 300, y: 680, s: .8 });
+const board = G(camFl); E('rect', { x: -90, y: -10, width: 180, height: 20, rx: 10, fill: '#ff6b6b', stroke: INK, 'stroke-width': 5 }, board); E('circle', { cx: -55, cy: 18, r: 12, fill: INK }, board); E('circle', { cx: 55, cy: 18, r: 12, fill: INK }, board); gsap.set(board, { x: 300, y: 810 });
+const clockFl = G(camFl, { opacity: 0 }); E('circle', { cx: 960, cy: 260, r: 90, fill: '#fff', stroke: INK, 'stroke-width': 7 }, clockFl); const chFl = E('path', { d: 'M960,260 L960,195 M960,260 L1000,280', stroke: INK, 'stroke-width': 8, 'stroke-linecap': 'round' }, clockFl);
+const worries = ['what do they think?', 'am I good enough?'].map((t, i) => { const g = G(camFl, { opacity: 0 }); const x = 520 + i * 820, y = 200 + i * 40; E('rect', { x: x - 200, y: y - 50, width: 400, height: 90, rx: 45, fill: '#ffffff', stroke: INK, 'stroke-width': 5 }, g); T(g, x, y + 10, 30, t, '#9aa9b8', 800); return g; });
+const flowL = LBL(camFl, 960, 960, 'psychologists: flow  ·  athletes: the zone', '#ffcf4a', 0, 40);
+const frameFl = frameOf(setFl);
+
+// ============ SET N: less noise (803) + sweet spot (804) ============
+const setN = G(screen, { opacity: 0 });
+rgrad('nBg', [[0, '#24306a'], [1, '#0c1030']]);
+const camN = G(setN); bg(camN, 'url(#nBg)'); stars(camN, 40);
+const brainN = Brain(camN, 160, 200, 1.0);
+const front = E('ellipse', { cx: 160 + 140, cy: 200 + 140, rx: 120, ry: 100, fill: '#ff8f4a', opacity: .0, filter: 'url(#glow)' }, camN);
+const judgeL = LBL(camN, 420, 120, 'judge & second-guess: quieter', '#ff8fb1', 0, 34);
+const noise = E('path', { d: 'M160,820 ' + Array.from({ length: 40 }, (_, i) => `L${160 + i * 14},${820 + ((i * 37) % 9 - 4) * 14}`).join(' '), stroke: '#ff8fb1', 'stroke-width': 6, fill: 'none', opacity: 0 }, camN);
+const calm = E('path', { d: 'M160,820 C300,800 440,840 580,820 C640,812 680,820 720,820', stroke: '#7ee081', 'stroke-width': 7, fill: 'none', opacity: 0 }, camN);
+const lessL = LBL(camN, 440, 950, 'not more brain. less noise.', '#7ee081', 0, 38);
+const chart = G(camN, { opacity: 0 });
+E('rect', { x: 1000, y: 160, width: 760, height: 720, rx: 24, fill: 'rgba(255,255,255,.06)', stroke: '#9ff3ff', 'stroke-width': 4 }, chart);
+E('path', { d: 'M1060,820 L1720,820 M1060,820 L1060,200', stroke: '#ffffff', 'stroke-width': 6, 'stroke-linecap': 'round' }, chart);
+T(chart, 1390, 870, 30, 'your skill →', '#ffffff', 800); T(chart, 1030, 520, 30, 'challenge →', '#ffffff', 800, { transform: 'rotate(-90 1030 520)' });
+const chan = E('path', { d: 'M1060,760 L1080,820 L1720,240 L1700,180 Z', fill: '#7ee081', opacity: 0 }, chart);
+const stressZ = G(chart, { opacity: 0 }); E('path', { d: 'M1060,200 L1060,740 L1680,190 Z', fill: '#ff6b6b', opacity: .25 }, stressZ); T(stressZ, 1230, 360, 40, 'stress', '#ff8f8f', 900);
+const boredZ = G(chart, { opacity: 0 }); E('path', { d: 'M1100,820 L1720,820 L1720,270 Z', fill: '#9fb3ff', opacity: .25 }, boredZ); T(boredZ, 1560, 700, 40, 'boring', '#9fb3ff', 900);
+const flowT = T(chart, 1420, 500, 40, 'flow', '#ffffff', 900, { opacity: 0, transform: 'rotate(-42 1420 500)' });
+const dot = E('circle', { cx: 1200, cy: 300, r: 22, fill: '#ffcf4a', stroke: '#fff', 'stroke-width': 5, opacity: 0, filter: 'url(#glow)' }, chart);
+const frameN = frameOf(setN);
+
+// ============ SET AR: the arena showdown (805-814) ============
+const setAr = G(screen, { opacity: 0 });
+rgrad('arBg', [[0, '#2a1e5a'], [1, '#08061a']]);
+const camAr = G(setAr); bg(camAr, 'url(#arBg)');
+for (let i = 0; i < 4; i++) { const x = 200 + i * 507; const b = E('path', { d: `M${x},-40 L${x - 160},1000 L${x + 160},1000 Z`, fill: '#ffffff', opacity: .06 }, camAr); tl.to(b, { rotation: (i % 2 ? 8 : -8), svgOrigin: `${x} -40`, duration: 3, yoyo: true, repeat: 20, ease: 'sine.inOut' }, i * .4); }
+E('ellipse', { cx: 960, cy: 960, rx: 1100, ry: 140, fill: '#3a2a7a' }, camAr);
+for (let r = 0; r < 2; r++) for (let i = 0; i < 40; i++) E('circle', { cx: 30 + i * 49 + r * 24, cy: 1000 + r * 40, r: 14, fill: SC[(i + r) % 6], opacity: .5 }, camAr);
+// left: Orbi with brain hologram; right: server tower
+const orbiAr = OrbiBot(camAr, { x: 340, y: 760, s: 1 });
+const holo = Brain(camAr, 190, 280, .5); tl.to(holo.hot, { opacity: .25, duration: 1, yoyo: true, repeat: 30 }, 0);
+const rack = G(camAr); E('rect', { x: 1440, y: 300, width: 300, height: 600, rx: 20, fill: '#2a3448', stroke: '#9ff3ff', 'stroke-width': 6 }, rack);
+const leds = []; for (let k = 0; k < 10; k++) { E('rect', { x: 1470, y: 330 + k * 56, width: 240, height: 40, rx: 8, fill: '#1a2232' }, rack); for (let j = 0; j < 4; j++) { const l = E('circle', { cx: 1500 + j * 30, cy: 350 + k * 56, r: 6, fill: SC[(k + j) % 6] }, rack); leds.push(l); } }
+leds.forEach((l, i) => tl.to(l, { opacity: .2, duration: .15, yoyo: true, repeat: 60, ease: 'none' }, (i % 7) * .09));
+// scoreboard
+const sb = G(camAr); E('rect', { x: 700, y: 40, width: 520, height: 130, rx: 24, fill: '#14243a', stroke: '#ffcf4a', 'stroke-width': 6 }, sb);
+T(sb, 800, 84, 26, 'YOU', '#9ff3ff', 900); T(sb, 1120, 84, 26, 'MACHINE', '#ff8fb1', 900);
+const sY = T(sb, 800, 150, 60, '0', '#ffffff', 900), sM = T(sb, 1120, 150, 60, '0', '#ffffff', 900); T(sb, 960, 145, 50, ':', '#ffffff', 900);
+const yScore = [0, 0, 0, 1, 2, 3], mScore = [0, 1, 2, 2, 2, 2];
+const roundCard = (n, title) => { const g = card(camAr, 960, 520, 820, 560, '#ffffff'); T(g, 960, 290, 30, 'ROUND ' + n, '#9aa9b8', 900); T(g, 960, 345, 46, title, INK, 900); return g; };
+const R1 = roundCard(1, 'speed'); { T(R1, 760, 470, 34, 'chip', INK, 800); T(R1, 760, 540, 40, 'billions / s', '#ff4d8a', 900); T(R1, 1160, 470, 34, 'neuron', INK, 800); T(R1, 1160, 540, 40, '≤ few hundred / s', '#2a7ab0', 900); }
+const R1bar = E('rect', { x: 600, y: 600, width: 0, height: 40, rx: 12, fill: '#ff8fb1' }, R1); const R1b2 = E('rect', { x: 1060, y: 600, width: 0, height: 40, rx: 12, fill: '#9ff3ff' }, R1);
+const R2 = roundCard(2, 'knowledge'); { for (let k = 0; k < 14; k++) E('rect', { x: 620 + (k % 2) * 10, y: 650 - k * 22, width: 200, height: 20, rx: 4, fill: SC[k % 6], stroke: INK, 'stroke-width': 3 }, R2); T(R2, 760, 690, 28, 'trillions of words', '#ff4d8a', 900); T(R2, 1160, 520, 80, '⌛', '#9aa9b8', 900); T(R2, 1160, 600, 30, 'thousands of lifetimes', '#2a7ab0', 900); }
+const R3 = roundCard(3, 'raw power'); { T(R3, 760, 450, 32, 'LineShine (China)', INK, 800); T(R3, 760, 520, 40, '≈ 2 quintillion / s', '#ff4d8a', 900); T(R3, 1160, 450, 32, 'your brain', INK, 800); const q = T(R3, 1160, 520, 40, '? (estimate)', '#2a7ab0', 900); }
+const sameL = LBL(camAr, 960, 750, 'NIST estimate: same league', '#ffcf4a', 0, 34);
+const R3b = G(camAr, { opacity: 0 }); { E('rect', { x: 560, y: 820, width: 800, height: 0, fill: 'none' }, R3b); }
+const pw = card(camAr, 960, 520, 820, 560, '#ffffff'); T(pw, 960, 290, 30, 'the power bill', '#9aa9b8', 900);
+const pwBig = E('rect', { x: 620, y: 360, width: 160, height: 0, rx: 10, fill: '#ff8fb1', stroke: INK, 'stroke-width': 4 }, pw); T(pw, 700, 740, 30, '≈ 42 MW', INK, 900);
+const pwSmall = E('rect', { x: 1140, y: 700, width: 160, height: 0, rx: 4, fill: '#9ff3ff', stroke: INK, 'stroke-width': 4 }, pw); T(pw, 1220, 740, 30, '20 W', INK, 900);
+const bulbS = Bulb(pw, 1220, 540, .45);
+const twoM = LBL(camAr, 960, 860, '≈ 2,000,000× less', '#7ee081', 0, 44);
+const R4 = roundCard(4, 'learning'); { const gir = (x, y, s, o = 1) => { const g = G(R4, { transform: `translate(${x},${y}) scale(${s})`, opacity: o }); E('path', { d: 'M-30,40 L-30,-10 L-20,-90 L0,-90 L5,-20 L40,-10 L40,40', fill: '#ffcf4a', stroke: INK, 'stroke-width': 5 }, g); for (const [a, b] of [[-15, -60], [-20, 10], [20, 5]]) E('circle', { cx: a, cy: b, r: 8, fill: '#c98a3a' }, g); return g; }; gir(760, 560, 1.4); T(R4, 760, 690, 28, 'child: 1 example', '#2a7ab0', 900); for (let k = 0; k < 12; k++) gir(1060 + (k % 4) * 70, 440 + Math.floor(k / 4) * 90, .5, .8); T(R4, 1160, 690, 28, 'AI: huge piles', '#ff4d8a', 900); }
+const R5 = roundCard(5, 'the real world'); { const ico = (x, t) => { T(R5, x, 560, 30, t, INK, 800); }; E('rect', { x: 600, y: 420, width: 120, height: 90, rx: 10, fill: '#9fb3ff', stroke: INK, 'stroke-width': 4 }, R5); ico(660, 'laundry'); for (let k = 0; k < 4; k++) E('rect', { x: 880 + k * 40, y: 500 - k * 30, width: 40, height: 30 + k * 30, fill: '#c6d3e6', stroke: INK, 'stroke-width': 3 }, R5); ico(960, 'stairs'); E('path', { d: 'M1220,420 L1300,420 L1285,510 L1235,510 Z', fill: '#e8f8ff', stroke: INK, 'stroke-width': 4 }, R5); ico(1260, 'catching a glass'); T(R5, 960, 660, 30, 'easy for you · still hard for robots', '#2a7ab0', 900); }
+const chessC = card(camAr, 960, 520, 900, 580, '#ffffff');
+{ T(chessC, 960, 290, 30, 'chess, 2005: humans + computers', '#9aa9b8', 900); for (let r = 0; r < 6; r++) for (let c = 0; c < 6; c++) E('rect', { x: 820 + c * 46, y: 340 + r * 46, width: 46, height: 46, fill: (r + c) % 2 ? '#8a5530' : '#f6e2c0' }, chessC);
+  T(chessC, 890, 420, 60, '♞', INK, 900); T(chessC, 1030, 500, 60, '♛', INK, 900);
+  for (const x of [660, 1260]) { E('rect', { x: x - 70, y: 520, width: 140, height: 90, rx: 8, fill: '#2a3448', stroke: INK, 'stroke-width': 4 }, chessC); E('rect', { x: x - 58, y: 530, width: 116, height: 66, rx: 4, fill: '#9fe0ff' }, chessC); E('circle', { cx: x, cy: 440, r: 40, fill: '#f2c29b', stroke: INK, 'stroke-width': 5 }, chessC); } T(chessC, 960, 720, 30, 'winners: two amateurs with ordinary computers', '#2a7ab0', 900); }
+const trophy = G(camAr, { opacity: 0 }); E('path', { d: 'M900,140 L1020,140 L1010,220 C1000,260 920,260 910,220 Z', fill: '#ffcf4a', stroke: INK, 'stroke-width': 5 }, trophy); E('rect', { x: 935, y: 255, width: 50, height: 30, fill: '#ffb547', stroke: INK, 'stroke-width': 4 }, trophy);
+const gmX = LBL(camAr, 960, 860, 'not grandmasters', '#ff8fb1', 0, 34);
+const both = G(camAr, { opacity: 0 }); { const b = Brain(both, 560, 420, .45); E('rect', { x: 1140, y: 420, width: 180, height: 180, rx: 20, fill: '#2a3448', stroke: '#9ff3ff', 'stroke-width': 6 }, both); for (let k = 0; k < 6; k++) { E('path', { d: `M${1160 + k * 28},420 L${1160 + k * 28},390 M${1160 + k * 28},600 L${1160 + k * 28},630`, stroke: '#9ff3ff', 'stroke-width': 5 }, both); } T(both, 960, 560, 110, '+', '#ffcf4a', 900); }
+const bothL = LBL(camAr, 960, 800, 'what you do with both', '#ffcf4a', 0, 44);
+const frameAr = frameOf(setAr);
+
+// ============ SET E: ending meadow (818-821) ============
+const setE = G(screen, { opacity: 0 });
+grad('eSky', [[0, '#3fa4e8'], [.6, '#a8e4f6'], [1, '#ffe8c8']]);
+const camE = G(setE); bg(camE, 'url(#eSky)');
+for (let i = 0; i < 4; i++) { const cx = 200 + i * 520, cy = 140 + (i % 2) * 70; const c = G(camE, { opacity: .9 }); [[0, 0, 70], [60, 10, 55], [-60, 14, 50], [20, -30, 50]].forEach(([dx, dy, r]) => E('circle', { cx: cx + dx, cy: cy + dy, r, fill: '#fff' }, c)); tl.to(c, { x: 140, duration: 40, ease: 'none' }, 0); }
+E('path', { d: 'M-200,760 C300,700 900,740 1400,710 C1700,694 1900,720 2120,700 L2120,1300 L-200,1300 Z', fill: '#7ee081' }, camE);
+E('path', { d: 'M-200,840 C400,810 1000,830 1500,800 C1800,790 1950,805 2120,795 L2120,1300 L-200,1300 Z', fill: '#57c48a' }, camE);
+for (let i = 0; i < 30; i++) { const x = (i * 131) % 1920, y = 860 + (i * 47) % 180; const f = E('circle', { cx: x, cy: y, r: 8, fill: SC[i % 6] }, camE); tl.to(f, { y: -6, duration: 1.2 + (i % 4) * .3, yoyo: true, repeat: 20, ease: 'sine.inOut' }, i * .07); }
+const orbiE = OrbiBot(camE, { x: 960, y: 700, s: 1.1 });
+const bulbE = Bulb(camE, 1460, 420, 1.1);
+const featL = LBL(camE, 960, 140, 'power-saving mode = the feature', '#ffcf4a', 0, 44);
+const tips = [['good sleep', '#9fb3ff'], ['real challenges', '#ffcf4a'], ['less noise', '#7ee081']].map(([t, c], i) => LBL(camE, 420 + i * 540, 280, t, c, 0, 40));
+const realL = LBL(camE, 960, 1000, 'your real 100%', '#ff8fb1', 0, 48);
+const qDials = G(camE, { opacity: 0 }); { E('rect', { x: 460, y: 240, width: 1000, height: 220, rx: 30, fill: 'rgba(255,255,255,.85)', stroke: INK, 'stroke-width': 6 }, qDials); ['SENSES', 'MEMORY', 'SPEED', 'BODY', 'LEARNING'].forEach((n, i) => { const x = 560 + i * 200; E('circle', { cx: x, cy: 330, r: 46, fill: ['#5fe8d0', '#ffb547', '#ff8fb1', '#9fb3ff', '#7ee081'][i], stroke: INK, 'stroke-width': 5 }, qDials); E('path', { d: `M${x},330 L${x + 20},300`, stroke: INK, 'stroke-width': 7, 'stroke-linecap': 'round' }, qDials); T(qDials, x, 420, 24, n, INK, 900); }); }
+const qT = T(camE, 960, 560, 60, 'which one first?', '#ffffff', 900, { opacity: 0, stroke: INK, 'stroke-width': 8, 'paint-order': 'stroke' });
+const outro = G(screen, { opacity: 0 });
+rgrad('oBg', [[0, '#3fb6e8'], [1, '#14306a']]);
+E('rect', { width: 1920, height: 1080, fill: 'url(#oBg)' }, outro); stars(outro, 60);
+const ring = E('ellipse', { cx: 960, cy: 470, rx: 260, ry: 90, fill: 'none', stroke: '#ffcf4a', 'stroke-width': 10, transform: 'rotate(-14 960 470)' }, outro);
+E('circle', { cx: 960, cy: 470, r: 120, fill: '#9ff3ff', stroke: '#ffffff', 'stroke-width': 8 }, outro); E('circle', { cx: 920, cy: 430, r: 34, fill: '#ffffff', opacity: .6 }, outro);
+const sat = E('circle', { cx: 1220, cy: 405, r: 22, fill: '#ffcf4a', stroke: '#fff', 'stroke-width': 4 }, outro);
+T(outro, 960, 720, 90, 'MINDSPHERE', 'url(#tTxt)', 900, { stroke: '#fff7d6', 'stroke-width': 4, 'paint-order': 'stroke', 'letter-spacing': 6 });
+T(outro, 960, 810, 42, 'see you on the next orbit', '#ffffff', 700);
+const frameE = frameOf(setE);
+
+// ============ SET P: control panel (815-817) ============
+const setP = G(screen, { opacity: 0 });
+{ const g = E('linearGradient', { id: 'pBg2', x1: 0, y1: 0, x2: 0, y2: 1 }, defs); [[0, '#3fb6e8'], [.6, '#8fe3f0'], [1, '#d8fbe8']].forEach(([o, c]) => E('stop', { offset: o, 'stop-color': c }, g)); }
+const camP = G(setP);
+E('rect', { x: -200, y: -200, width: 2320, height: 1480, fill: 'url(#pBg2)' }, camP);
+for (let i = 0; i < 14; i++) E('circle', { cx: 100 + i * 140, cy: 80 + (i * 97) % 220, r: 3 + (i % 3), fill: '#fff', opacity: .7 }, camP);
+E('path', { d: 'M-200,880 C300,840 900,870 1400,850 C1700,840 1900,860 2120,850 L2120,1300 L-200,1300 Z', fill: '#57c48a' }, camP);
+E('path', { d: 'M-200,930 C400,900 1000,925 1500,905 C1800,895 1950,910 2120,900 L2120,1300 L-200,1300 Z', fill: '#3aa873' }, camP);
+// desk
+const desk = G(camP);
+E('path', { d: 'M700,980 L1860,980 L1800,330 L760,330 Z', fill: '#e9f7ff', stroke: '#1d3a4a', 'stroke-width': 7, 'stroke-linejoin': 'round' }, desk);
+E('path', { d: 'M760,330 L1800,330 L1790,380 L770,380 Z', fill: '#c6e6f2' }, desk);
+T(desk, 1280, 366, 30, 'BRAIN CONTROL PANEL', '#1d3a4a', 900, { 'letter-spacing': 6 });
+E('path', { d: 'M700,980 L1860,980 L1860,1010 L700,1010 Z', fill: '#9cc7d6', stroke: '#1d3a4a', 'stroke-width': 7, 'stroke-linejoin': 'round' }, desk);
+const CH = [['SENSES', '#5fe8d0'], ['MEMORY', '#ffb547'], ['SPEED', '#ff8fb1'], ['BODY', '#9fb3ff'], ['LEARNING', '#7ee081']];
+const knobs = [], meters = [], colGlow = [], icons = {};
+CH.forEach(([name, col], i) => {
+  const x = 880 + i * 200, top = 470, bot = 880;
+  colGlow.push(E('rect', { x: x - 70, y: 400, width: 140, height: 560, rx: 30, fill: col, opacity: 0, filter: 'url(#glow)' }, desk));
+  E('rect', { x: x - 12, y: top, width: 24, height: bot - top, rx: 12, fill: '#1d3a4a' }, desk);
+  for (let k = 0; k <= 10; k++) E('path', { d: `M${x + 24},${top + k * (bot - top) / 10} L${x + 40},${top + k * (bot - top) / 10}`, stroke: '#7fa3b4', 'stroke-width': 3 }, desk);
+  const mg = G(desk); const segs = [];
+  for (let k = 0; k < 10; k++) segs.push(E('rect', { x: x - 52, y: bot - 30 - k * 40, width: 16, height: 30, rx: 5, fill: k > 7 ? '#ff6b6b' : k > 5 ? '#ffcf4a' : col, opacity: .18 }, mg));
+  meters.push(segs);
+  const kn = G(desk); E('rect', { x: x - 44, y: -26, width: 88, height: 52, rx: 14, fill: name === 'MASTER' ? '#ff6b6b' : '#ffffff', stroke: '#1d3a4a', 'stroke-width': 6 }, kn);
+  E('path', { d: `M${x - 30},0 L${x + 30},0`, stroke: '#1d3a4a', 'stroke-width': 5, 'stroke-linecap': 'round' }, kn);
+  gsap.set(kn, { y: bot - 70 }); knobs.push(kn);
+  T(desk, x, 945, 26, name, '#1d3a4a', 900);
+});
+const lvl = (i, t, f, d = .5, ease = 'power3.out') => { tl.to(knobs[i], { y: 880 - 70 - f * (880 - 470 - 70), duration: d, ease }, t);
+  meters[i].forEach((s, k) => tl.to(s, { opacity: k < Math.round(f * 10) ? 1 : .18, duration: .08 }, t + .05 + k * .03 * d)); };
+// icons over the channels
+const icon = (i, draw) => { const g = G(camP, { opacity: 0 }); draw(g, 880 + i * 200, 250); return g; };
+icons.eye = icon(0, (g, x, y) => { E('path', { d: `M${x - 60},${y} C${x - 30},${y - 40} ${x + 30},${y - 40} ${x + 60},${y} C${x + 30},${y + 40} ${x - 30},${y + 40} ${x - 60},${y} Z`, fill: '#fff', stroke: '#1d3a4a', 'stroke-width': 7 }, g); E('circle', { cx: x, cy: y, r: 20, fill: '#2f9a92', stroke: '#1d3a4a', 'stroke-width': 5 }, g); E('circle', { cx: x - 6, cy: y - 6, r: 6, fill: '#fff' }, g); });
+icons.mem = icon(1, (g, x, y) => { E('rect', { x: x - 44, y: y - 52, width: 88, height: 104, rx: 12, fill: '#ffe2a8', stroke: '#1d3a4a', 'stroke-width': 7 }, g); for (let k = 0; k < 4; k++) E('path', { d: `M${x - 26},${y - 26 + k * 18} L${x + 26},${y - 26 + k * 18}`, stroke: '#1d3a4a', 'stroke-width': 5, 'stroke-linecap': 'round' }, g); E('path', { d: `M${x + 20},${y - 70} L${x + 34},${y - 44} L${x + 60},${y - 52}`, stroke: '#ffb547', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, g); });
+icons.bolt = icon(2, (g, x, y) => { E('path', { d: `M${x + 10},${y - 64} L${x - 34},${y + 6} L${x - 2},${y + 6} L${x - 14},${y + 64} L${x + 36},${y - 10} L${x + 2},${y - 10} Z`, fill: '#ffe08a', stroke: '#1d3a4a', 'stroke-width': 7, 'stroke-linejoin': 'round' }, g); });
+// Orbi at the panel
+E('ellipse', { cx: 430, cy: 1000, rx: 90, ry: 14, fill: '#0b4a30', opacity: .35 }, camP);
+const orbiP = OrbiBot(camP, { x: 430, y: 800, s: 1.35 });
+// price tag
+const tag = G(camP, { opacity: 0 });
+E('path', { d: 'M1720,420 L1800,420 L1840,470 L1800,520 L1720,520 Z', fill: '#ffe08a', stroke: '#1d3a4a', 'stroke-width': 6, 'stroke-linejoin': 'round' }, tag);
+E('circle', { cx: 1808, cy: 470, r: 8, fill: '#1d3a4a' }, tag); T(tag, 1758, 492, 60, '?', '#1d3a4a', 900);
+E('path', { d: 'M1808,470 C1830,420 1790,390 1720,400', stroke: '#1d3a4a', 'stroke-width': 4, fill: 'none' }, tag);
+
+
+icons.body = icon(3, (g, x, y) => { E('rect', { x: x - 50, y: y - 8, width: 100, height: 16, rx: 6, fill: '#c6d3e6', stroke: '#1d3a4a', 'stroke-width': 6 }, g); for (const s of [-1, 1]) { E('rect', { x: x + s * 50 - 14, y: y - 38, width: 28, height: 76, rx: 10, fill: '#9fb3ff', stroke: '#1d3a4a', 'stroke-width': 6 }, g); } });
+icons.learn = icon(4, (g, x, y) => { E('path', { d: `M${x},${y - 30} C${x - 20},${y - 44} ${x - 50},${y - 44} ${x - 60},${y - 38} L${x - 60},${y + 40} C${x - 50},${y + 34} ${x - 20},${y + 34} ${x},${y + 48} C${x + 20},${y + 34} ${x + 50},${y + 34} ${x + 60},${y + 40} L${x + 60},${y - 38} C${x + 50},${y - 44} ${x + 20},${y - 44} ${x},${y - 30} Z`, fill: '#e6ffe0', stroke: '#1d3a4a', 'stroke-width': 6, 'stroke-linejoin': 'round' }, g); E('path', { d: `M${x},${y - 30} L${x},${y + 48}`, stroke: '#1d3a4a', 'stroke-width': 5 }, g); });
+const okMk = (x) => { const g = G(camP, { opacity: 0 }); E('circle', { cx: x, cy: 420, r: 34, fill: '#3fbf6a', stroke: '#fff', 'stroke-width': 5 }, g); E('path', { d: `M${x - 16},420 L${x - 4},432 L${x + 18},408`, stroke: '#fff', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, g); return g; };
+const redP = E('rect', { x: -200, y: -200, width: 2320, height: 1480, fill: '#ff3a2a', opacity: 0 }, camP);
+const warn = G(camP, { opacity: 0 }); E('path', { d: 'M960,120 L1060,290 L860,290 Z', fill: '#ffcf4a', stroke: INK, 'stroke-width': 7, 'stroke-linejoin': 'round' }, warn); T(warn, 960, 270, 90, '!', INK, 900);
+const energy = card(camP, 360, 520, 420, 420, '#ffffff'); T(energy, 360, 360, 28, 'energy', '#9aa9b8', 900);
+E('rect', { x: 230, y: 400, width: 100, height: 300, rx: 12, fill: '#e8eef5', stroke: INK, 'stroke-width': 4 }, energy); const needB = E('rect', { x: 230, y: 700, width: 100, height: 0, rx: 12, fill: '#ff6b6b' }, energy); T(energy, 280, 740, 24, 'needed', INK, 800);
+E('rect', { x: 390, y: 400, width: 100, height: 300, rx: 12, fill: '#e8eef5', stroke: INK, 'stroke-width': 4 }, energy); E('rect', { x: 390, y: 580, width: 100, height: 120, rx: 12, fill: '#7ee081' }, energy); T(energy, 440, 740, 24, 'available', INK, 800);
+const offL = LBL(camP, 1280, 980, 'knows what to switch off', '#7ee081', 0, 40);
+const frameP = frameOf(setP);
+
+// ======================= TIMELINE =======================
+// 801-802: flow at the skatepark
+tl.fromTo(camFl, { scale: 1.12 }, { scale: 1, svgOrigin: '960 600', duration: 5, ease: 'power2.out', immediateRender: false }, 0);
+orbiFl.idle(tl, 0, OFF['803']); orbiFl.face(tl, .3, 'happy');
+const glide = (t) => { const P = [[700, 590, .8], [1220, 590, 1.1], [1620, 810, .8]]; let tt = t; tl.set(board, { x: 300, y: 810 }, t - .01); orbiFl.fly(tl, t - .01, 300, 680, .01);
+  for (const [x, y, d] of P) { tl.to(board, { x, y, duration: d, ease: 'none' }, tt); orbiFl.fly(tl, tt, x, y - 130, d); tt += d; } };
+glide(W('801', 'maybe')); sfx('whoosh', W('801', 'maybe') + .4, .4);
+pop(clockFl, W('802', 'time') - .2, 960, 260); tl.to(chFl, { rotation: 720, svgOrigin: '960 260', duration: 1.5, ease: 'power1.in' }, W('802', 'time')); tl.to(clockFl, { opacity: 0, scale: .2, svgOrigin: '960 260', duration: .5 }, W('802', 'disappears'));
+worries.forEach((w, i) => { pop(w, W('802', 'worrying') - .3 + i * .2, 520 + i * 820, 200); tl.to(w, { opacity: 0, y: -40, duration: .5 }, W('802', 'others') + .3 + i * .1); });
+glide(W('802', 'task')); orbiFl.pose(tl, W('802', 'itself'), 'open');
+showLbl(flowL, W('802', 'flow'));
+// 803-804: less noise, sweet spot
+const tN = OFF['803'] - .4;
+slide(setFl, setN, tN, 1, frameFl, frameN);
+tl.to(noise, { opacity: 1, duration: .2 }, tN + .6);
+tl.to(front, { opacity: .6, duration: .3 }, W('803', 'judge') - .2); showLbl(judgeL, W('803', 'judge'));
+tl.to(front, { opacity: .05, duration: 1 }, W('803', 'quiet') - .2); tl.to(brainN.dim, { opacity: .0, duration: .1 }, W('803', 'quiet'));
+tl.to(noise, { opacity: 0, duration: .5 }, W('803', 'less')); tl.to(calm, { opacity: 1, duration: .5 }, W('803', 'less')); showLbl(lessL, W('803', 'noise'));
+tl.to(chart, { opacity: 1, duration: .4 }, OFF['804'] - .2);
+tl.to(chan, { opacity: .35, duration: .4 }, W('804', 'harder'));
+tl.to(boredZ, { opacity: 1, duration: .3 }, W('804', 'boring') - .1); tl.to(stressZ, { opacity: 1, duration: .3 }, W('804', 'stress') - .1);
+tl.to(dot, { opacity: 1, duration: .1 }, W('804', 'boring') - .2); tl.to(dot, { attr: { cx: 1620, cy: 760 }, duration: .5 }, W('804', 'boring') - .1); tl.to(dot, { attr: { cx: 1140, cy: 260 }, duration: .6 }, W('804', 'stress') - .1);
+tl.to(dot, { attr: { cx: 1400, cy: 500 }, duration: .6, ease: 'back.out(2)' }, W('804', 'between')); tl.to(flowT, { opacity: 1, duration: .3 }, W('804', 'sweet')); sfx('chime', W('804', 'sweet'), .5);
+// 805-814: the arena
+const tAr = OFF['805'] - .4;
+slide(setN, setAr, tAr, 1, frameN, frameAr);
+tl.fromTo(camAr, { scale: 1.15 }, { scale: 1, svgOrigin: '960 540', duration: 3, ease: 'power2.out', immediateRender: false }, tAr + .3);
+orbiAr.idle(tl, tAr, 60); orbiAr.face(tl, W('805', 'best'), 'happy'); orbiAr.pose(tl, W('805', 'best'), 'thumbs'); sfx('impact', W('805', 'machines'), .5);
+const score = (k, t, who) => { tl.set(sY, { textContent: String(yScore[k]) }, t); tl.set(sM, { textContent: String(mScore[k]) }, t); tl.fromTo(who === 'y' ? sY : sM, { scale: 1.8, svgOrigin: who === 'y' ? '800 130' : '1120 130' }, { scale: 1, duration: .4, ease: 'back.out(2)', immediateRender: false }, t); sfx('ding', t, .5); };
+const rounds = [[R1, '806'], [R2, '807'], [R3, '808']];
+pop(R1, W('806', 'round') - .1, 960, 520);
+tl.to(R1bar, { attr: { width: 320 }, duration: .6 }, W('806', 'billions')); tl.to(R1b2, { attr: { width: 30 }, duration: .4 }, W('806', 'hundred'));
+score(1, W('806', 'machine'), 'm'); orbiAr.pose(tl, W('806', 'machine'), 'shrug');
+tl.to(R1, { opacity: 0, duration: .25 }, OFF['807'] - .2); pop(R2, W('807', 'knowledge') - .7, 960, 520);
+score(2, W('807', 'machine'), 'm'); orbiAr.face(tl, W('807', 'lifetimes'), 'wow');
+tl.to(R2, { opacity: 0, duration: .25 }, OFF['808'] - .2); pop(R3, W('808', 'round') - .1, 960, 520); sfx('zap', W('808', 'line'), .4);
+orbiAr.face(tl, W('808', 'brain'), 'think'); showLbl(sameL, W('808', 'league') - .3);
+tl.to([R3, sameL], { opacity: 0, duration: .25 }, OFF['809'] - .2); pop(pw, W('809', 'bill') - .2, 960, 520);
+tl.to(pwBig, { attr: { y: 360 - 0, height: 340 }, duration: .8, ease: 'power2.out' }, WA('809', ['42', 'forty']) - .2);
+tl.to(pwSmall, { attr: { y: 699, height: 1 }, duration: .3 }, WA('809', ['20', 'twenty']) - .1); tl.to([bulbS.halo, bulbS.rays], { opacity: 1, duration: .3 }, WA('809', ['20', 'twenty']));
+showLbl(twoM, W('809', 'million') - .2); score(3, W('809', 'point') + .2, 'y'); orbiAr.pose(tl, W('809', 'point'), 'thumbs'); orbiAr.face(tl, W('809', 'point'), 'happy');
+tl.to([pw, twoM], { opacity: 0, duration: .25 }, OFF['810'] - .2); pop(R4, W('810', 'round') - .1, 960, 520);
+score(4, W('810', 'point') + .2, 'y');
+tl.to(R4, { opacity: 0, duration: .25 }, OFF['811'] - .2); pop(R5, W('811', 'round') - .1, 960, 520);
+tl.to(rack, { rotation: 3, svgOrigin: '1590 900', duration: .2, yoyo: true, repeat: 3 }, W('811', 'robots')); score(5, W('811', 'point') + .2, 'y'); orbiAr.pose(tl, W('811', 'point'), 'count');
+tl.to(R5, { opacity: 0, duration: .25 }, OFF['812'] - .2);
+tl.fromTo(sb, { scale: 1 }, { scale: 1.25, svgOrigin: '960 105', duration: .4, yoyo: true, repeat: 1, immediateRender: false }, WA('812', ['3', 'three'])); orbiAr.face(tl, WA('812', ['3', 'three']), 'happy');
+pop(chessC, W('812', 'chess') - .2, 960, 520); sfx('pop', W('812', 'chess'), .4);
+showLbl(gmX, W('813', 'grandmasters')); pop(trophy, W('813', 'amateur') - .1, 960, 200); sfx('chime', W('813', 'amateur'), .5);
+tl.to([chessC, gmX, trophy], { opacity: 0, duration: .3 }, OFF['814'] - .2);
+pop(both, W('814', 'brain') - .1, 960, 520); showLbl(bothL, W('814', 'both'));
+// 815-817: every dial at max
+const tP = OFF['815'] - .4;
+slide(setAr, setP, tP, -1, frameAr, frameP);
+for (let i = 0; i < 5; i++) lvl(i, tP + .3, .5, .3);
+['eye', 'mem', 'bolt', 'body', 'learn'].forEach((k, i) => pop(icons[k], tP + .3, 880 + i * 200, 250));
+orbiP.idle(tl, tP, 30);
+for (let i = 0; i < 5; i++) { lvl(i, W('815', 'way') + i * .12, 1, .4); tl.to(colGlow[i], { opacity: .8, duration: .2 }, W('815', 'way') + i * .12); }
+sfx('zap', W('815', 'once'), .6); orbiP.face(tl, W('815', 'once'), 'wow');
+tl.to(redP, { opacity: .25, duration: .5 }, W('816', 'senses')); pop(warn, W('816', 'senses'), 960, 220);
+tl.to(camP, { x: 8, duration: .06, yoyo: true, repeat: 30 }, W('816', 'senses')); sfx('rumble', W('816', 'senses'), .5);
+pop(energy, W('816', 'energy') - .4, 360, 520); tl.to(needB, { attr: { y: 360, height: 340 }, duration: .8 }, W('816', 'energy')); sfx('beep', W('816', 'deliver'), .5);
+orbiP.pose(tl, W('816', 'overheating'), 'shrug');
+tl.to([redP, warn, energy], { opacity: 0, duration: .4 }, OFF['817'] - .2);
+const tOff = W('817', 'off') - .6;
+[.62, .35, .5, .2, .7].forEach((f, i) => { lvl(i, tOff + i * .1, f, .6, 'power2.inOut'); tl.to(colGlow[i], { opacity: f > .55 ? .6 : 0, duration: .3 }, tOff + i * .1); });
+showLbl(offL, W('817', 'off')); orbiP.face(tl, W('817', 'off'), 'happy'); orbiP.pose(tl, W('817', 'off'), 'thumbs');
+// 818-821: ending
+const tE = OFF['818'] - .4;
+slide(setP, setE, tE, 1, frameP, frameE);
+orbiE.idle(tl, tE, 40); orbiE.face(tl, tE, 'happy');
+tl.to([bulbE.halo, bulbE.rays], { opacity: 1, duration: .6 }, tE + .5);
+showLbl(featL, W('818', 'feature') - .2);
+tl.to(featL, { opacity: 0, duration: .3 }, OFF['819'] - .2);
+showLbl(tips[0], W('819', 'sleep') - .1); showLbl(tips[1], W('819', 'challenges') - .1); showLbl(tips[2], W('819', 'noise') - .1);
+showLbl(realL, W('819', 'real')); orbiE.pose(tl, W('819', 'real'), 'thumbs');
+tl.to(tips.concat([realL]), { opacity: 0, duration: .3 }, OFF['820'] - .2);
+pop(qDials, OFF['820'] + .1, 960, 340); tl.to(qT, { opacity: 1, duration: .3 }, W('820', 'first') - .2); orbiE.pose(tl, W('820', 'dial'), 'think'); orbiE.face(tl, W('820', 'dial'), 'think');
+tl.to([qDials, qT], { opacity: 0, duration: .3 }, OFF['821'] - .1);
+orbiE.face(tl, W('821', 'bulb') - .3, 'happy'); orbiE.pose(tl, W('821', 'bulb') - .3, 'pointUp');
+tl.fromTo(bulbE.g, { scale: 1 }, { scale: 1.12, svgOrigin: '1460 420', duration: .4, yoyo: true, repeat: 1, immediateRender: false }, W('821', 'bulb'));
+orbiE.pose(tl, W('821', 'see'), 'wave');
+const tO = OFF['821'] + LDUR['821'] - .9;
+enter(setE, outro, tO); tl.to(sat, { rotation: 360, svgOrigin: '960 470', duration: 4, ease: 'none' }, tO); sfx('chime', tO, .6);
+END = tO + 4; tl.to(flash, { opacity: 0, duration: .01 }, END);
+window.SFX = SFX; window.DURATION = END; window.OFFS = OFF;
+window.seek = t => { tl.seek(t, false); drawRigs(); };
+window.seek(0);
+</script></body></html>
